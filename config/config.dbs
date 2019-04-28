@@ -1,5 +1,5 @@
 DatabaseHost=localhost
-DatabasePort=
+DatabasePort=3306
 DatabaseName=db_inventaris
 DatabaseUser=root
 DatabasePass=
