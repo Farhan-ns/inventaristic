@@ -1,0 +1,15 @@
+1.0.2
+added LihatBarang for user
+1.0.1
+Changed Barang Masalah Column to show only user-important field
+Changed Barang Masalah Query to be compatible with database revision 1
+1.0
+Initial Commit
+added Stok Barang
+added Rekap Barang
+added Data Peminjam
+added Data Peminjaman
+added MySqlConnection (Database Connection)
+added Activity Logger (In Progress)
+added config.dbs (database configuration file)
+added assertion option in virtual machine runtime parameter
