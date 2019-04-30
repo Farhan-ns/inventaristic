@@ -9,17 +9,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import com.smkn4.inventaristic.util.MySqlConnection;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import com.smkn4.inventaristic.util.MySqlConnection;
 
 /**
  *
- * @author Regita
+ * @author ASUS
  */
 public class LihatBarang extends javax.swing.JFrame {
 
@@ -37,18 +37,17 @@ public class LihatBarang extends javax.swing.JFrame {
     }
     
  private void readData(){
-        String[] kolomTabel = {"Nama Barang", "Jumlah","Lokasi", "Deskripsi"};
+        String[] kolomTabel = {"Nama Barang","Quantitas","Lokasi"};
         defaultTableModel   = new DefaultTableModel(null, kolomTabel);
         try {
             connection      = MySqlConnection.getConnection();
             preStatement    = connection.prepareStatement("SELECT * FROM barang_masuk");
             result          = preStatement.executeQuery();
             while(result.next()){
-                String nama_barang = result.getString("nama_barang");
-                String jumlah = result.getString("quantitas");
-                String lokasi = result.getString("lokasi");
-                String deskripsi = result.getString("deskripsi");
-                defaultTableModel.addRow(new String[]{nama_barang,jumlah,lokasi, deskripsi});
+                String nama_barang             = result.getString("nama_barang");
+                String quantitas               = result.getString("quantitas");
+                String lokasi                  = result.getString("lokasi");
+                defaultTableModel.addRow(new String[]{nama_barang,quantitas,lokasi});
             }
         } catch (SQLException e) {
             e.printStackTrace();

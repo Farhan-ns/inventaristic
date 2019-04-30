@@ -5,10 +5,13 @@
  */
 package com.smkn4.inventaristic.admin.laporan.rekap;
 
+import java.awt.print.PrinterException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.MessageFormat;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import com.smkn4.inventaristic.util.MySqlConnection;
@@ -24,6 +27,7 @@ public class RekapBarangBermasalah extends javax.swing.JFrame {
     public RekapBarangBermasalah() {
         initComponents();
         koneksi = MySqlConnection.getConnection();
+        showData();
     }
     
     DefaultTableModel dtm;
@@ -32,7 +36,7 @@ public class RekapBarangBermasalah extends javax.swing.JFrame {
         String[] kolom = {"No", "ID Barang Bermasalah", "ID Barang", "Tanggal", "Jumlah", "Keterangan"};
 
         dtm = new DefaultTableModel(null, kolom);
-        JTableHeader header = tbl_rekap.getTableHeader();
+        JTableHeader header = tbl_bermasalah.getTableHeader();
         header.setFont(new java.awt.Font("Calibri", 1, 13));
         header.setForeground(new java.awt.Color(153, 0, 154));
         dtm.getDataVector().removeAllElements();
@@ -44,20 +48,20 @@ public class RekapBarangBermasalah extends javax.swing.JFrame {
             System.out.println("" +query);
             int no = 1;
             while (rs.next()) {
-                String id_barang_beramsalah = rs.getString("id_barang_beramsalah");
+                String id_barang_bermasalah = rs.getString("id_barang_bermasalah");
                 String id_barang = rs.getString("id_barang");
                 String tanggal_bermasalah = rs.getString("tanggal_bermasalah");
                 String jumlah = rs.getString("jumlah");
                 String ket = rs.getString("ket");
 
-                dtm.addRow(new String[]{no + "", id_barang_beramsalah, id_barang, tanggal_bermasalah, jumlah, ket});
+                dtm.addRow(new String[]{no + "", id_barang_bermasalah, id_barang, tanggal_bermasalah, jumlah, ket});
                 no++;
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        tbl_rekap.setModel(dtm);    
-        tbl_rekap.getColumnModel().getColumn(2).setPreferredWidth(150);
+        tbl_bermasalah.setModel(dtm);    
+        tbl_bermasalah.getColumnModel().getColumn(2).setPreferredWidth(150);
 //        count.setText("" + tbl_rekap.getRowCount());
     }
 
@@ -72,8 +76,8 @@ public class RekapBarangBermasalah extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbl_rekap = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        tbl_bermasalah = new javax.swing.JTable();
+        Print = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -81,7 +85,7 @@ public class RekapBarangBermasalah extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
         jLabel1.setText("Laporan Data Barang Bermasalah");
 
-        tbl_rekap.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_bermasalah.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -92,10 +96,15 @@ public class RekapBarangBermasalah extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tbl_rekap);
+        jScrollPane1.setViewportView(tbl_bermasalah);
 
-        jButton1.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
-        jButton1.setText("Print");
+        Print.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        Print.setText("Print");
+        Print.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PrintActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jButton2.setText("Batal");
@@ -105,19 +114,19 @@ public class RekapBarangBermasalah extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(182, 182, 182)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 735, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Print, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(41, 41, 41)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(169, 169, 169))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,13 +137,24 @@ public class RekapBarangBermasalah extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(Print)
                     .addComponent(jButton2))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void PrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrintActionPerformed
+        MessageFormat title = new MessageFormat("Laporan Data Barang Bermasalah");
+        MessageFormat footer = new MessageFormat("page(0,number,integer)");
+        
+        try {
+            tbl_bermasalah.print(JTable.PrintMode.NORMAL, title, footer);
+        } catch(PrinterException ex) {
+            System.err.print("Error Printer");
+        }
+    }//GEN-LAST:event_PrintActionPerformed
 
     /**
      * @param args the command line arguments
@@ -175,10 +195,10 @@ public class RekapBarangBermasalah extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton Print;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tbl_rekap;
+    private javax.swing.JTable tbl_bermasalah;
     // End of variables declaration//GEN-END:variables
 }

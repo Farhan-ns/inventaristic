@@ -5,10 +5,13 @@
  */
 package com.smkn4.inventaristic.admin.laporan.rekap;
 
+import java.awt.print.PrinterException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.MessageFormat;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import com.smkn4.inventaristic.util.MySqlConnection;
@@ -24,6 +27,7 @@ public class RekapPeminjaman extends javax.swing.JFrame {
     public RekapPeminjaman() {
         initComponents();
         koneksi = MySqlConnection.getConnection();
+        showData();
     }
     
     DefaultTableModel dtm;
@@ -32,7 +36,7 @@ public class RekapPeminjaman extends javax.swing.JFrame {
         String[] kolom = {"No", "ID Peminjaman", "Tanggal Peminjaman", "Rincian", "ID Barang", "Tanggal Kembali"};
 
         dtm = new DefaultTableModel(null, kolom);
-        JTableHeader header = tbl_rekap.getTableHeader();
+        JTableHeader header = tbl_peminjaman.getTableHeader();
         header.setFont(new java.awt.Font("Calibri", 1, 13));
         header.setForeground(new java.awt.Color(153, 0, 154));
         dtm.getDataVector().removeAllElements();
@@ -56,8 +60,8 @@ public class RekapPeminjaman extends javax.swing.JFrame {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        tbl_rekap.setModel(dtm);    
-        tbl_rekap.getColumnModel().getColumn(2).setPreferredWidth(150);
+        tbl_peminjaman.setModel(dtm);    
+        tbl_peminjaman.getColumnModel().getColumn(2).setPreferredWidth(150);
 //        count.setText("" + tbl_rekap.getRowCount());
     }
 
@@ -72,7 +76,7 @@ public class RekapPeminjaman extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbl_rekap = new javax.swing.JTable();
+        tbl_peminjaman = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -81,7 +85,7 @@ public class RekapPeminjaman extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
         jLabel1.setText("Laporan Data Peminjaman");
 
-        tbl_rekap.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_peminjaman.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -92,10 +96,15 @@ public class RekapPeminjaman extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tbl_rekap);
+        jScrollPane1.setViewportView(tbl_peminjaman);
 
         jButton1.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jButton1.setText("Print");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jButton2.setText("Batal");
@@ -107,19 +116,17 @@ public class RekapPeminjaman extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 735, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 212, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(236, 236, 236))))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jLabel1)
+                .addGap(205, 205, 205))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,6 +144,17 @@ public class RekapPeminjaman extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        MessageFormat title = new MessageFormat("Laporan Data Peminjaman");
+        MessageFormat footer = new MessageFormat("page(0,number,integer)");
+        
+        try {
+            tbl_peminjaman.print(JTable.PrintMode.NORMAL, title, footer);
+        } catch(PrinterException ex) {
+            System.err.print("Error Printer");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -181,6 +199,6 @@ public class RekapPeminjaman extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tbl_rekap;
+    private javax.swing.JTable tbl_peminjaman;
     // End of variables declaration//GEN-END:variables
 }
