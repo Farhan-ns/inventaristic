@@ -11,7 +11,11 @@ package com.smkn4.inventaristic.admin.siswa;
  */
 import com.smkn4.inventaristic.util.MySqlConnection;
 import java.sql.*;
-
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -35,7 +39,7 @@ public class DataPeminjam extends javax.swing.JFrame {
     
     DefaultTableModel  dtm;
     public void readData(){
-        String[] kolomTabel = {"NIS", "Nama", "Tanggal Lahir","Jenis Kelamin", "Kelas", "Jurusan", "Barcode", "Tahun Ajaran"};
+        String[] kolomTabel = {"NIS", "Nama", "Tanggal Lahir","Jenis Kelamin", "Kelas", "Jurusan", "Tahun Ajaran", "Sanksi"};
         defaultTableModel   = new DefaultTableModel(null, kolomTabel);
         try {
             connection      = MySqlConnection.getConnection();
@@ -48,11 +52,12 @@ public class DataPeminjam extends javax.swing.JFrame {
                 String jenis_kelamin    = result.getString("jenkel");
                 String kelas            = result.getString("kelas"); 
                 String jurusan          = result.getString("jurusan");
-                String barcode          = result.getString("barcode");
-                String tahun_ajaran       = result.getString("thn_ajaran");
+                String tahun_ajaran     = result.getString("thn_ajaran");
+                String sanksi           = result.getString("sanksi");
+                
                 
                 defaultTableModel.addRow(new String[]{nis,nama,tgl_lahir,
-                    jenis_kelamin,kelas,jurusan,barcode,tahun_ajaran});
+                    jenis_kelamin,kelas,jurusan,tahun_ajaran,sanksi });
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -240,6 +245,7 @@ public class DataPeminjam extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(DataPeminjam.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
