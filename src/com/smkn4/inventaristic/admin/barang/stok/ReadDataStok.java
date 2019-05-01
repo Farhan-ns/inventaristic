@@ -15,6 +15,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import customDateFormatter.CustomDateFormatter;
 import com.smkn4.inventaristic.util.MySqlConnection;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -160,11 +162,11 @@ public class ReadDataStok extends javax.swing.JFrame {
     }//GEN-LAST:event_tbl_barangMouseClicked
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
-        String idWhoWantToBeDelete = tbl_barang.getValueAt(baris, 0).toString();
+        String idWhoWantToBeDelete = tbl_barang.getValueAt(baris, 1).toString();
         //(baris, 1) --> 1 itu menunjukan kolom (nis), indexnya seperti array
         try {
             Statement stmt = koneksi.createStatement();
-            String query = "DELETE FROM barang WHERE id_barang = '" + idWhoWantToBeDelete + "'";
+            String query = "DELETE FROM barang_masuk WHERE id_barang = '" + idWhoWantToBeDelete + "'";
             int berhasil = stmt.executeUpdate(query);
             if (berhasil == 1) {
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
@@ -189,12 +191,14 @@ public class ReadDataStok extends javax.swing.JFrame {
     DefaultTableModel dtm;
 
     public void showData() {
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-mm-dd");
+        DateFormat outputFormat = new SimpleDateFormat("dd-mm-yyyy");
         String[] kolom = {"NO", "Id Barang", "Nama Barang", "Jenis Barang", "Jumlah", "Status", "Lokasi", "Tanggal Masuk", "Umur Pakai"};
         dtm = new DefaultTableModel(null, kolom);
         int no = 1;
         try {
             Statement stat = koneksi.createStatement();
-            String query = "SELECT * FROM barang ";
+            String query = "SELECT *, COUNT(nama_barang) FROM barang_masuk GROUP BY nama_barang";
             //buat ada filter
             String queryFilter = "";
             ResultSet rs = stat.executeQuery(query+queryFilter);
@@ -202,16 +206,16 @@ public class ReadDataStok extends javax.swing.JFrame {
                 String idBarang = rs.getString("id_barang");
                 String namaBarang = rs.getString("nama_barang");
                 String jenisBarang = rs.getString("jenis_barang");
-                String tgl_masuk = rs.getString("tanggal_masuk");
+                String tgl_masuk = rs.getString("tgl_masuk");
                 Date date;
                 Calendar cal = Calendar.getInstance();
                 try {
-//                    date = inputFormat.parse(tgl_masuk);
-                    String tanggalMasuk = CustomDateFormatter.formatToJavaDatePattern(tgl_masuk);
-                    String kuantitas = rs.getString("jumlah");
-                    String status = rs.getString("status");
+                    date = inputFormat.parse(tgl_masuk);
+                    String tanggalMasuk = outputFormat.format(date);
+                    String status = rs.getString("kondisi");
+                    String kuantitas = rs.getString("COUNT(nama_barang)");
                     String lokasiBarang = rs.getString("lokasi");
-                    String umur = rs.getString("total_pakai");
+                    String umur = rs.getString("total_penggunaan");
                     dtm.addRow(new String[]{no + "", idBarang, namaBarang, jenisBarang, kuantitas, status, lokasiBarang, tanggalMasuk, umur});
                     no++;
                     //System.out.println(idBarang + "  -  " + namaBarang);
