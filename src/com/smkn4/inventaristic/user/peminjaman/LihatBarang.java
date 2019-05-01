@@ -45,7 +45,8 @@ public class LihatBarang extends javax.swing.JFrame {
             result          = preStatement.executeQuery();
             while(result.next()){
                 String nama_barang             = result.getString("nama_barang");
-                String quantitas               = result.getString("quantitas");
+                String quantitas               = "";
+                //kuantitas pake rumus
                 String lokasi                  = result.getString("lokasi");
                 defaultTableModel.addRow(new String[]{nama_barang,quantitas,lokasi});
             }
