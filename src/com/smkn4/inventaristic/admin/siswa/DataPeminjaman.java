@@ -32,27 +32,28 @@ public class DataPeminjaman extends javax.swing.JFrame {
         readData();
     }
     
-    private void readData(){
+        private void readData(){
         String[] kolomTabel = {"NIS", "Nama", "Kelas","Id barang","Nama Barang","tanggal peminjaman","tanggal pengembalian","status"};
         defaultTableModel   = new DefaultTableModel(null, kolomTabel);
         try {
             connection      = MySqlConnection.getConnection();
-            preStatement    = connection.prepareStatement("SELECT * "
-                    + "FROM siswa,barang,peminjaman,utama WHERE siswa.nis = utama.nis &&"
-                    + " barang.id_barang=peminjaman.id_barang && peminjaman.no_peminjaman = utama.no_peminjaman");
+            preStatement    = connection.prepareStatement("SELECT * FROM siswa,`peminjaman`,`rincian`,`barang_masuk`,`petugas`\n" +
+"WHERE `peminjaman`.`nis`=`siswa`.`nis` && `rincian`.`id_peminjaman`=`peminjaman`.`id_peminjaman`\n" +
+" && `barang_masuk`.`id_barang` = `rincian`.`id_barang`\n" +
+" && `petugas`.`id_petugas`= `barang_masuk`.`id_petugas`");
+            System.out.println(preStatement);
             result          = preStatement.executeQuery();
             while(result.next()){
-                String nis              = result.getString("nis");
-                String nama             = result.getString("nama_siswa");
-                String id_kelas        =    result.getString("id_kelas");
-                String id_barang     = result.getString("id_barang");
-                String nama_barang   = result.getString("nama_barang");
-                String tanggal_peminjaman= result.getDate("tanggal_peminjaman").toString();
-                Date tanggal_kembali= result.getDate("tanggal_kembali");
-                String tanggalKembali = (tanggal_kembali != null) ? tanggal_kembali.toString() : "";
-                String Status = result.getString("status");
+                String nis              = result.getString("siswa.nis");
+                String nama             = result.getString("siswa.nama_siswa");
+                String id_kelas        =    result.getString("siswa.kelas");
+                String id_barang     = result.getString("barang_masuk.id_barang");
+                String nama_barang   = result.getString("barang_masuk.nama_barang");
+                String tanggal_peminjaman= result.getDate("peminjaman.tgl_peminjaman").toString();
+                String tanggal_kembali= result.getDate("peminjaman.tgl_kembali").toString();
+                String Status = result.getString("peminjaman.status_peminjaman");
                 
-                defaultTableModel.addRow(new String[]{nis,nama,id_kelas,id_barang,nama_barang,tanggal_peminjaman,tanggalKembali,Status});
+                defaultTableModel.addRow(new String[]{nis,nama,id_kelas,id_barang,nama_barang,tanggal_peminjaman,tanggal_kembali,Status});
             }
         } catch (SQLException e) {
             e.printStackTrace();
