@@ -42,8 +42,7 @@ public class RekapBarang extends javax.swing.JFrame {
         dtm.getDataVector().removeAllElements();
         try {
             Statement stmt = koneksi.createStatement();
-            String query = "SELECT * FROM barang\n";
-//                    + "WHERE tanggal_peminjaman = '" ++"'";
+            String query = "SELECT *, COUNT(nama_barang) FROM barang_masuk GROUP BY nama_barang";
             ResultSet rs = stmt.executeQuery(query);
             System.out.println("" +query);
             int no = 1;
@@ -51,11 +50,11 @@ public class RekapBarang extends javax.swing.JFrame {
                 String id_barang = rs.getString("id_barang");
                 String nama_barang = rs.getString("nama_barang");
                 String jenis_barang = rs.getString("jenis_barang");
-                String tanggal_masuk = rs.getString("tanggal_masuk");
-                String jumlah = rs.getString("jumlah");
-                String status = rs.getString("status");
+                String tanggal_masuk = rs.getString("tgl_masuk");
+                String jumlah= rs.getString("COUNT(nama_barang)");
+                String status = rs.getString("kondisi");
                 String lokasi = rs.getString("lokasi");
-                String total_pakar = rs.getString("total_pakai");
+                String total_pakar = rs.getString("total_penggunaan");
 
                 dtm.addRow(new String[]{no + "", id_barang, nama_barang, jenis_barang, tanggal_masuk, jumlah, status, lokasi, total_pakar});
                 no++;
@@ -152,7 +151,7 @@ public class RekapBarang extends javax.swing.JFrame {
     private void PrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrintActionPerformed
         
         MessageFormat title = new MessageFormat("Laporan Data Barang");
-        MessageFormat footer = new MessageFormat("page(0,number,integer)");
+        MessageFormat footer = new MessageFormat("SMKN 4 Bandung - Inventaris App");
         
         try {
             tbl_rekap.print(JTable.PrintMode.NORMAL, title, footer);

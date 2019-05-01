@@ -37,18 +37,18 @@ public class LihatBarang extends javax.swing.JFrame {
     }
     
  private void readData(){
-        String[] kolomTabel = {"Nama Barang","Quantitas","Lokasi"};
+        String[] kolomTabel = {"Nama Barang","Deskripsi","Kuantitas","Lokasi"};
         defaultTableModel   = new DefaultTableModel(null, kolomTabel);
         try {
             connection      = MySqlConnection.getConnection();
-            preStatement    = connection.prepareStatement("SELECT * FROM barang_masuk");
+            preStatement    = connection.prepareStatement("SELECT *, COUNT(nama_barang) FROM barang_masuk GROUP BY nama_barang");
             result          = preStatement.executeQuery();
             while(result.next()){
                 String nama_barang             = result.getString("nama_barang");
-                String quantitas               = "";
-                //kuantitas pake rumus
+                String desk            = result.getString("deskripsi");
+                String quantitas               = result.getString("COUNT(nama_barang)");
                 String lokasi                  = result.getString("lokasi");
-                defaultTableModel.addRow(new String[]{nama_barang,quantitas,lokasi});
+                defaultTableModel.addRow(new String[]{nama_barang,desk,quantitas,lokasi});
             }
         } catch (SQLException e) {
             e.printStackTrace();
