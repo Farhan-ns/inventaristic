@@ -7,7 +7,7 @@ package com.smkn4.inventaristic.admin.siswa;
 
 /**
  *
- * @author Bagusth
+ * @author Bagus Tito Hindarto
  */
 
 import com.smkn4.inventaristic.util.MySqlConnection;
