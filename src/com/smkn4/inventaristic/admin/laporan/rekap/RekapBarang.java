@@ -33,7 +33,7 @@ public class RekapBarang extends javax.swing.JFrame {
     DefaultTableModel dtm;
     
     public void showData() {
-        String[] kolom = {"No", "ID Barang", "Nama Barang", "Jenis Barang", "Tanggal Masuk", "Jumlah", "Status", "Lokasi", "Waktu Pakai"};
+        String[] kolom = {"No", "ID Barang", "Nama Barang", "Jenis", "Tanggal Masuk", "Jumlah", "Status", "Lokasi", "Waktu Pakai"};
 
         dtm = new DefaultTableModel(null, kolom);
         JTableHeader header = tbl_rekap.getTableHeader();
@@ -54,16 +54,23 @@ public class RekapBarang extends javax.swing.JFrame {
                 String jumlah= rs.getString("COUNT(nama_barang)");
                 String status = rs.getString("kondisi");
                 String lokasi = rs.getString("lokasi");
-                String total_pakar = rs.getString("total_penggunaan");
+                String total_pakai = rs.getString("total_penggunaan");
 
-                dtm.addRow(new String[]{no + "", id_barang, nama_barang, jenis_barang, tanggal_masuk, jumlah, status, lokasi, total_pakar});
+                dtm.addRow(new String[]{no + "", id_barang, nama_barang, jenis_barang, tanggal_masuk, jumlah, status, lokasi, total_pakai});
                 no++;
-            }
+            }            
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         tbl_rekap.setModel(dtm);    
-//        count.setText("" + tbl_rekap.getRowCount());
+        tbl_rekap.getColumnModel().getColumn(0).setPreferredWidth(15);
+        tbl_rekap.getColumnModel().getColumn(1).setPreferredWidth(55);
+        tbl_rekap.getColumnModel().getColumn(3).setPreferredWidth(40);
+        tbl_rekap.getColumnModel().getColumn(4).setPreferredWidth(120);
+        tbl_rekap.getColumnModel().getColumn(5).setPreferredWidth(30);
+        tbl_rekap.getColumnModel().getColumn(6).setPreferredWidth(35);
+        tbl_rekap.getColumnModel().getColumn(7).setPreferredWidth(30);
+//        tbl_rekap.getColumnModel().getColumn(8).setPreferredWidth(40);
     }
 
     /**
@@ -117,19 +124,20 @@ public class RekapBarang extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(432, 432, 432)
+                .addComponent(Print, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 735, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(Print, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(253, 253, 253))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 654, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(229, 229, 229)
+                        .addComponent(jLabel1)))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,12 +145,12 @@ public class RekapBarang extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addComponent(jLabel1)
                 .addGap(33, 33, 33)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Print)
                     .addComponent(jButton2))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
