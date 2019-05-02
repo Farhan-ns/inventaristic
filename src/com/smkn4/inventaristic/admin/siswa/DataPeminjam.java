@@ -9,7 +9,6 @@ package com.smkn4.inventaristic.admin.siswa;
  *
  * @author Tan
  */
-import com.smkn4.inventaristic.util.MySqlConnection;
 import java.sql.*;
 //import java.text.SimpleDateFormat;
 import javax.swing.ButtonGroup;
@@ -18,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import com.smkn4.inventaristic.util.MySqlConnection;
 
 public class DataPeminjam extends javax.swing.JFrame {
 
