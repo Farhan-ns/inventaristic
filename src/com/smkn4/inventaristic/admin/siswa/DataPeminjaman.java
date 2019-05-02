@@ -59,6 +59,10 @@ public class DataPeminjaman extends javax.swing.JFrame {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, ""
                     + "Ada Kesalahan Query");
+        } catch (NullPointerException ex){
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, ""
+                    + "Ada Kesalahan Query");
         }finally{
             try {
                 connection.close();
