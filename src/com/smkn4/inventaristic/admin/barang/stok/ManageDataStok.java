@@ -14,7 +14,8 @@ import customDateFormatter.CustomDateFormatter;
 import com.smkn4.inventaristic.util.MySqlConnection;
 import java.sql.Timestamp;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import org.apache.commons.lang3.time.DateFormatUtils;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -233,9 +234,7 @@ public class ManageDataStok extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnSimpanActionPerformed
     public String getTanggal() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = new Date();
-        return dateFormat.format(date);
+        return DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss");
     }
     public void simpanData(){
         String idBarang = txtIdBarang.getText();

@@ -228,7 +228,7 @@
             </Property>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Rusak"/>
-            <Property name="actionCommand" type="java.lang.String" value="Barang Rusak"/>
+            <Property name="actionCommand" type="java.lang.String" value="rusak"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="kecilActionPerformed"/>
@@ -240,7 +240,7 @@
               <ComponentRef name="Keterangan"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Hilang"/>
-            <Property name="actionCommand" type="java.lang.String" value="Barang Hilang"/>
+            <Property name="actionCommand" type="java.lang.String" value="hilang"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="besarActionPerformed"/>

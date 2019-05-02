@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import customDateFormatter.CustomDateFormatter;
 import com.smkn4.inventaristic.util.MySqlConnection;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import org.apache.commons.lang3.time.DateFormatUtils;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -191,8 +191,8 @@ public class ReadDataStok extends javax.swing.JFrame {
     DefaultTableModel dtm;
 
     public void showData() {
-        DateFormat inputFormat = new SimpleDateFormat("yyyy-mm-dd");
-        DateFormat outputFormat = new SimpleDateFormat("dd-mm-yyyy");
+//        DateFormat inputFormat = new SimpleDateFormat("yyyy-mm-dd");
+//        DateFormat outputFormat = new SimpleDateFormat("dd-mm-yyyy");
         String[] kolom = {"NO", "Id Barang", "Nama Barang", "Jenis Barang", "Jumlah", "Status", "Lokasi", "Tanggal Masuk", "Umur Pakai"};
         dtm = new DefaultTableModel(null, kolom);
         int no = 1;
@@ -206,12 +206,9 @@ public class ReadDataStok extends javax.swing.JFrame {
                 String idBarang = rs.getString("id_barang");
                 String namaBarang = rs.getString("nama_barang");
                 String jenisBarang = rs.getString("jenis_barang");
-                String tgl_masuk = rs.getString("tgl_masuk");
-                Date date;
-                Calendar cal = Calendar.getInstance();
+                Date tgl_masuk = rs.getDate("tgl_masuk");
                 try {
-                    date = inputFormat.parse(tgl_masuk);
-                    String tanggalMasuk = outputFormat.format(date);
+                    String tanggalMasuk = DateFormatUtils.format(tgl_masuk, "dd-MM-yyy");
                     String status = rs.getString("kondisi");
                     String kuantitas = rs.getString("COUNT(nama_barang)");
                     String lokasiBarang = rs.getString("lokasi");

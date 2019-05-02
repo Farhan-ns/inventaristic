@@ -26,7 +26,7 @@ public class BarangMasalah extends javax.swing.JFrame {
      */
     public BarangMasalah() {
         initComponents();
-        readData(false, "tanggal_bermasalah", "ASC", null);
+        readData(false, "tgl_bermasalah", "ASC", null);
     }
 
     /**
@@ -108,7 +108,7 @@ public class BarangMasalah extends javax.swing.JFrame {
         Keterangan.add(kecil);
         kecil.setSelected(true);
         kecil.setText("Rusak");
-        kecil.setActionCommand("Barang Rusak");
+        kecil.setActionCommand("rusak");
         kecil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 kecilActionPerformed(evt);
@@ -117,7 +117,7 @@ public class BarangMasalah extends javax.swing.JFrame {
 
         Keterangan.add(besar);
         besar.setText("Hilang");
-        besar.setActionCommand("Barang Hilang");
+        besar.setActionCommand("hilang");
         besar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 besarActionPerformed(evt);
@@ -260,25 +260,29 @@ public class BarangMasalah extends javax.swing.JFrame {
     private void filter (){
         Map<String, String> filter = new HashMap<>();
         String keterangan = Keterangan.getSelection().getActionCommand();
-        if(keterangan.equals("Barang Rusak")){
-            filter.put("status", keterangan);
-        }else if (keterangan.equals("Barang Hilang")){
-            filter.put("status", keterangan);
+        if(keterangan.equals("rusak")){
+            filter.put("jenis_masalah", keterangan);
+        }else if (keterangan.equals("hilang")){
+            filter.put("jenis_masalah", keterangan);
+        }
+        boolean search = true;
+        if (filter.isEmpty()) {
+            search = false;
         }
         String tanggal = TanggalGroup.getSelection().getActionCommand();
         String ascDESC = (tanggal.equals("muda")) ? " ASC " : " DESC ";
     
 //    search (filter.isEmpty()) ? false : true;
-    readData(true,"tanggal_bermasalah", ascDESC, filter);
+    readData(search,"tgl_bermasalah", ascDESC, filter);
     }
 private void readData(boolean search, String orderBy, String ascDesc, Map<String, String> filter) {
         defaultTableModel = new DefaultTableModel(null, this.kolomTabel);
-        String[] kolomTabel = {"nama_barang", "lokasi", "status", "Tanggal Bermasalah", "Jumlah"};
+        String[] kolomTabel = {"nama_barang", "Jenis Masalah","lokasi", "Tanggal Bermasalah", "Jumlah"};
         DefaultTableModel defaultTableModel = new DefaultTableModel(null, kolomTabel);
-        String query = "SELECT barang_masuk.`nama_barang`, `barang_masuk`.`lokasi`, barang_bermasalah.`status`, barang_bermasalah.`tanggal_bermasalah`, barang_bermasalah.`jumlah` "
+        String query = "SELECT barang_masuk.`nama_barang`, `barang_masuk`.`lokasi`, barang_bermasalah.`jenis_masalah`, barang_bermasalah.`tgl_bermasalah`, COUNT(barang_masuk.nama_barang) AS jumlah"
                 + " FROM `barang_masuk` "
                 + " INNER JOIN `barang_bermasalah` "
-                + " ON `barang_masuk`.`id_barang_masuk` = `barang_bermasalah`.`id_barang_masuk`";
+                + " ON `barang_masuk`.`id_barang` = `barang_bermasalah`.`id_barang`";
         if (search) {
             query += " WHERE ";
             int i = 1;
@@ -296,13 +300,14 @@ private void readData(boolean search, String orderBy, String ascDesc, Map<String
         try {
             Connection conn = MySqlConnection.getConnection();
             Statement statement = conn.createStatement();
+            System.out.println(query);
             result = statement.executeQuery(query);
             int no = 1;
             while (result.next()) {
                 String namaBarang = result.getString("nama_barang");
+                String status = result.getString("jenis_masalah");
                 String lokasiBarang = result.getString("lokasi");
-                String status = result.getString("status");
-                String tanggalBermasalah = result.getString("tanggal_bermasalah");
+                String tanggalBermasalah = result.getString("tgl_bermasalah");
                 String jumlah = result.getString("jumlah");
                 defaultTableModel.addRow(new String[]{namaBarang, lokasiBarang, status, tanggalBermasalah, jumlah});
             }
