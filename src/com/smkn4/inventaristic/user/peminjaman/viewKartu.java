@@ -246,21 +246,52 @@ public class viewKartu extends javax.swing.JFrame {
         });
     }
     public void scan(){
-        if(txt_barcode.getText().length() == 10){
+//        if(txt_barcode.getText().length() == 10){
             String nis = txt_barcode.getText();
             txt_barcode.setText("");
             showIdentitas(nis);
             lblNotif.setText("Scan QR Barang");
             txt_barcode.setFocusable(false);
             txt_barang.setFocusable(true);
+//        }
+    }
+
+   //start belum kepake
+    String[] semuaBarang;
+    public String[] cariBarangSama(String idBarang) {
+        int max = tbl_pinjam.getRowCount();
+        TableModel model = tbl_pinjam.getModel();
+        String barangAda;
+        for (int i = 0; i < max; i++){
+            if(tbl_pinjam.getRowCount() > 0){
+                barangAda = model.getValueAt(i,2).toString();
+                semuaBarang[i] = barangAda;
+            }
         }
+        return semuaBarang;
     }
     
+    public void cekBarang(String idBarang) {
+        String[] Barang = cariBarangSama(idBarang);
+        if(Barang == null) {
+            showBarang(idBarang);
+        }else {
+            for(String i : Barang){
+                if(idBarang != i) {
+                    showBarang(idBarang);
+                }
+            }
+        }
+    }
+    //end belum kepake
+    
     public void scanBarang(){
-        if(txt_barang.getText() != ""){
+        if(txt_barang.getText().length() == 12){
             String id_barang = txt_barang.getText();
             txt_barang.setText("");
             showBarang(id_barang);
+//            cekBarang(id_barang);
+            System.out.println(id_barang);
         }
     }
     
