@@ -33,7 +33,7 @@ public class RekapBarangBermasalah extends javax.swing.JFrame {
     DefaultTableModel dtm;
     
     public void showData() {
-        String[] kolom = {"No", "ID Barang Bermasalah", "ID Barang", "Tanggal", "Jumlah", "Keterangan"};
+        String[] kolom = {"No", "ID Barang Bermasalah", "ID Barang", "Tanggal", "Deskripsi", "Jenis"};
 
         dtm = new DefaultTableModel(null, kolom);
         JTableHeader header = tbl_bermasalah.getTableHeader();
@@ -48,20 +48,25 @@ public class RekapBarangBermasalah extends javax.swing.JFrame {
             System.out.println("" +query);
             int no = 1;
             while (rs.next()) {
-                String id_barang_bermasalah = rs.getString("id_barang_bermasalah");
+                String id_barang_masalah = rs.getString("id_barang_masalah");
                 String id_barang = rs.getString("id_barang");
-                String tanggal_bermasalah = rs.getString("tanggal_bermasalah");
-                String jumlah = rs.getString("jumlah");
-                String ket = rs.getString("ket");
+                String tgl_bermasalah = rs.getString("tgl_bermasalah");
+                String deskripsi = rs.getString("deskripsi");
+                String jenis_masalah = rs.getString("jenis_masalah");
 
-                dtm.addRow(new String[]{no + "", id_barang_bermasalah, id_barang, tanggal_bermasalah, jumlah, ket});
+                dtm.addRow(new String[]{no + "", id_barang_masalah, id_barang, tgl_bermasalah, deskripsi, jenis_masalah});
                 no++;
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         tbl_bermasalah.setModel(dtm);    
-        tbl_bermasalah.getColumnModel().getColumn(2).setPreferredWidth(150);
+        tbl_bermasalah.getColumnModel().getColumn(0).setPreferredWidth(10);
+        tbl_bermasalah.getColumnModel().getColumn(1).setPreferredWidth(80);
+        tbl_bermasalah.getColumnModel().getColumn(2).setPreferredWidth(20);
+        tbl_bermasalah.getColumnModel().getColumn(3).setPreferredWidth(80);
+        tbl_bermasalah.getColumnModel().getColumn(4).setPreferredWidth(20);
+        tbl_bermasalah.getColumnModel().getColumn(5).setPreferredWidth(20);
 //        count.setText("" + tbl_rekap.getRowCount());
     }
 
@@ -113,20 +118,19 @@ public class RekapBarangBermasalah extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 735, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(Print, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(169, 169, 169))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Print, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 674, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,12 +138,12 @@ public class RekapBarangBermasalah extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addComponent(jLabel1)
                 .addGap(50, 50, 50)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Print)
                     .addComponent(jButton2))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pack();
@@ -147,7 +151,7 @@ public class RekapBarangBermasalah extends javax.swing.JFrame {
 
     private void PrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrintActionPerformed
         MessageFormat title = new MessageFormat("Laporan Data Barang Bermasalah");
-        MessageFormat footer = new MessageFormat("page(0,number,integer)");
+        MessageFormat footer = new MessageFormat("SMKN 4 Bandung - Inventaris App");
         
         try {
             tbl_bermasalah.print(JTable.PrintMode.NORMAL, title, footer);
