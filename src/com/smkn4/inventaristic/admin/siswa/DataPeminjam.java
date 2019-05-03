@@ -9,18 +9,15 @@ package com.smkn4.inventaristic.admin.siswa;
  *
  * @author Tan
  */
-import com.smkn4.inventaristic.util.MySqlConnection;
 import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
+//import java.text.SimpleDateFormat;
+import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import com.smkn4.inventaristic.util.MySqlConnection;
 
 public class DataPeminjam extends javax.swing.JFrame {
 
@@ -37,27 +34,112 @@ public class DataPeminjam extends javax.swing.JFrame {
         readData();
     }
     
-    DefaultTableModel  dtm;
-    public void readData(){
-        String[] kolomTabel = {"NIS", "Nama", "Tanggal Lahir","Jenis Kelamin", "Kelas", "Jurusan", "Tahun Ajaran", "Sanksi"};
+    
+    private void readData() {
+        String[] kolomTabel = {"NIS", "Nama","Tanggal Lahir", "Jenis Kelamin", "Kelas", "Jurusan", "Tahun Ajaran"};
         defaultTableModel   = new DefaultTableModel(null, kolomTabel);
         try {
             connection      = MySqlConnection.getConnection();
             preStatement    = connection.prepareStatement("SELECT * FROM siswa");
             result          = preStatement.executeQuery();
             while(result.next()){
+                String nis = result.getString("nis");
+                String nama = result.getString("nama_siswa");
+                String tanggal_lahir = result.getDate("tgl_lahir").toString();
+                String jenis_kelamin = result.getString("jenkel");
+                String kelas = result.getString("kelas");
+                String jurusan = result.getString("jurusan");
+                String tahun_ajaran = result.getString("thn_ajaran");
+
+                defaultTableModel.addRow(new String[]{nis,nama,tanggal_lahir,jenis_kelamin,kelas,jurusan,tahun_ajaran});
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Ada Kesalahan Query");
+        }finally{
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        tabel_peminjam.setModel(defaultTableModel);
+        initTableColumn();
+        
+        ButtonGroup jenkel = new ButtonGroup();
+        jenkel.add(fLaki);
+        jenkel.add(fPerempuan);
+        jenkel.add(fNone);
+        
+    }
+    
+     private void filterData(){
+         
+        String kelass = null;
+        String jk = "";
+        
+        if (fKelas.getSelectedItem() == "X"){
+            kelass = "%X-%";
+        }else if (fKelas.getSelectedItem() == "XI"){
+            kelass = "%XI-%";
+        }else if (fKelas.getSelectedItem() == "XII"){
+            kelass = "%XII-%";
+        }else if (fKelas.getSelectedItem() == "Default"){
+            kelass = "%%";
+        }
+        String jur = "";
+        if (fJurusan.getSelectedItem() == "RPL"){
+            jur = "%Rekayasa%";
+        }else if (fJurusan.getSelectedItem() == "TKJ"){
+            jur = "%Komputer%";
+        } else if (fJurusan.getSelectedItem() == "MM"){
+            jur = "%Multi%";
+        } else if (fJurusan.getSelectedItem() == "TOI"){
+            jur = "%Otomasi%";
+        } else if (fJurusan.getSelectedItem() == "TITL"){
+            jur = "%Listrik%";
+        } else if (fJurusan.getSelectedItem() == "TEAV"){
+            jur = "%Audio%";
+        } else if (fJurusan.getSelectedItem() == "Default"){
+            jur = "%%";
+        }
+        
+        if(fLaki.isSelected()) {
+            jk = "L";
+        }else if (fPerempuan.isSelected()) {
+            jk = "P";
+        }else if (fNone.isSelected()){
+            jk = "%%";
+        }
+        
+        
+        String[] kolomTabel = {"NIS", "Nama","Tanggal Lahir", "Jenis Kelamin", "Kelas", "Jurusan", "Tahun Ajaran"};
+        defaultTableModel   = new DefaultTableModel(null, kolomTabel);
+        try {
+            connection      = MySqlConnection.getConnection();
+            
+            String us1="";
+            if(usia_cmb.getSelectedItem()=="Default"){
+                 us1="";
+            }else if(usia_cmb.getSelectedItem()=="Termuda"){
+                 us1=" ORDER BY tgl_lahir DESC ";   
+            }else if(usia_cmb.getSelectedItem()=="Tertua"){
+                 us1=" ORDER BY tgl_lahir ASC ";   
+            }
+            preStatement    = connection.prepareStatement("SELECT * FROM siswa WHERE kelas LIKE '"+kelass+"'AND jenkel LIKE" + "'%"+jk+"%' AND jurusan LIKE '"+jur+"'"+us1);
+            result          = preStatement.executeQuery();
+            while(result.next()){
                 String nis              = result.getString("nis");
                 String nama             = result.getString("nama_siswa");
-                String tgl_lahir        = result.getDate("tgl_lahir").toString();
-                String jenis_kelamin    = result.getString("jenkel");
-                String kelas            = result.getString("kelas"); 
-                String jurusan          = result.getString("jurusan");
-                String tahun_ajaran     = result.getString("thn_ajaran");
-                String sanksi           = result.getString("sanksi");
-                
-                
-                defaultTableModel.addRow(new String[]{nis,nama,tgl_lahir,
-                    jenis_kelamin,kelas,jurusan,tahun_ajaran,sanksi });
+                String tanggal_lahir      = result.getDate("tgl_lahir").toString();
+                String jenis_kelamin   = result.getString("jenkel");
+                String kelas       =    result.getString("kelas");
+                String jurusan        =    result.getString("jurusan");
+                String tahun_ajaran        =    result.getString("thn_ajaran");
+
+                defaultTableModel.addRow(new String[]{nis,nama,tanggal_lahir,jenis_kelamin,kelas,jurusan,tahun_ajaran});
+                System.out.println(kelas);
+                System.out.println(kelass);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -72,6 +154,7 @@ public class DataPeminjam extends javax.swing.JFrame {
         tabel_peminjam.setModel(defaultTableModel);
         initTableColumn();
     }
+    
      private void initTableColumn(){
         DefaultTableCellRenderer dtr = new DefaultTableCellRenderer(); 
         dtr.setHorizontalAlignment(JLabel.CENTER);
@@ -98,12 +181,16 @@ public class DataPeminjam extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        fJenKel = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabel_peminjam = new javax.swing.JTable();
-        tmbh = new javax.swing.JButton();
-        edit = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        fKelas = new javax.swing.JComboBox<>();
+        usia_cmb = new javax.swing.JComboBox<>();
+        fJurusan = new javax.swing.JComboBox<>();
+        fLaki = new javax.swing.JRadioButton();
+        fPerempuan = new javax.swing.JRadioButton();
+        fNone = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -118,31 +205,47 @@ public class DataPeminjam extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tabel_peminjam.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabel_peminjamMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(tabel_peminjam);
 
-        tmbh.setText("Tambah");
-        tmbh.addActionListener(new java.awt.event.ActionListener() {
+        fKelas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Default", "X", "XI", "XII" }));
+        fKelas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tmbhActionPerformed(evt);
+                fKelasActionPerformed(evt);
             }
         });
 
-        edit.setText("Edit");
-        edit.addActionListener(new java.awt.event.ActionListener() {
+        usia_cmb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Default", "Termuda", "Tertua" }));
+        usia_cmb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editActionPerformed(evt);
+                usia_cmbActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Refresh");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        fJurusan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Default", "RPL", "TKJ", "MM", "TITL", "TOI", "TEAV" }));
+        fJurusan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                fJurusanActionPerformed(evt);
+            }
+        });
+
+        fLaki.setText("Laki-Laki");
+        fLaki.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fLakiActionPerformed(evt);
+            }
+        });
+
+        fPerempuan.setText("Perempuan");
+        fPerempuan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fPerempuanActionPerformed(evt);
+            }
+        });
+
+        fNone.setText("None");
+        fNone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fNoneActionPerformed(evt);
             }
         });
 
@@ -152,73 +255,79 @@ public class DataPeminjam extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 930, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(tmbh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(edit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jButton1))
-                .addGap(25, 25, 25))
+                        .addComponent(fKelas, 0, 81, Short.MAX_VALUE)
+                        .addComponent(usia_cmb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(fJurusan, javax.swing.GroupLayout.Alignment.TRAILING, 0, 81, Short.MAX_VALUE))
+                    .addComponent(fLaki)
+                    .addComponent(fPerempuan)
+                    .addComponent(fNone))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(tmbh)
-                        .addGap(18, 18, 18)
-                        .addComponent(edit)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1)))
-                .addContainerGap(153, Short.MAX_VALUE))
+                .addGap(0, 25, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(87, 87, 87)
+                .addComponent(fKelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fJurusan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(usia_cmb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(fLaki)
+                .addGap(18, 18, 18)
+                .addComponent(fPerempuan)
+                .addGap(18, 18, 18)
+                .addComponent(fNone)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    int baris;
-    
-    private void tmbhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tmbhActionPerformed
-        ManageEdit tambahData = new ManageEdit(this,true,"tambah","");
-        tambahData.setVisible(true);
-    }//GEN-LAST:event_tmbhActionPerformed
-
-    private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
-        String NIS = (String) tabel_peminjam.getValueAt(baris, 0);
-        ManageEdit tambahData = new ManageEdit(this,true,"Edit",NIS);
-        tambahData.setVisible(true);
+    private void fKelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fKelasActionPerformed
+        // TODO add your handling code here:
+      filterData();
         
-    }//GEN-LAST:event_editActionPerformed
+    }//GEN-LAST:event_fKelasActionPerformed
 
-    private void tabel_peminjamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_peminjamMouseClicked
-        // TODO add your handling code here:
-        baris = tabel_peminjam.getSelectedRow();
-    }//GEN-LAST:event_tabel_peminjamMouseClicked
+    private void usia_cmbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usia_cmbActionPerformed
+    filterData();
+// TODO add your handling code here:
+    }//GEN-LAST:event_usia_cmbActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-         readData();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void fJurusanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fJurusanActionPerformed
+        filterData();
+    }//GEN-LAST:event_fJurusanActionPerformed
+
+    private void fLakiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fLakiActionPerformed
+        filterData();
+    }//GEN-LAST:event_fLakiActionPerformed
+
+    private void fPerempuanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fPerempuanActionPerformed
+        filterData();
+    }//GEN-LAST:event_fPerempuanActionPerformed
+
+    private void fNoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fNoneActionPerformed
+        filterData();
+    }//GEN-LAST:event_fNoneActionPerformed
 
     /**
      * @param args the command line arguments
@@ -246,7 +355,6 @@ public class DataPeminjam extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(DataPeminjam.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -255,14 +363,17 @@ public class DataPeminjam extends javax.swing.JFrame {
             }
         });
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton edit;
-    private javax.swing.JButton jButton1;
+    private javax.swing.ButtonGroup fJenKel;
+    private javax.swing.JComboBox<String> fJurusan;
+    private javax.swing.JComboBox<String> fKelas;
+    private javax.swing.JRadioButton fLaki;
+    private javax.swing.JRadioButton fNone;
+    private javax.swing.JRadioButton fPerempuan;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabel_peminjam;
-    private javax.swing.JButton tmbh;
+    private javax.swing.JComboBox<String> usia_cmb;
     // End of variables declaration//GEN-END:variables
-
-    
 }

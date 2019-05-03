@@ -8,13 +8,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Date;
 import javax.swing.JOptionPane;
-import customDateFormatter.CustomDateFormatter;
 import com.smkn4.inventaristic.util.MySqlConnection;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import com.smkn4.inventaristic.util.barcode.BarcodeGen;
+import java.util.Calendar;
+import org.apache.commons.lang3.time.DateFormatUtils;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -76,6 +74,8 @@ public class ManageDataStok extends javax.swing.JDialog {
         btnSimpan = new javax.swing.JButton();
         rdJangkaPanjang = new javax.swing.JRadioButton();
         rdJangkaPendek = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -121,7 +121,7 @@ public class ManageDataStok extends javax.swing.JDialog {
         });
 
         btnJenis.add(rdJangkaPanjang);
-        rdJangkaPanjang.setText("Barang Jangka Panjang");
+        rdJangkaPanjang.setText("Jangka Panjang");
         rdJangkaPanjang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rdJangkaPanjangActionPerformed(evt);
@@ -129,7 +129,17 @@ public class ManageDataStok extends javax.swing.JDialog {
         });
 
         btnJenis.add(rdJangkaPendek);
-        rdJangkaPendek.setText("Barang Jangka Pendek");
+        rdJangkaPendek.setText("Jangka Pendek");
+
+        jLabel1.setText("SMKN4BDG-");
+
+        jCheckBox1.setSelected(true);
+        jCheckBox1.setText("Generate Barcode");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -139,37 +149,39 @@ public class ManageDataStok extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(lblLokasi)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtLokasi, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jCheckBox1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSimpan))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lblStatus)
+                                .addGap(40, 40, 40))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lblNamaBarang)
+                                .addGap(6, 6, 6))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblStatus)
-                                            .addComponent(lblJenisBarang))
-                                        .addGap(10, 10, 10))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(lblNamaBarang)
-                                        .addGap(6, 6, 6))
-                                    .addComponent(lblIDBarang))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(rdJangkaPanjang)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(rdJangkaPendek))
-                                    .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(3, 3, 3)
-                                    .addComponent(txtNamaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(txtIdBarang, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblLokasi)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblIDBarang)
+                                    .addComponent(lblJenisBarang))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnSimpan)
-                            .addComponent(txtLokasi, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(rdJangkaPanjang)
+                                .addGap(18, 18, 18)
+                                .addComponent(rdJangkaPendek))
+                            .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtIdBarang))
+                                .addComponent(txtNamaBarang, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,17 +189,21 @@ public class ManageDataStok extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblIDBarang)
-                            .addComponent(txtIdBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblIDBarang)
                         .addGap(18, 18, 18)
                         .addComponent(lblNamaBarang))
-                    .addComponent(txtNamaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtIdBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNamaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblJenisBarang)
                     .addComponent(rdJangkaPanjang)
-                    .addComponent(rdJangkaPendek))
+                    .addComponent(rdJangkaPendek)
+                    .addComponent(lblJenisBarang))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(8, 8, 8)
@@ -199,9 +215,11 @@ public class ManageDataStok extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtLokasi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblLokasi))
-                .addGap(18, 18, 18)
-                .addComponent(btnSimpan)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSimpan)
+                    .addComponent(jCheckBox1))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
@@ -232,39 +250,45 @@ public class ManageDataStok extends javax.swing.JDialog {
         else simpanData();
         this.dispose();
     }//GEN-LAST:event_btnSimpanActionPerformed
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
     public String getTanggal() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = new Date();
-        return dateFormat.format(date);
+        return DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss");
     }
     public void simpanData(){
-        String idBarang = txtIdBarang.getText();
+        String idBarang = "SMKN4BDG-" + txtIdBarang.getText();
         String namaBarang = txtNamaBarang.getText();
         String jenisBarang = null;
-        if(rdJangkaPanjang.isSelected()){
+        if(rdJangkaPanjang.isSelected()) {
             jenisBarang = "Barang Jangka Panjang";
-        } else if(rdJangkaPendek.isSelected()){
+        } else if(rdJangkaPendek.isSelected()) {
             jenisBarang = "Barang Jangka Pendek";
         }
         String tgl_masuk = getTanggal();
         String status = txtStatus.getText();
         String lokasi = txtLokasi.getText();
-                try {
-                    Statement stmt = koneksi.createStatement();
-                    String query = "INSERT INTO barang_masuk(id_barang, nama_barang, jenis_barang, tgl_masuk, kondisi, lokasi) " +
-                        "VALUES('"+idBarang+"','"+namaBarang+"','"+jenisBarang+"','"+tgl_masuk+"','"+status+"','"+lokasi+"')";
-                    System.out.println(query);
-            
-                    int berhasil = stmt.executeUpdate(query);
-                    if (berhasil == 1){
+        try {
+            Statement stmt = koneksi.createStatement();
+            String query = "INSERT INTO barang_masuk(id_barang, nama_barang, jenis_barang, tgl_masuk, kondisi, lokasi) " +
+                "VALUES('"+idBarang+"','"+namaBarang+"','"+jenisBarang+"','"+tgl_masuk+"','"+status+"','"+lokasi+"')";
+            System.out.println(query);
+
+            int berhasil = stmt.executeUpdate(query);
+            if (berhasil == 1){
+                if (BarcodeGen.generate(idBarang)) {
+                    JOptionPane.showMessageDialog(null, "-Data Berhasil Dimasukkan\n-Barcode telah di generate");
+                } else {
                     JOptionPane.showMessageDialog(null, "Data Berhasil Dimasukkan");
-                    }else{
-                    JOptionPane.showMessageDialog(null, "Data Gagal Dimasukkan");
-                    }
-                } catch (SQLException ex){
-                    ex.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "Terjadi Kesalahan Pada Database");
                 }
+            }else{
+                JOptionPane.showMessageDialog(null, "Data Gagal Dimasukkan");
+            }
+        } catch (SQLException ex){
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Terjadi Kesalahan Pada Database");
+        }
     }
     
     public void editData(){
@@ -353,6 +377,8 @@ public class ManageDataStok extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup btnJenis;
     private javax.swing.JButton btnSimpan;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblIDBarang;
     private javax.swing.JLabel lblJenisBarang;
     private javax.swing.JLabel lblLokasi;
