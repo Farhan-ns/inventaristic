@@ -34,7 +34,6 @@ public class DataPeminjam extends javax.swing.JFrame {
         readData();
     }
     
-    
     private void readData() {
         String[] kolomTabel = {"NIS", "Nama","Tanggal Lahir", "Jenis Kelamin", "Kelas", "Jurusan", "Tahun Ajaran"};
         defaultTableModel   = new DefaultTableModel(null, kolomTabel);
