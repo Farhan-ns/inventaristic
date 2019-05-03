@@ -324,6 +324,8 @@ public class ManageEdit extends javax.swing.JDialog {
         }catch (SQLException e){
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Terjadi kesalahan di Database");
+        } catch (ParseException ex) {
+            Logger.getLogger(ManageEdit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     /**
