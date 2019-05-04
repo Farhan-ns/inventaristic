@@ -60,7 +60,7 @@ public class BarcodeGen {
         try {
             OutputStream out = new FileOutputStream(outputFile);
             BitmapCanvasProvider canvas = new BitmapCanvasProvider(out, "image/x-png", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
-            bean.generateBarcode(canvas, "SMKN4BDG-" + text);
+            bean.generateBarcode(canvas,text);
             canvas.finish();
             out.close();
             success = true;

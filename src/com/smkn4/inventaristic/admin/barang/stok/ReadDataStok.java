@@ -1,6 +1,7 @@
 
 package com.smkn4.inventaristic.admin.barang.stok;
 
+import com.smkn4.inventaristic.util.EnumParser;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.Connection;
@@ -203,6 +204,7 @@ public class ReadDataStok extends javax.swing.JFrame {
                 String idBarang = rs.getString("id_barang");
                 String namaBarang = rs.getString("nama_barang");
                 String jenisBarang = rs.getString("jenis_barang");
+                jenisBarang = EnumParser.format(jenisBarang);
                 Date tgl_masuk = rs.getDate("tgl_masuk");
                 try {
                     String tanggalMasuk = DateFormatUtils.format(tgl_masuk, "dd-MM-yyy");

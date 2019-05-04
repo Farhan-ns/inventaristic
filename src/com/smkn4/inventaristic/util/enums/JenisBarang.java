@@ -8,7 +8,8 @@ package com.smkn4.inventaristic.util.enums;
 /**
  *
  * @author Farhanunnasih
- */
+ */ 
+
 public enum JenisBarang {
-    JANGKA_PANJANG, JANGKA_PENDEK;
+    ASET, HABIS_PAKAI;
 }

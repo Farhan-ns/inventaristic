@@ -56,4 +56,15 @@ public class EnumParser {
         kalimat = kalimat.replace("_", " ");
         return WordUtils.capitalizeFully(kalimat);
     }
+    
+    /**
+     * Mem-format sebuah enum untuk di simpan ke database
+     * @param kalimat
+     * @return 
+     */
+    public static String dbFormat(Enum str) {
+        String kalimat = str.toString();
+        kalimat = kalimat.replace(" ", "_");
+        return kalimat.toLowerCase();
+    }
 }

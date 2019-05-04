@@ -2,7 +2,7 @@
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <NonVisualComponents>
-    <Component class="javax.swing.ButtonGroup" name="btnJenis">
+    <Component class="javax.swing.ButtonGroup" name="groupBtnJenis">
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -31,16 +31,6 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="lblLokasi" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="txtLokasi" min="-2" pref="168" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btnSimpan" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="lblStatus" min="-2" max="-2" attributes="0"/>
@@ -50,7 +40,7 @@
                               <Component id="lblNamaBarang" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lblIDBarang" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblJenisBarang" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -60,9 +50,9 @@
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="rdJangkaPanjang" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="rdJangkaPendek" min="-2" max="-2" attributes="0"/>
+                              <Component id="rdbAset" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="rdbHabis" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="txtStatus" min="-2" pref="167" max="-2" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
@@ -73,6 +63,18 @@
                               </Group>
                               <Component id="txtNamaBarang" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
                           </Group>
+                      </Group>
+                  </Group>
+                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="btnSimpan" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="lblLokasi" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="txtLokasi" min="-2" pref="168" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -102,8 +104,8 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="rdJangkaPanjang" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="rdJangkaPendek" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="rdbAset" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="rdbHabis" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblJenisBarang" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -185,23 +187,23 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSimpanActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="rdJangkaPanjang">
+    <Component class="javax.swing.JRadioButton" name="rdbAset">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="btnJenis"/>
+          <ComponentRef name="groupBtnJenis"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Jangka Panjang"/>
+        <Property name="text" type="java.lang.String" value="Aset"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rdJangkaPanjangActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rdbAsetActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="rdJangkaPendek">
+    <Component class="javax.swing.JRadioButton" name="rdbHabis">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="btnJenis"/>
+          <ComponentRef name="groupBtnJenis"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Jangka Pendek"/>
+        <Property name="text" type="java.lang.String" value="Habis Pakai"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">

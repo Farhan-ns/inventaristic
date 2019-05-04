@@ -1,6 +1,7 @@
 
 package com.smkn4.inventaristic.admin.barang.stok;
 
+import com.smkn4.inventaristic.util.EnumParser;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import static java.lang.Boolean.TRUE;
@@ -11,6 +12,7 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 import com.smkn4.inventaristic.util.MySqlConnection;
 import com.smkn4.inventaristic.util.barcode.BarcodeGen;
+import com.smkn4.inventaristic.util.enums.JenisBarang;
 import java.util.Calendar;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
@@ -61,7 +63,7 @@ public class ManageDataStok extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnJenis = new javax.swing.ButtonGroup();
+        groupBtnJenis = new javax.swing.ButtonGroup();
         txtIdBarang = new javax.swing.JTextField();
         lblIDBarang = new javax.swing.JLabel();
         lblNamaBarang = new javax.swing.JLabel();
@@ -72,8 +74,8 @@ public class ManageDataStok extends javax.swing.JDialog {
         lblLokasi = new javax.swing.JLabel();
         txtLokasi = new javax.swing.JTextField();
         btnSimpan = new javax.swing.JButton();
-        rdJangkaPanjang = new javax.swing.JRadioButton();
-        rdJangkaPendek = new javax.swing.JRadioButton();
+        rdbAset = new javax.swing.JRadioButton();
+        rdbHabis = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
 
@@ -120,16 +122,16 @@ public class ManageDataStok extends javax.swing.JDialog {
             }
         });
 
-        btnJenis.add(rdJangkaPanjang);
-        rdJangkaPanjang.setText("Jangka Panjang");
-        rdJangkaPanjang.addActionListener(new java.awt.event.ActionListener() {
+        groupBtnJenis.add(rdbAset);
+        rdbAset.setText("Aset");
+        rdbAset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdJangkaPanjangActionPerformed(evt);
+                rdbAsetActionPerformed(evt);
             }
         });
 
-        btnJenis.add(rdJangkaPendek);
-        rdJangkaPendek.setText("Jangka Pendek");
+        groupBtnJenis.add(rdbHabis);
+        rdbHabis.setText("Habis Pakai");
 
         jLabel1.setText("SMKN4BDG-");
 
@@ -149,14 +151,6 @@ public class ManageDataStok extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblLokasi)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtLokasi, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jCheckBox1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSimpan))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(lblStatus)
@@ -171,16 +165,25 @@ public class ManageDataStok extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(rdJangkaPanjang)
-                                .addGap(18, 18, 18)
-                                .addComponent(rdJangkaPendek))
+                                .addComponent(rdbAset)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(rdbHabis))
                             .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                     .addComponent(jLabel1)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(txtIdBarang))
-                                .addComponent(txtNamaBarang, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txtNamaBarang, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(jCheckBox1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSimpan))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(lblLokasi)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtLokasi, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -201,8 +204,8 @@ public class ManageDataStok extends javax.swing.JDialog {
                         .addGap(5, 5, 5)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rdJangkaPanjang)
-                    .addComponent(rdJangkaPendek)
+                    .addComponent(rdbAset)
+                    .addComponent(rdbHabis)
                     .addComponent(lblJenisBarang))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -241,9 +244,9 @@ public class ManageDataStok extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLokasiActionPerformed
 
-    private void rdJangkaPanjangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdJangkaPanjangActionPerformed
+    private void rdbAsetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbAsetActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_rdJangkaPanjangActionPerformed
+    }//GEN-LAST:event_rdbAsetActionPerformed
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
        if(action.equals("Edit")) editData();
@@ -258,14 +261,9 @@ public class ManageDataStok extends javax.swing.JDialog {
         return DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss");
     }
     public void simpanData(){
-        String idBarang = "SMKN4BDG-" + txtIdBarang.getText();
+        String idBarang = txtIdBarang.getText();
         String namaBarang = txtNamaBarang.getText();
-        String jenisBarang = null;
-        if(rdJangkaPanjang.isSelected()) {
-            jenisBarang = "Barang Jangka Panjang";
-        } else if(rdJangkaPendek.isSelected()) {
-            jenisBarang = "Barang Jangka Pendek";
-        }
+        String jenisBarang = (rdbAset.isSelected()) ? EnumParser.dbFormat(JenisBarang.ASET) : EnumParser.dbFormat(JenisBarang.HABIS_PAKAI);
         String tgl_masuk = getTanggal();
         String status = txtStatus.getText();
         String lokasi = txtLokasi.getText();
@@ -274,10 +272,9 @@ public class ManageDataStok extends javax.swing.JDialog {
             String query = "INSERT INTO barang_masuk(id_barang, nama_barang, jenis_barang, tgl_masuk, kondisi, lokasi) " +
                 "VALUES('"+idBarang+"','"+namaBarang+"','"+jenisBarang+"','"+tgl_masuk+"','"+status+"','"+lokasi+"')";
             System.out.println(query);
-
             int berhasil = stmt.executeUpdate(query);
             if (berhasil == 1){
-                if (BarcodeGen.generate(idBarang)) {
+                if (BarcodeGen.generate("SMKN4BDG-" + idBarang)) {
                     JOptionPane.showMessageDialog(null, "-Data Berhasil Dimasukkan\n-Barcode telah di generate");
                 } else {
                     JOptionPane.showMessageDialog(null, "Data Berhasil Dimasukkan");
@@ -294,12 +291,7 @@ public class ManageDataStok extends javax.swing.JDialog {
     public void editData(){
         String idBarang = txtIdBarang.getText();
         String namaBarang = txtNamaBarang.getText();
-        String jenisBarang = null;
-        if(rdJangkaPanjang.isSelected()){
-            jenisBarang = "Barang Jangka Panjang";
-        } else if(rdJangkaPendek.isSelected()){
-            jenisBarang = "Barang Jangka Pendek";
-        }
+        String jenisBarang = groupBtnJenis.getSelection().getActionCommand();
         String tgl_masuk = getTanggal();
         String status = txtStatus.getText();
         String lokasi = txtLokasi.getText();
@@ -327,10 +319,11 @@ public class ManageDataStok extends javax.swing.JDialog {
             rs.next();
             txtIdBarang.setText(rs.getString("id_barang"));
             txtNamaBarang.setText(rs.getString("nama_barang"));
-            if ("Barang Jangka Panjang".equals(rs.getString("jenis_barang"))) {
-                rdJangkaPanjang.setSelected(TRUE);
-            }else if ("Barang Jangka Pendek".equals(rs.getString("jenis_barang"))) {
-                rdJangkaPendek.setSelected(TRUE);
+            String jenisBarang = rs.getString("jenis_barang");
+            if ("Aset".equals(jenisBarang)) {
+                rdbAset.setSelected(true);
+            }else if ("Habis Pakai".equals(jenisBarang)) {
+                rdbHabis.setSelected(true);
             }
             txtStatus.setText(rs.getString("kondisi"));
             txtLokasi.setText(rs.getString("lokasi"));
@@ -375,8 +368,8 @@ public class ManageDataStok extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup btnJenis;
     private javax.swing.JButton btnSimpan;
+    private javax.swing.ButtonGroup groupBtnJenis;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblIDBarang;
@@ -384,8 +377,8 @@ public class ManageDataStok extends javax.swing.JDialog {
     private javax.swing.JLabel lblLokasi;
     private javax.swing.JLabel lblNamaBarang;
     private javax.swing.JLabel lblStatus;
-    private javax.swing.JRadioButton rdJangkaPanjang;
-    private javax.swing.JRadioButton rdJangkaPendek;
+    private javax.swing.JRadioButton rdbAset;
+    private javax.swing.JRadioButton rdbHabis;
     private javax.swing.JTextField txtIdBarang;
     private javax.swing.JTextField txtLokasi;
     private javax.swing.JTextField txtNamaBarang;
