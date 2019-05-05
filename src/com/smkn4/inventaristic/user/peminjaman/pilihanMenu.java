@@ -12,13 +12,13 @@ import java.awt.Toolkit;
  *
  * @author COMPUTER
  */
-public class mainMenu extends javax.swing.JFrame {
+public class pilihanMenu extends javax.swing.JFrame {
 
     /**
      * Creates new form mainMenu
      */
     
-    public mainMenu() {
+    public pilihanMenu() {
         initComponents();
         //mengambil ukuran layar
         Dimension layar = Toolkit.getDefaultToolkit().getScreenSize();
@@ -41,8 +41,8 @@ public class mainMenu extends javax.swing.JFrame {
 
         pinjam = new javax.swing.JPanel();
         pinjamBarang = new javax.swing.JLabel();
-        kembali = new javax.swing.JPanel();
-        kembaliBarang = new javax.swing.JLabel();
+        minta = new javax.swing.JPanel();
+        mintaBarang = new javax.swing.JLabel();
         lblNotif1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -75,31 +75,31 @@ public class mainMenu extends javax.swing.JFrame {
                 .addGap(41, 41, 41))
         );
 
-        kembali.setBackground(new java.awt.Color(153, 153, 153));
-        kembali.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        kembali.addMouseListener(new java.awt.event.MouseAdapter() {
+        minta.setBackground(new java.awt.Color(153, 153, 153));
+        minta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        minta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                kembaliMouseClicked(evt);
+                mintaMouseClicked(evt);
             }
         });
 
-        kembaliBarang.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        kembaliBarang.setText("Pengembalian");
+        mintaBarang.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        mintaBarang.setText("Permintaan");
 
-        javax.swing.GroupLayout kembaliLayout = new javax.swing.GroupLayout(kembali);
-        kembali.setLayout(kembaliLayout);
-        kembaliLayout.setHorizontalGroup(
-            kembaliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kembaliLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(kembaliBarang)
+        javax.swing.GroupLayout mintaLayout = new javax.swing.GroupLayout(minta);
+        minta.setLayout(mintaLayout);
+        mintaLayout.setHorizontalGroup(
+            mintaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mintaLayout.createSequentialGroup()
+                .addContainerGap(26, Short.MAX_VALUE)
+                .addComponent(mintaBarang)
                 .addContainerGap())
         );
-        kembaliLayout.setVerticalGroup(
-            kembaliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kembaliLayout.createSequentialGroup()
+        mintaLayout.setVerticalGroup(
+            mintaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mintaLayout.createSequentialGroup()
                 .addContainerGap(43, Short.MAX_VALUE)
-                .addComponent(kembaliBarang)
+                .addComponent(mintaBarang)
                 .addGap(41, 41, 41))
         );
 
@@ -111,40 +111,44 @@ public class mainMenu extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(53, 53, 53)
+                .addGap(44, 44, 44)
                 .addComponent(pinjam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                .addComponent(kembali, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addComponent(minta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(168, 168, 168)
                 .addComponent(lblNotif1)
-                .addGap(171, 171, 171))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(36, Short.MAX_VALUE)
+                .addContainerGap(35, Short.MAX_VALUE)
                 .addComponent(lblNotif1)
-                .addGap(18, 18, 18)
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(kembali, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pinjam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(63, 63, 63))
+                    .addComponent(pinjam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(minta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(102, 102, 102))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void pinjamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pinjamMouseClicked
-        viewKartu pinjam = new viewKartu();
-        pinjam.setVisible(true);
+        scanKartu scan = new scanKartu();
+        scan.act = "pinjam";
+        scan.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_pinjamMouseClicked
 
-    private void kembaliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_kembaliMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_kembaliMouseClicked
+    private void mintaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mintaMouseClicked
+        scanKartu scan = new scanKartu();
+        scan.act = "minta";
+        scan.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_mintaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -163,33 +167,36 @@ public class mainMenu extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(mainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pilihanMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(mainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pilihanMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(mainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pilihanMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(mainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pilihanMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new mainMenu().setVisible(true);
+                new pilihanMenu().setVisible(true);
             }
         });
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel kembali;
-    private javax.swing.JLabel kembaliBarang;
     private javax.swing.JLabel lblNotif1;
+    private javax.swing.JPanel minta;
+    private javax.swing.JLabel mintaBarang;
     private javax.swing.JPanel pinjam;
-    private javax.swing.JPanel pinjam1;
-    private javax.swing.JPanel pinjam2;
-    private javax.swing.JPanel pinjam3;
     private javax.swing.JLabel pinjamBarang;
     // End of variables declaration//GEN-END:variables
 }

@@ -14,12 +14,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -28,19 +24,17 @@ import javax.swing.table.TableModel;
  *
  * @author COMPUTER
  */
-public class viewKartu extends javax.swing.JFrame {
+public class permintaanBarang extends javax.swing.JFrame {
 
     /**
-     * Creates new form viewKartu
+     * Creates new form permintaanBarang
      */
     Connection koneksi;
     public int no = 1;
-    public viewKartu() {
+    public permintaanBarang() {
         initComponents();
         createTable();
         koneksi = MySqlConnection.getConnection();
-        txt_barcode.setForeground(new Color(0,0,0,0));
-        txt_barcode.setBackground(new Color(0,0,0,0));
         txt_barang.setForeground(new Color(0,0,0,0));
         txt_barang.setBackground(new Color(0,0,0,0));
         //mengambil ukuran layar
@@ -62,7 +56,6 @@ public class viewKartu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txt_barcode = new javax.swing.JTextField();
         txt_nis = new javax.swing.JLabel();
         txt_nama = new javax.swing.JLabel();
         txt_kelas = new javax.swing.JLabel();
@@ -72,15 +65,9 @@ public class viewKartu extends javax.swing.JFrame {
         btn_pinjam = new javax.swing.JButton();
         btn_batal = new javax.swing.JButton();
         lblNotif = new javax.swing.JLabel();
+        judul = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        txt_barcode.setBorder(null);
-        txt_barcode.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txt_barcodeKeyReleased(evt);
-            }
-        });
 
         txt_nis.setFont(new java.awt.Font("Tekton Pro", 0, 18)); // NOI18N
         txt_nis.setText("NIS");
@@ -100,10 +87,7 @@ public class viewKartu extends javax.swing.JFrame {
 
         tbl_pinjam.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "No", "Nama Barang", "Kode Barang"
@@ -127,7 +111,10 @@ public class viewKartu extends javax.swing.JFrame {
         });
 
         lblNotif.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        lblNotif.setText("Scan Kartu Pinjam");
+        lblNotif.setText("Scan Barcode Barang");
+
+        judul.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        judul.setText("Permintaan Barang");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -136,17 +123,12 @@ public class viewKartu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txt_barcode, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txt_barang, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_nama)
                             .addComponent(txt_nis)
                             .addComponent(txt_kelas))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 169, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(69, 69, 69))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -156,17 +138,21 @@ public class viewKartu extends javax.swing.JFrame {
                             .addComponent(btn_batal))
                         .addGap(18, 18, 18)
                         .addComponent(btn_pinjam)
-                        .addGap(24, 24, 24))))
+                        .addGap(24, 24, 24))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(txt_barang, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(judul)
+                        .addGap(147, 147, 147))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_barcode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_barang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(txt_barang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(42, 42, 42)
                         .addComponent(txt_nis)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -174,9 +160,11 @@ public class viewKartu extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_kelas))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
+                        .addGap(7, 7, 7)
+                        .addComponent(judul)
+                        .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                 .addComponent(lblNotif)
                 .addGap(76, 76, 76)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -188,27 +176,22 @@ public class viewKartu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txt_barcodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_barcodeKeyReleased
-       scan();
-    }//GEN-LAST:event_txt_barcodeKeyReleased
-
     private void txt_barangKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_barangKeyReleased
         scanBarang();
     }//GEN-LAST:event_txt_barangKeyReleased
 
-    private void btn_batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batalActionPerformed
-        mainMenu main = new mainMenu();
-        main.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btn_batalActionPerformed
-
     private void btn_pinjamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pinjamActionPerformed
-        createPeminjaman();
         addBarang();
-        mainMenu main = new mainMenu();
+        pilihanMenu main = new pilihanMenu();
         main.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_pinjamActionPerformed
+
+    private void btn_batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batalActionPerformed
+        pilihanMenu main = new pilihanMenu();
+        main.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_batalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -227,13 +210,13 @@ public class viewKartu extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(viewKartu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(permintaanBarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(viewKartu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(permintaanBarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(viewKartu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(permintaanBarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(viewKartu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(permintaanBarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -241,22 +224,12 @@ public class viewKartu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new viewKartu().setVisible(true);
+                new permintaanBarang().setVisible(true);
             }
         });
     }
-    public void scan(){
-//        if(txt_barcode.getText().length() == 10){
-            String nis = txt_barcode.getText();
-            txt_barcode.setText("");
-            showIdentitas(nis);
-            lblNotif.setText("Scan QR Barang");
-            txt_barcode.setFocusable(false);
-            txt_barang.setFocusable(true);
-//        }
-    }
-
-   //start belum kepake
+    
+    //start belum kepake
     String[] semuaBarang;
     public String[] cariBarangSama(String idBarang) {
         int max = tbl_pinjam.getRowCount();
@@ -286,7 +259,7 @@ public class viewKartu extends javax.swing.JFrame {
     //end belum kepake
     
     public void scanBarang(){
-        if(txt_barang.getText().length() == 12){
+       if(txt_barang.getText().length() == 12){
             String id_barang = txt_barang.getText();
             txt_barang.setText("");
             showBarang(id_barang);
@@ -344,13 +317,13 @@ public class viewKartu extends javax.swing.JFrame {
         return dateFormat.format(date);
     }
     
-    public void createPeminjaman() {
-        String tanggalPinjam = getTanggal();
+    public void createPermintaan(String idBarang) {
+        String tanggalminta = getTanggal();
         String nis = txt_nis.getText();
         try {
             Statement stmt = koneksi.createStatement();
-            String query = "INSERT INTO peminjaman(tgl_peminjaman, nis) " +
-                "VALUES('"+tanggalPinjam+"', "+"'"+nis+"')";
+            String query = "INSERT INTO permintaan(tgl_permintaan, nis, id_barang) " +
+                "VALUES('"+tanggalminta+"', "+"'"+nis+"', '"+ idBarang +"')";
             System.out.println(query);
             stmt.executeUpdate(query);
         } catch (SQLException ex){
@@ -359,43 +332,15 @@ public class viewKartu extends javax.swing.JFrame {
         }
     }
     
-    public String cariPeminjaman() {
-        String nis = txt_nis.getText();
-        String idPinjam = "";
-        try {
-            Statement stmt = koneksi.createStatement();
-            String query = "SELECT id_peminjaman FROM peminjaman WHERE nis ='"+nis+"' AND tgl_kembali IS NULL";
-            ResultSet rs = stmt.executeQuery(query);
-            rs.next();
-            idPinjam = rs.getString("id_peminjaman");
-        } catch (SQLException ex){
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Terjadi Kesalahan di Query");
-        }
-        return idPinjam;
-    }
     
     public void addBarang() {
         //ambil data dari tabel
         int max = tbl_pinjam.getRowCount();
         TableModel model = tbl_pinjam.getModel();
         String idBarang;
-        String idPinjam = cariPeminjaman();
         for (int i = 0; i < max; i++){
             idBarang = model.getValueAt(i,2).toString();
-            addRincian(idPinjam, idBarang);
-        }
-    }
-    
-    public void addRincian(String idPinjam, String idBarang) {
-        try {
-            Statement stmt = koneksi.createStatement();
-            String query = "INSERT INTO rincian(id_peminjaman, id_barang, status_barang) " +
-                "VALUES('"+idPinjam+"', "+"'"+idBarang+"', 'Dipinjam')";
-            System.out.println(query);
-            stmt.executeUpdate(query);
-        } catch (SQLException ex){
-            ex.printStackTrace();
+            createPermintaan(idBarang);
         }
     }
     
@@ -403,10 +348,10 @@ public class viewKartu extends javax.swing.JFrame {
     private javax.swing.JButton btn_batal;
     private javax.swing.JButton btn_pinjam;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel judul;
     private javax.swing.JLabel lblNotif;
     private javax.swing.JTable tbl_pinjam;
     private javax.swing.JTextField txt_barang;
-    private javax.swing.JTextField txt_barcode;
     private javax.swing.JLabel txt_kelas;
     private javax.swing.JLabel txt_nama;
     private javax.swing.JLabel txt_nis;
