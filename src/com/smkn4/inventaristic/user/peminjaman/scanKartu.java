@@ -11,7 +11,7 @@ import java.awt.Toolkit;
 
 /**
  *
- * @author COMPUTER
+ * @author Aip Ariyadi
  */
 public class scanKartu extends javax.swing.JFrame {
 
@@ -55,7 +55,7 @@ public class scanKartu extends javax.swing.JFrame {
         lblNotif1.setText("[");
 
         lblNotif2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        lblNotif2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/realBarcode/logoBarcode.png"))); // NOI18N
+        lblNotif2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/logoBarcode.png"))); // NOI18N
 
         lblNotif3.setFont(new java.awt.Font("Tahoma", 0, 150)); // NOI18N
         lblNotif3.setText("]");
@@ -125,6 +125,8 @@ public class scanKartu extends javax.swing.JFrame {
             peminjaman(nis);
         }else if(act == "minta"){
             permintaan(nis);
+        }else if(act == "kembali"){
+            pengembalian(nis);
         }
     }
     
@@ -142,6 +144,12 @@ public class scanKartu extends javax.swing.JFrame {
         this.dispose();
     }
     
+    public void pengembalian(String nis) {
+        pengembalianBarang kembali = new pengembalianBarang();
+        kembali.setVisible(true);
+        kembali.showIdentitas(nis);
+        this.dispose();
+    }
     /**
      * @param args the command line arguments
      */

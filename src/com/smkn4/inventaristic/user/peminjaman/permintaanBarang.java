@@ -22,7 +22,7 @@ import javax.swing.table.TableModel;
 
 /**
  *
- * @author COMPUTER
+ * @author Aip Ariyadi
  */
 public class permintaanBarang extends javax.swing.JFrame {
 
@@ -62,7 +62,7 @@ public class permintaanBarang extends javax.swing.JFrame {
         txt_barang = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_pinjam = new javax.swing.JTable();
-        btn_pinjam = new javax.swing.JButton();
+        btn_pintaBarang = new javax.swing.JButton();
         btn_batal = new javax.swing.JButton();
         lblNotif = new javax.swing.JLabel();
         judul = new javax.swing.JLabel();
@@ -96,10 +96,10 @@ public class permintaanBarang extends javax.swing.JFrame {
         tbl_pinjam.setEnabled(false);
         jScrollPane1.setViewportView(tbl_pinjam);
 
-        btn_pinjam.setText("Pinjam");
-        btn_pinjam.addActionListener(new java.awt.event.ActionListener() {
+        btn_pintaBarang.setText("Minta Barang");
+        btn_pintaBarang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_pinjamActionPerformed(evt);
+                btn_pintaBarangActionPerformed(evt);
             }
         });
 
@@ -137,7 +137,7 @@ public class permintaanBarang extends javax.swing.JFrame {
                             .addComponent(lblNotif)
                             .addComponent(btn_batal))
                         .addGap(18, 18, 18)
-                        .addComponent(btn_pinjam)
+                        .addComponent(btn_pintaBarang)
                         .addGap(24, 24, 24))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(8, 8, 8)
@@ -168,7 +168,7 @@ public class permintaanBarang extends javax.swing.JFrame {
                 .addComponent(lblNotif)
                 .addGap(76, 76, 76)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_pinjam)
+                    .addComponent(btn_pintaBarang)
                     .addComponent(btn_batal))
                 .addContainerGap())
         );
@@ -180,12 +180,12 @@ public class permintaanBarang extends javax.swing.JFrame {
         scanBarang();
     }//GEN-LAST:event_txt_barangKeyReleased
 
-    private void btn_pinjamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pinjamActionPerformed
+    private void btn_pintaBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pintaBarangActionPerformed
         addBarang();
         pilihanMenu main = new pilihanMenu();
         main.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btn_pinjamActionPerformed
+    }//GEN-LAST:event_btn_pintaBarangActionPerformed
 
     private void btn_batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batalActionPerformed
         pilihanMenu main = new pilihanMenu();
@@ -346,7 +346,7 @@ public class permintaanBarang extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_batal;
-    private javax.swing.JButton btn_pinjam;
+    private javax.swing.JButton btn_pintaBarang;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel judul;
     private javax.swing.JLabel lblNotif;
