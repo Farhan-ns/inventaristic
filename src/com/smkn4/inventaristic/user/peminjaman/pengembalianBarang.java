@@ -14,12 +14,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -28,14 +24,14 @@ import javax.swing.table.TableModel;
  *
  * @author Aip Ariyadi
  */
-public class peminjamanBarang extends javax.swing.JFrame {
+public class pengembalianBarang extends javax.swing.JFrame {
 
     /**
-     * Creates new form viewKartu
+     * Creates new form permintaanBarang
      */
     Connection koneksi;
     public int no = 1;
-    public peminjamanBarang() {
+    public pengembalianBarang() {
         initComponents();
         createTable();
         koneksi = MySqlConnection.getConnection();
@@ -65,8 +61,8 @@ public class peminjamanBarang extends javax.swing.JFrame {
         txt_kelas = new javax.swing.JLabel();
         txt_barang = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbl_pinjam = new javax.swing.JTable();
-        btn_pinjam = new javax.swing.JButton();
+        tbl_barang = new javax.swing.JTable();
+        btn_selesai = new javax.swing.JButton();
         btn_batal = new javax.swing.JButton();
         lblNotif = new javax.swing.JLabel();
         judul = new javax.swing.JLabel();
@@ -89,7 +85,7 @@ public class peminjamanBarang extends javax.swing.JFrame {
             }
         });
 
-        tbl_pinjam.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_barang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -97,13 +93,13 @@ public class peminjamanBarang extends javax.swing.JFrame {
                 "No", "Nama Barang", "Kode Barang"
             }
         ));
-        tbl_pinjam.setEnabled(false);
-        jScrollPane1.setViewportView(tbl_pinjam);
+        tbl_barang.setEnabled(false);
+        jScrollPane1.setViewportView(tbl_barang);
 
-        btn_pinjam.setText("Pinjam");
-        btn_pinjam.addActionListener(new java.awt.event.ActionListener() {
+        btn_selesai.setText("Selesai");
+        btn_selesai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_pinjamActionPerformed(evt);
+                btn_selesaiActionPerformed(evt);
             }
         });
 
@@ -118,7 +114,7 @@ public class peminjamanBarang extends javax.swing.JFrame {
         lblNotif.setText("Scan Barcode Barang");
 
         judul.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        judul.setText("Peminjaman Barang");
+        judul.setText("Pengembalian Barang");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -132,7 +128,7 @@ public class peminjamanBarang extends javax.swing.JFrame {
                             .addComponent(txt_nama)
                             .addComponent(txt_nis)
                             .addComponent(txt_kelas))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 169, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(69, 69, 69))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -141,14 +137,14 @@ public class peminjamanBarang extends javax.swing.JFrame {
                             .addComponent(lblNotif)
                             .addComponent(btn_batal))
                         .addGap(18, 18, 18)
-                        .addComponent(btn_pinjam)
+                        .addComponent(btn_selesai)
                         .addGap(24, 24, 24))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addComponent(txt_barang, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(97, 97, 97)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(judul)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(130, 130, 130))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,12 +162,12 @@ public class peminjamanBarang extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(judul)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                 .addComponent(lblNotif)
-                .addGap(76, 76, 76)
+                .addGap(73, 73, 73)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_pinjam)
+                    .addComponent(btn_selesai)
                     .addComponent(btn_batal))
                 .addContainerGap())
         );
@@ -183,19 +179,18 @@ public class peminjamanBarang extends javax.swing.JFrame {
         scanBarang();
     }//GEN-LAST:event_txt_barangKeyReleased
 
+    private void btn_selesaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selesaiActionPerformed
+        pengembalianBarang();
+        pilihanMenu main = new pilihanMenu();
+        main.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_selesaiActionPerformed
+
     private void btn_batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batalActionPerformed
         pilihanMenu main = new pilihanMenu();
         main.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_batalActionPerformed
-
-    private void btn_pinjamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pinjamActionPerformed
-        createPeminjaman();
-        addBarang();
-        pilihanMenu main = new pilihanMenu();
-        main.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btn_pinjamActionPerformed
 
     /**
      * @param args the command line arguments
@@ -214,13 +209,13 @@ public class peminjamanBarang extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(peminjamanBarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pengembalianBarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(peminjamanBarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pengembalianBarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(peminjamanBarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pengembalianBarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(peminjamanBarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pengembalianBarang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -230,45 +225,18 @@ public class peminjamanBarang extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new peminjamanBarang().setVisible(true);
+                new pengembalianBarang().setVisible(true);
             }
         });
     }
     
-   //start belum kepake
-    String[] semuaBarang;
-    public String[] cariBarangSama(String idBarang) {
-        int max = tbl_pinjam.getRowCount();
-        TableModel model = tbl_pinjam.getModel();
-        String barangAda;
-        for (int i = 0; i < max; i++){
-            if(tbl_pinjam.getRowCount() > 0){
-                barangAda = model.getValueAt(i,2).toString();
-                semuaBarang[i] = barangAda;
-            }
-        }
-        return semuaBarang;
-    }
     
-    public void cekBarang(String idBarang) {
-        String[] Barang = cariBarangSama(idBarang);
-        if(Barang == null) {
-            showBarang(idBarang);
-        }else {
-            for(String i : Barang){
-                if(idBarang != i) {
-                    showBarang(idBarang);
-                }
-            }
-        }
-    }
-    //end belum kepake
     
     public void scanBarang(){
        if(txt_barang.getText().length() == 12){
             String id_barang = txt_barang.getText();
             txt_barang.setText("");
-            showBarang(id_barang);
+            barangKembali(id_barang);
 //            cekBarang(id_barang);
             System.out.println(id_barang);
         }
@@ -285,6 +253,8 @@ public class peminjamanBarang extends javax.swing.JFrame {
                 txt_kelas.setText(rs.getString(3));
             }
             rs.close();
+            stat.close();
+            showBarang(id);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -301,10 +271,41 @@ public class peminjamanBarang extends javax.swing.JFrame {
         no++;
     }
     
-    public void showBarang(String id) {
+    public void gantiWarna() {
+        //code untuk ganti warna
+    }
+    
+    public void barangKembali(String id) {
         try {
             Statement stat = koneksi.createStatement();
-            String query = "SELECT id_barang, nama_barang FROM barang_masuk WHERE id_barang = '"+id+"'";
+            String query = "UPDATE rincian SET status_barang = 'Dikembalikan' WHERE rincian.id_barang = '"+ id +"'" ;
+            System.out.println("Dikembalikan");
+            System.out.println(query);
+            stat.executeUpdate(query);
+            //gantiWarna();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void pengembalianBarang() {
+        try {
+            String tanggal = getTanggal();
+            String id = txt_nis.getText();
+            Statement stat = koneksi.createStatement();
+            String query = "UPDATE peminjaman SET tgl_kembali = '"+ tanggal +"', status_peminjaman = 'Sudah Dikembalikan' WHERE peminjaman.nis = '"+ id +"'" ;
+            System.out.println(query);
+            stat.executeUpdate(query);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void showBarang(String nis) {
+        try {
+            Statement stat = koneksi.createStatement();
+            String query = "SELECT rincian.id_barang, barang_masuk.nama_barang FROM barang_masuk, peminjaman, rincian, siswa WHERE rincian.id_peminjaman = peminjaman.id_peminjaman"
+                    + " AND rincian.id_barang = barang_masuk.id_barang AND peminjaman.nis = siswa.nis AND peminjaman.nis = '"+nis+"' AND peminjaman.status_peminjaman = 'Belum Kembali'" ;
             ResultSet rs = stat.executeQuery(query);
             while (rs.next()) {
                 String idBarang = rs.getString(1);
@@ -314,89 +315,23 @@ public class peminjamanBarang extends javax.swing.JFrame {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        tbl_pinjam.setModel(dtm);
+        tbl_barang.setModel(dtm);
     }
     
+
     public String getTanggal() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         return dateFormat.format(date);
     }
-    
-    public void createPeminjaman() {
-        String tanggalPinjam = getTanggal();
-        String nis = txt_nis.getText();
-        try {
-            Statement stmt = koneksi.createStatement();
-            String query = "INSERT INTO peminjaman(tgl_peminjaman, nis, status_peminjaman) " +
-                "VALUES('"+tanggalPinjam+"', "+"'"+nis+"', 'Belum Kembali')";
-            System.out.println(query);
-            stmt.executeUpdate(query);
-        } catch (SQLException ex){
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Terjadi Kesalahan di Query");
-        }
-    }
-    
-    public String cariPeminjaman() {
-        String nis = txt_nis.getText();
-        String idPinjam = "";
-        try {
-            Statement stmt = koneksi.createStatement();
-            String query = "SELECT id_peminjaman FROM peminjaman WHERE nis ='"+nis+"' AND tgl_kembali IS NULL";
-            ResultSet rs = stmt.executeQuery(query);
-            rs.next();
-            idPinjam = rs.getString("id_peminjaman");
-        } catch (SQLException ex){
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Terjadi Kesalahan di Query");
-        }
-        return idPinjam;
-    }
-    
-    public void addBarang() {
-        //ambil data dari tabel
-        int max = tbl_pinjam.getRowCount();
-        TableModel model = tbl_pinjam.getModel();
-        String idBarang;
-        String idPinjam = cariPeminjaman();
-        for (int i = 0; i < max; i++){
-            idBarang = model.getValueAt(i,2).toString();
-            addRincian(idPinjam, idBarang);
-        }
-        jumlahPinjam(max+"", idPinjam);
-    }
-    
-    public void addRincian(String idPinjam, String idBarang) {
-        try {
-            Statement stmt = koneksi.createStatement();
-            String query = "INSERT INTO rincian(id_peminjaman, id_barang, status_barang) " +
-                "VALUES('"+idPinjam+"', "+"'"+idBarang+"', 'Dipinjam')";
-            System.out.println(query);
-            stmt.executeUpdate(query);
-        } catch (SQLException ex){
-            ex.printStackTrace();
-        }
-    }
-    
-    public void jumlahPinjam(String max, String idPinjam) {
-        try {
-            Statement stmt = koneksi.createStatement();
-            String query = "UPDATE peminjaman SET jumlah_dipinjam = '"+ max +"' WHERE peminjaman.id_peminjaman = "+ idPinjam;
-            System.out.println(query);
-            stmt.executeUpdate(query);
-        } catch (SQLException ex){
-            ex.printStackTrace();
-        }
-    }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_batal;
-    private javax.swing.JButton btn_pinjam;
+    private javax.swing.JButton btn_selesai;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel judul;
     private javax.swing.JLabel lblNotif;
-    private javax.swing.JTable tbl_pinjam;
+    private javax.swing.JTable tbl_barang;
     private javax.swing.JTextField txt_barang;
     private javax.swing.JLabel txt_kelas;
     private javax.swing.JLabel txt_nama;
