@@ -49,6 +49,7 @@ public class EnumParser {
     
     /**
      * Mem-Format suatu string dari enum menjadi lebih user-friendly
+     * JENIS_BARANG = Jenis Barang
      * @param kalimat
      * @return enum yang telah di format menjadi lebih mudah dibaca
      */
@@ -59,6 +60,7 @@ public class EnumParser {
     
     /**
      * Mem-format sebuah enum untuk di simpan ke database
+     * Jenis Barang = jenis_barang
      * @param kalimat
      * @return 
      */
