@@ -4,7 +4,6 @@
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,7 +11,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="1049.0" style="-fx-background-color: #ecf0f1;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.smkn4.inventaristic.admin.barang.stok.StokBarangController">
    <left>
@@ -37,7 +35,7 @@
                <children>
                   <JFXButton fx:id="btnStokBarang" prefHeight="80.0" prefWidth="213.0" text="Stok Barang" textFill="#ecf0f1">
                      <font>
-                        <Font name="Lato Regular" size="20.0" />
+                        <Font name="Lato Bold" size="20.0" />
                      </font>
                      <HBox.margin>
                         <Insets />
@@ -49,7 +47,7 @@
                <children>
                   <JFXButton fx:id="btnBarangBermasalah" prefHeight="80.0" prefWidth="213.0" text="Barang Bermasalah" textFill="#ecf0f1">
                      <font>
-                        <Font name="Lato Regular" size="20.0" />
+                        <Font name="Lato Bold" size="20.0" />
                      </font>
                      <HBox.margin>
                         <Insets />
@@ -75,7 +73,7 @@
                         <Font name="Lato Bold" size="19.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblTotalBarang" alignment="CENTER" prefHeight="33.0" prefWidth="128.0" text="1000" textFill="#279ce5">
+                  <Label fx:id="lblTotalBarang" alignment="CENTER" prefHeight="33.0" prefWidth="128.0" text="0" textFill="#279ce5">
                      <font>
                         <Font name="Lato Bold" size="29.0" />
                      </font>
@@ -96,11 +94,22 @@
                   </Label>
                </children>
             </VBox>
-            <JFXTreeTableView fx:id="tabelStokBarang" layoutX="23.0" layoutY="140.0" prefHeight="404.0" prefWidth="800.0">
-               <columns>
-                  <TreeTableColumn prefWidth="194.33334350585938" text="Nama" />
-               </columns>
-            </JFXTreeTableView>
+            <JFXTreeTableView fx:id="tabelStokBarang" layoutX="23.0" layoutY="140.0" prefHeight="404.0" prefWidth="800.0" />
+            <JFXButton fx:id="btnTambah" layoutX="23.0" layoutY="86.0" prefHeight="33.0" prefWidth="90.0" ripplerFill="#ebebeb" style="-fx-background-color: #2ecc71;" text="Tambah">
+               <font>
+                  <Font name="Lato Regular" size="14.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnEdit" layoutX="118.0" layoutY="86.0" prefHeight="33.0" prefWidth="90.0" ripplerFill="#ebebeb" style="-fx-background-color: #2ecc71;" text="Edit">
+               <font>
+                  <Font name="Lato Regular" size="14.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnHapus" layoutX="214.0" layoutY="86.0" prefHeight="33.0" prefWidth="90.0" ripplerFill="#ebebeb" style="-fx-background-color: #2ecc71;" text="Hapus">
+               <font>
+                  <Font name="Lato Regular" size="14.0" />
+               </font>
+            </JFXButton>
          </children>
       </AnchorPane>
    </center>

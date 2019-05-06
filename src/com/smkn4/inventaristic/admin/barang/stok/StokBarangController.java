@@ -26,10 +26,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javax.swing.JOptionPane;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 /**
@@ -47,6 +53,15 @@ public class StokBarangController implements Initializable {
 
     @FXML
     private JFXButton btnBarangBermasalah;
+    
+    @FXML
+    private JFXButton btnTambah;
+
+    @FXML
+    private JFXButton btnEdit;
+
+    @FXML
+    private JFXButton btnHapus;
 
     @FXML
     private Label lblTotalBarang;
@@ -61,10 +76,11 @@ public class StokBarangController implements Initializable {
 
 
     /**
-     * Initializes the controller class.
+     * Inisialisi controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //MEMBUAT KOLOM TABEL DENGAN BINDING PROPERTY
         JFXTreeTableColumn<Barang, String> colNama = new JFXTreeTableColumn<>("Nama");
         colNama.setPrefWidth(150);
         colNama.setCellValueFactory((TreeTableColumn.CellDataFeatures<Barang, String> param) -> param.getValue().getValue().namaBarang);
@@ -93,10 +109,54 @@ public class StokBarangController implements Initializable {
         colPinjaman.setPrefWidth(150);
         colPinjaman.setCellValueFactory((TreeTableColumn.CellDataFeatures<Barang, String> param) -> param.getValue().getValue().dapatDipinjam);
         
-        ObservableList<Barang> barangs = FXCollections.observableArrayList();
+        //ObservableList digunakan untuk menyimpan data objek Barang dan ditambahkan ke tabel
+//        ObservableList<Barang> barangs = FXCollections.observableArrayList();
 //        barangs.add(new Barang("Proyektor", "Aset", "10-10-2019", "Baik", "A2", "10 jam", "Ya"));
 
+        //READ DATA
         this.connection = MySqlConnection.getConnection();
+        
+        readData();
+        //Menambah Objek Barang ke tabel
+//        final TreeItem<Barang> root = new RecursiveTreeItem<>(barangs, RecursiveTreeObject::getChildren);
+        tabelStokBarang.getColumns().setAll(colNama, colJenis, colTgl, colKondisi, colLokasi, colUmur, colPinjaman);
+//        tabelStokBarang.setRoot(root);
+//        tabelStokBarang.setShowRoot(false);
+        
+        //Event Handler - Hapus
+        btnHapus.setOnAction ( (event) -> {
+//            Stage dialog = new Stage();
+//            dialog.initStyle(StageStyle.UTILITY);
+//            Scene scene = new Scene(new Group(new Text(25, 25, "Hello World!")));
+//            dialog.setScene(scene);
+//            dialog.show();
+
+            deleteData();
+        });
+
+    }
+    
+    public void deleteData() {
+        if (tabelStokBarang.getSelectionModel().getSelectedItem() != null) {
+            Barang barang = tabelStokBarang.getSelectionModel().getSelectedItem().getValue();
+            String idBarang = barang.getIdBarang();
+            try {
+                String query = "DELETE FROM barang_masuk WHERE id_barang = '" + idBarang + "'";
+                Statement stmt = connection.createStatement();
+                int success = stmt.executeUpdate(query);
+                if (success == 1) {
+                    this.readData();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Pilih Row yang akan di hapus", "Error", 0);
+        }
+    }
+    
+    public void readData() {
+        ObservableList<Barang> barangs = FXCollections.observableArrayList();
         try {
             Statement stat = this.connection.createStatement();
             String query = "SELECT *, COUNT(nama_barang) FROM barang_masuk GROUP BY nama_barang";
@@ -106,49 +166,20 @@ public class StokBarangController implements Initializable {
             */
             ResultSet rs = stat.executeQuery(query);
             while(rs.next()) {
-                String[] str = readData(rs);
-                barangs.add(new Barang(str[0], str[1], str[2], str[3], str[4], str[5], str[6]));
+                String[] str = getDataBarang(rs);
+                barangs.add(new Barang(str[0], str[1], str[2], str[3], str[4], str[5], str[6], str[7]));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
-        lblTotalBarang.setText(String.valueOf(barangs.size()));
-        
-
+        //Menghitung jumlah total barang
         final TreeItem<Barang> root = new RecursiveTreeItem<>(barangs, RecursiveTreeObject::getChildren);
-        tabelStokBarang.getColumns().setAll(colNama, colJenis, colTgl, colKondisi, colLokasi, colUmur, colPinjaman);
+        lblTotalBarang.setText(String.valueOf(barangs.size()));
         tabelStokBarang.setRoot(root);
         tabelStokBarang.setShowRoot(false);
-
-    }
-  
-    
-    class Barang extends RecursiveTreeObject<Barang> {
-        SimpleStringProperty namaBarang;
-        SimpleStringProperty jenisBarang;
-        SimpleStringProperty tanggalMasuk;
-        SimpleStringProperty kondisi;
-        SimpleStringProperty lokasi;
-        SimpleStringProperty totalPenggunaan;
-        SimpleStringProperty dapatDipinjam;
-//        SimpleStringProperty deskripsi;
-//        SimpleStringProperty petugas;
-
-        public Barang(String namaBarang, String jenisBarang, String tanggalMasuk, String kondisi, String lokasi, String totalPenggunaan,String dapatDipinjam) {
-            this.namaBarang = new SimpleStringProperty(namaBarang);
-            this.jenisBarang = new SimpleStringProperty(jenisBarang);
-            this.tanggalMasuk = new SimpleStringProperty(tanggalMasuk);
-            this.dapatDipinjam = new SimpleStringProperty(dapatDipinjam);
-            this.kondisi = new SimpleStringProperty(kondisi);
-            this.lokasi = new SimpleStringProperty(lokasi);
-            this.totalPenggunaan = new SimpleStringProperty(totalPenggunaan);
-//            this.deskripsi = new SimpleStringProperty(deskripsi);
-//            this.petugas = new SimpleStringProperty(petugas);
-        }
     }
     
-    public String[] readData(ResultSet rs) {
+    public String[] getDataBarang(ResultSet rs) {
         try {
             String idBarang = rs.getString("id_barang");
             String namaBarang = rs.getString("nama_barang");
@@ -170,10 +201,72 @@ public class StokBarangController implements Initializable {
             totalPenggunaan;
             dapatDipinjam;
             */
-            return new String[]{namaBarang, jenisBarang, tanggalMasuk, kondisi, lokasi, umur, dapatDipinjam};
+            return new String[]{idBarang, namaBarang, jenisBarang, tanggalMasuk, kondisi, lokasi, umur, dapatDipinjam};
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
+
+  
+    
+    class Barang extends RecursiveTreeObject<Barang> {
+        SimpleStringProperty idBarang;
+        SimpleStringProperty namaBarang;
+        SimpleStringProperty jenisBarang;
+        SimpleStringProperty tanggalMasuk;
+        SimpleStringProperty kondisi;
+        SimpleStringProperty lokasi;
+        SimpleStringProperty totalPenggunaan;
+        SimpleStringProperty dapatDipinjam;
+//        SimpleStringProperty deskripsi;
+//        SimpleStringProperty petugas;
+
+        public Barang(String idBarang, String namaBarang, String jenisBarang, String tanggalMasuk, String kondisi, String lokasi, String totalPenggunaan,String dapatDipinjam) {
+            this.idBarang = new SimpleStringProperty(idBarang);
+            this.namaBarang = new SimpleStringProperty(namaBarang);
+            this.jenisBarang = new SimpleStringProperty(jenisBarang);
+            this.tanggalMasuk = new SimpleStringProperty(tanggalMasuk);
+            this.dapatDipinjam = new SimpleStringProperty(dapatDipinjam);
+            this.kondisi = new SimpleStringProperty(kondisi);
+            this.lokasi = new SimpleStringProperty(lokasi);
+            this.totalPenggunaan = new SimpleStringProperty(totalPenggunaan);
+//            this.deskripsi = new SimpleStringProperty(deskripsi);
+//            this.petugas = new SimpleStringProperty(petugas);
+        }
+
+        public String getIdBarang() {
+            return idBarang.get();
+        }
+
+        public String getNamaBarang() {
+            return namaBarang.get();
+        }
+
+        public String getJenisBarang() {
+            return jenisBarang.get();
+        }
+
+        public String getTanggalMasuk() {
+            return tanggalMasuk.get();
+        }
+
+        public String getKondisi() {
+            return kondisi.get();
+        }
+
+        public String getLokasi() {
+            return lokasi.get();
+        }
+
+        public String getTotalPenggunaan() {
+            return totalPenggunaan.get();
+        }
+
+        public String getDapatDipinjam() {
+            return dapatDipinjam.get();
+        }
+        
+    }
+    
 }
