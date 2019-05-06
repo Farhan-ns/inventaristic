@@ -31,34 +31,55 @@ public class PeminjamanAktif extends javax.swing.JFrame {
     public PeminjamanAktif() {
         initComponents();
         koneksi = MySqlConnection.getConnection();
+        showData();
     }
     
     DefaultTableModel dtm;
     
     public void showData() {
-        String[] kolom = {"No","No Peminjaman", "Tanggal Pinjam", "No Rincian", "ID Barang", "Tanggal Kembali"};
-
+        String[] kolom = {"Id Peminjaman", "Tanggal Peminjaman", "NIS", "Nama", "Jumlah Dipinjam", "Tanggal Kembali", "Status Peminjaman"};
+        
+       
         dtm = new DefaultTableModel(null, kolom);
         JTableHeader header = peminjaman.getTableHeader();
         header.setFont(new java.awt.Font("Calibri", 1, 13));
         header.setForeground(new java.awt.Color(153, 0, 154));
         dtm.getDataVector().removeAllElements();
+        String f1 = null;
+        String f2 = null;
+        
         try {
+            
+            String n = search.getText();
+            String  n1 = " LIKE %"+n+"%";
+            
+             String f    = cmbF.getSelectedItem().toString();
+            if(f.equals("[PILIH]")){
+                f1 = " ";
+            }else if(f.equals("Terlama")){
+                f1 = " ORDER BY tgl_peminjaman ASC";
+            }else if(f.equals("Terbaru")){
+                f1 = " ORDER BY tgl_peminjaman DESC";
+            }
+            
             Statement stmt = koneksi.createStatement();
-            String query = "SELECT * FROM peminjaman\n";
+            String query = "SELECT * FROM peminjaman JOIN siswa "
+                    + "ON siswa.nis = peminjaman.nis WHERE peminjaman.nis LIKE '%"+n+"%' "+f1;
 //                    + "WHERE tanggal_peminjaman = '" ++"'";
             ResultSet rs = stmt.executeQuery(query);
             System.out.println("" +query);
-            int no = 1;
+            
             while (rs.next()) {
-                String no_peminjaman = rs.getString("no_peminjaman");
-                String tanggal_peminjaman = rs.getString("tanggal_peminjaman");
-                String no_rincian_peminjaman = rs.getString("no_rincian_peminjaman");
-                String id_barang = rs.getString("id_barang");
-                String tanggal_kembali = rs.getString("tanggal_kembali");
+                String id_peminjaman = rs.getString("id_peminjaman");
+                String tanggal_peminjaman = rs.getString("tgl_peminjaman");
+                String nis = rs.getString("nis");
+                String nama = rs.getString("nama_siswa");
+                String jml_dipinjam = rs.getString("jumlah_dipinjam");
+                String tanggal_kembali = rs.getString("tgl_kembali");
+                String status = rs.getString("status_peminjaman");
 
-                dtm.addRow(new String[]{no + "", no_peminjaman, tanggal_peminjaman, no_rincian_peminjaman, id_barang, tanggal_kembali});
-                no++;
+                dtm.addRow(new String[]{id_peminjaman, tanggal_peminjaman, nis, nama, jml_dipinjam, tanggal_kembali, status});
+                
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -82,6 +103,10 @@ public class PeminjamanAktif extends javax.swing.JFrame {
         peminjaman = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        cmbF = new javax.swing.JComboBox<>();
+        search = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -112,29 +137,72 @@ public class PeminjamanAktif extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Filter :");
+
+        cmbF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[PILIH]", "Terbaru", "Terlama" }));
+        cmbF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbFActionPerformed(evt);
+            }
+        });
+
+        search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchActionPerformed(evt);
+            }
+        });
+        search.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchKeyReleased(evt);
+            }
+        });
+
+        jLabel2.setText("Search");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(72, Short.MAX_VALUE))
+                        .addGap(46, 46, 46)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(cmbF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 618, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jButton2)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addGap(21, 21, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(35, 35, 35)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(0, 15, Short.MAX_VALUE))
+                    .addComponent(jLabel1)
+                    .addComponent(cmbF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
+                .addGap(37, 37, 37))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -143,7 +211,7 @@ public class PeminjamanAktif extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,6 +246,20 @@ public class PeminjamanAktif extends javax.swing.JFrame {
         // TODO add your handling code here:
         showData();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void cmbFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFActionPerformed
+        // TODO add your handling code here:
+        showData();
+    }//GEN-LAST:event_cmbFActionPerformed
+
+    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
+        // TODO add your handling code here:
+        showData();
+    }//GEN-LAST:event_searchActionPerformed
+
+    private void searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchKeyReleased
+       showData();
+    }//GEN-LAST:event_searchKeyReleased
 
     int baris;
     /**
@@ -217,10 +299,14 @@ public class PeminjamanAktif extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmbF;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable peminjaman;
+    private javax.swing.JTextField search;
     // End of variables declaration//GEN-END:variables
 }
