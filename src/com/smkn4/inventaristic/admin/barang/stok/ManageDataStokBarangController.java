@@ -84,7 +84,7 @@ public class ManageDataStokBarangController implements Initializable {
     ToggleGroup groupJenis;
     ToggleGroup groupKondisi;
     private String idBarang;      
-    public String action;
+    public String action = "";
 
     /**
      * Initializes the controller class.

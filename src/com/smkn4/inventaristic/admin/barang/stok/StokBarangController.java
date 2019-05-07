@@ -39,7 +39,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javax.swing.JOptionPane;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.text.WordUtils;
 
 /**
  * FXML Controller class
@@ -229,14 +231,14 @@ public class StokBarangController implements Initializable {
             String idBarang = rs.getString("id_barang");
             String namaBarang = rs.getString("nama_barang");
             String jenisBarang = rs.getString("jenis_barang");
-            jenisBarang = EnumParser.format(jenisBarang);
+            jenisBarang =  WordUtils.capitalizeFully(EnumParser.format(jenisBarang));
             Date tgl = rs.getDate("tgl_masuk");
             String tanggalMasuk = DateFormatUtils.format(tgl, "dd-MM-yyy");
-            String kondisi = rs.getString("kondisi");
+            String kondisi = WordUtils.capitalizeFully(rs.getString("kondisi"));
             String lokasi = rs.getString("lokasi");
             String kuantitas = rs.getString("COUNT(nama_barang)");
             String umur = rs.getString("total_penggunaan");
-            String dapatDipinjam = rs.getString("dapat_dipinjam");
+            String dapatDipinjam = WordUtils.capitalizeFully(rs.getString("dapat_dipinjam"));
             /*
             namaBarang;
             jenisBarang;
