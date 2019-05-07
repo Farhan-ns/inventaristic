@@ -15,6 +15,18 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import com.smkn4.inventaristic.util.MySqlConnection;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -32,8 +44,60 @@ public class RekapBarangBermasalah extends javax.swing.JFrame {
     
     DefaultTableModel dtm;
     
+    
+    private String getCellValue(int x,int y){
+        return dtm.getValueAt(x,y).toString();
+    }
+    
+//    export data
+    private void exportToExcel(){
+        XSSFWorkbook wb = new XSSFWorkbook();
+        XSSFSheet ws = wb.createSheet();
+        
+//        header
+
+        MessageFormat title = new MessageFormat("Laporan Data Barang Bermasalah");
+        
+//        load data
+        TreeMap<String,Object[]> data = new TreeMap<>();
+        data.put("-1",new Object[]{dtm.getColumnName(0),dtm.getColumnName(1),dtm.getColumnName(2),dtm.getColumnName(3),dtm.getColumnName(4),dtm.getColumnName(5 )});
+        
+//    load data cell row
+        for(int i = 0;i<dtm.getRowCount();i++){
+            data.put(Integer.toString(i),new Object[]{getCellValue(i,0),getCellValue(i,1),getCellValue(i,2),getCellValue(i,3),getCellValue(i,4),getCellValue(i,5)});
+        }
+//     Write to excel
+        Set<String> ids = data.keySet();
+        XSSFRow row;
+        int rowID = 0;
+        
+        for(String key : ids){
+            row=ws.createRow(rowID++);
+            
+            Object[] values=data.get(key);
+            int cellID = 0;
+            for(Object o: values){
+                Cell cell = row.createCell(cellID++);
+                cell.setCellValue(o.toString());
+            }
+            
+        }
+        
+//        Save File
+        try{
+            FileOutputStream fos = new FileOutputStream(new File("D:/Excel/DataBarangBermasalah.xls"));
+            wb.write(fos);
+            fos.close();
+        }catch(FileNotFoundException ex){
+            Logger.getLogger(RekapBarangBermasalah.class.getName()).log(Level.SEVERE,null,ex);
+        }catch(IOException ex){
+            Logger.getLogger(RekapPeminjaman.class.getName()).log(Level.SEVERE,null,ex);
+        }
+    }
+    
+    
     public void showData() {
-        String[] kolom = {"No", "ID Barang Bermasalah", "ID Barang", "Tanggal", "Deskripsi", "Jenis"};
+        String[] kolom = {"No", "ID Barang Bermasalah", "ID Barang", "Tanggal", "Deskripsi", "Masalah"};
 
         dtm = new DefaultTableModel(null, kolom);
         JTableHeader header = tbl_bermasalah.getTableHeader();
@@ -83,7 +147,7 @@ public class RekapBarangBermasalah extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_bermasalah = new javax.swing.JTable();
         Print = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        export = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -111,8 +175,18 @@ public class RekapBarangBermasalah extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
-        jButton2.setText("Batal");
+        export.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        export.setText("Export Data");
+        export.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                exportMousePressed(evt);
+            }
+        });
+        export.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -127,8 +201,8 @@ public class RekapBarangBermasalah extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(Print, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(export, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 674, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
@@ -142,7 +216,7 @@ public class RekapBarangBermasalah extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Print)
-                    .addComponent(jButton2))
+                    .addComponent(export))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
@@ -159,6 +233,14 @@ public class RekapBarangBermasalah extends javax.swing.JFrame {
             System.err.print("Error Printer");
         }
     }//GEN-LAST:event_PrintActionPerformed
+
+    private void exportMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exportMousePressed
+        
+    }//GEN-LAST:event_exportMousePressed
+
+    private void exportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportActionPerformed
+       exportToExcel();
+    }//GEN-LAST:event_exportActionPerformed
 
     /**
      * @param args the command line arguments
@@ -200,7 +282,7 @@ public class RekapBarangBermasalah extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Print;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton export;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbl_bermasalah;
