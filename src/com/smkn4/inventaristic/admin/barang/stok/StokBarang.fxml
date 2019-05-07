@@ -87,7 +87,7 @@
                         <Font name="Lato Bold" size="19.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblBBermasalah" alignment="CENTER" prefHeight="33.0" prefWidth="128.0" text="50" textFill="#e34529">
+                  <Label fx:id="lblBBermasalah" alignment="CENTER" prefHeight="33.0" prefWidth="128.0" text="50" textFill="#ff1111">
                      <font>
                         <Font name="Lato Bold" size="29.0" />
                      </font>
@@ -111,6 +111,11 @@
                </font>
             </JFXButton>
             <JFXButton fx:id="btnRefresh" layoutX="310.0" layoutY="86.0" prefHeight="33.0" prefWidth="90.0" ripplerFill="#ebebeb" style="-fx-background-color: #2ecc71;" text="Refresh">
+               <font>
+                  <Font name="Lato Regular" size="14.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnTambahBermasalah" layoutX="407.0" layoutY="86.0" prefHeight="33.0" prefWidth="109.0" ripplerFill="#ebebeb" style="-fx-background-color: #ff1b1b;" text="+ Bermasalah" textFill="WHITE">
                <font>
                   <Font name="Lato Regular" size="14.0" />
                </font>

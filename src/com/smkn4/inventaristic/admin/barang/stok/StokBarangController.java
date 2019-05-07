@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import com.smkn4.inventaristic.admin.barang.bermasalah.ManageDataBarangMasalahController;
 import com.smkn4.inventaristic.util.EnumParser;
 import com.smkn4.inventaristic.util.MySqlConnection;
 import java.io.IOException;
@@ -76,10 +77,12 @@ public class StokBarangController implements Initializable {
 
     @FXML
     private JFXTreeTableView<Barang> tabelStokBarang;
-    
-    Connection connection;
     @FXML
     private JFXButton btnRefresh;
+    @FXML
+    private JFXButton btnTambahBermasalah;
+    
+    Connection connection;
 
 
     /**
@@ -208,6 +211,22 @@ public class StokBarangController implements Initializable {
                 ex.printStackTrace();
             }
         });
+        btnTambahBermasalah.setOnAction((event) -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/admin/barang/bermasalah/ManageDataBarangMasalah.fxml"));
+                Parent formManage = loader.load();
+                ManageDataBarangMasalahController controller = loader.getController();
+                Stage stage = new Stage();
+                stage.initOwner(btnTambahBermasalah.getScene().getWindow());
+                stage.initStyle(StageStyle.UTILITY);
+                stage.setScene(new Scene(formManage));
+                stage.show();
+                controller.readData(getIdBarang(), getNamaBarang());
+            } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
+            }
+        });
         btnHapus.setOnAction ( (event) -> {
             deleteData();
         });
@@ -221,7 +240,17 @@ public class StokBarangController implements Initializable {
             Barang barang = tabelStokBarang.getSelectionModel().getSelectedItem().getValue();
             return barang.getIdBarang();
         } else {
-            JOptionPane.showMessageDialog(null, "Pilih Row yang akan di hapus", "Error", 0);
+            JOptionPane.showMessageDialog(null, "Pilih Row terlebih dahulu", "Error", 0);
+            return "";
+        }
+    }
+    
+    private String getNamaBarang() {
+        if (tabelStokBarang.getSelectionModel().getSelectedItem() != null) {
+            Barang barang = tabelStokBarang.getSelectionModel().getSelectedItem().getValue();
+            return barang.getNamaBarang();
+        } else {
+            JOptionPane.showMessageDialog(null, "Pilih Row terlebih dahulu", "Error", 0);
             return "";
         }
     }
