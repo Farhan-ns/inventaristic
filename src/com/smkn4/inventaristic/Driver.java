@@ -21,9 +21,10 @@ public class Driver extends Application{
     @Override
     public void start(Stage primaryStage) {
         try {
+            //Menjalankan Stokbarang
             Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/admin/barang/stok/StokBarang.fxml"));
             Scene scene = new Scene(root);
-            scene.getStylesheets().add("/com/smkn4/inventaristic/center-column.css");
+//            scene.getStylesheets().add("/com/smkn4/inventaristic/center-column.css");#ea2a2a
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {
