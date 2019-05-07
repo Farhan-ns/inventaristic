@@ -27,6 +27,12 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -227,16 +233,20 @@ public class RekapBarang extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void PrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrintActionPerformed
-        
-        MessageFormat title = new MessageFormat("Laporan Data Barang");
-        MessageFormat footer = new MessageFormat("SMKN 4 Bandung - Inventaris App");
+        String Source = null;
+        String Report = null;
         
         try {
-            tbl_rekap.print(JTable.PrintMode.NORMAL, title, footer);
-        } catch(PrinterException ex) {
-            System.err.print("Error Printer");
+            Source = System.getProperty("user.dir") + "/lib/rekap/Rekap.jrxml";
+            Report = System.getProperty("user.dir") + "/lib/rekap/Rekap.jasper";
+            
+            JasperReport jasperReport = JasperCompileManager.compileReport(Source);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, koneksi);
+            JasperExportManager.exportReportToHtmlFile(jasperPrint, Report);
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch(Exception e) {
+            System.out.println(e);
         }
-        
     }//GEN-LAST:event_PrintActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
