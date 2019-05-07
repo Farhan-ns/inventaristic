@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="390.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.smkn4.inventaristic.admin.barang.stok.ManageDataStokBarangController">
+   <children>
+      <Pane prefHeight="520.0" prefWidth="390.0" style="-fx-border-width: 3px; -fx-background-color: #ecf0f1;">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" prefHeight="37.0" prefWidth="148.0" text="Tambah Barang">
+               <font>
+                  <Font name="Lato Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="69.0" prefHeight="37.0" prefWidth="148.0" text="Nama Barang">
+               <font>
+                  <Font name="Lato Regular" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="121.0" prefHeight="37.0" prefWidth="148.0">
+               <font>
+                  <Font name="Lato Regular" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tFieldNama" layoutX="160.0" layoutY="75.0" prefHeight="25.0" prefWidth="204.0" />
+            <Label layoutX="14.0" layoutY="106.0" prefHeight="37.0" prefWidth="148.0" text="Jenis ">
+               <font>
+                  <Font name="Lato Regular" size="16.0" />
+               </font>
+            </Label>
+            <JFXRadioButton fx:id="rbAset" layoutX="167.0" layoutY="116.0" text="Aset" />
+            <JFXRadioButton fx:id="rbHabis" layoutX="225.0" layoutY="116.0" text="Habis Pakai" />
+            <Label layoutX="14.0" layoutY="140.0" prefHeight="37.0" prefWidth="148.0" text="Tanggal Masuk">
+               <font>
+                  <Font name="Lato Regular" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="177.0" prefHeight="37.0" prefWidth="148.0" text="Kondisi">
+               <font>
+                  <Font name="Lato Regular" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="214.0" prefHeight="37.0" prefWidth="148.0" text="Lokasi">
+               <font>
+                  <Font name="Lato Regular" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="251.0" prefHeight="37.0" prefWidth="148.0" text="Tahun Barang">
+               <font>
+                  <Font name="Lato Regular" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="288.0" prefHeight="37.0" prefWidth="148.0" text="Sumber Perolehan">
+               <font>
+                  <Font name="Lato Regular" size="16.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="tAreaDeskripsi" layoutX="160.0" layoutY="335.0" prefHeight="55.0" prefWidth="204.0" />
+            <DatePicker fx:id="dpTglMasuk" layoutX="243.0" layoutY="146.0" prefHeight="25.0" prefWidth="120.0" />
+            <JFXRadioButton fx:id="rbBaru" layoutX="167.0" layoutY="187.0" text="Baru" />
+            <JFXRadioButton fx:id="rbLama" layoutX="225.0" layoutY="187.0" text="Lama" />
+            <JFXRadioButton fx:id="rbBekas" layoutX="284.0" layoutY="187.0" text="Bekas" />
+            <TextField fx:id="tFieldLokasi" layoutX="161.0" layoutY="220.0" prefHeight="25.0" prefWidth="206.0" />
+            <TextField fx:id="tFieldThnBarang" layoutX="162.0" layoutY="257.0" prefHeight="25.0" prefWidth="76.0" />
+            <TextField fx:id="tFieldSumber" layoutX="162.0" layoutY="294.0" prefHeight="25.0" prefWidth="204.0" />
+            <JFXCheckBox fx:id="cbPinjaman" layoutX="14.0" layoutY="402.0" text="Dapat Dipinjam" />
+            <JFXButton fx:id="btnSimpan" layoutX="284.0" layoutY="449.0" prefHeight="37.0" prefWidth="88.0" text="Simpan">
+               <font>
+                  <Font name="Lato Black" size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXCheckBox fx:id="cbGenerate" layoutX="14.0" layoutY="431.0" selected="true" text="Generate Barcode" />
+            <JFXCheckBox fx:id="cbToday" layoutX="164.0" layoutY="149.0" selected="true" text="Hari Ini" />
+            <TextField fx:id="tFieldTglMasuk" layoutX="243.0" layoutY="146.0" prefHeight="25.0" prefWidth="95.0" />
+            <Label fx:id="lblNotifSuccess" layoutX="187.0" layoutY="486.0" prefHeight="18.0" prefWidth="186.0" text="Barang Berhasil Di Tambahkan" textFill="#0f9d58" visible="false">
+               <font>
+                  <Font name="Lato Regular" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblNotifFail" layoutX="187.0" layoutY="486.0" prefHeight="18.0" prefWidth="186.0" text="Penambahan Barang gagal" textFill="#ff0707" visible="false">
+               <font>
+                  <Font name="Lato Regular" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="12.0" layoutY="325.0" prefHeight="37.0" prefWidth="148.0" text="Deskripsi">
+               <font>
+                  <Font name="Lato Regular" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <DatePicker layoutX="-176.0" layoutY="10.0" />
+   </children>
+</AnchorPane>

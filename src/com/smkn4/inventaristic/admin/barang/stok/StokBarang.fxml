@@ -110,6 +110,11 @@
                   <Font name="Lato Regular" size="14.0" />
                </font>
             </JFXButton>
+            <JFXButton fx:id="btnRefresh" layoutX="310.0" layoutY="86.0" prefHeight="33.0" prefWidth="90.0" ripplerFill="#ebebeb" style="-fx-background-color: #2ecc71;" text="Refresh">
+               <font>
+                  <Font name="Lato Regular" size="14.0" />
+               </font>
+            </JFXButton>
          </children>
       </AnchorPane>
    </center>

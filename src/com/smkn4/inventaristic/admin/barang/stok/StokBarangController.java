@@ -12,6 +12,7 @@ import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import com.smkn4.inventaristic.util.EnumParser;
 import com.smkn4.inventaristic.util.MySqlConnection;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -25,8 +26,10 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
@@ -73,6 +76,8 @@ public class StokBarangController implements Initializable {
     private JFXTreeTableView<Barang> tabelStokBarang;
     
     Connection connection;
+    @FXML
+    private JFXButton btnRefresh;
 
 
     /**
@@ -122,18 +127,7 @@ public class StokBarangController implements Initializable {
         tabelStokBarang.getColumns().setAll(colNama, colJenis, colTgl, colKondisi, colLokasi, colUmur, colPinjaman);
 //        tabelStokBarang.setRoot(root);
 //        tabelStokBarang.setShowRoot(false);
-        
-        //Event Handler - Hapus
-        btnHapus.setOnAction ( (event) -> {
-//            Stage dialog = new Stage();
-//            dialog.initStyle(StageStyle.UTILITY);
-//            Scene scene = new Scene(new Group(new Text(25, 25, "Hello World!")));
-//            dialog.setScene(scene);
-//            dialog.show();
-
-            deleteData();
-        });
-
+        setbuttonAction();
     }
     
     public void deleteData() {
@@ -177,6 +171,57 @@ public class StokBarangController implements Initializable {
         lblTotalBarang.setText(String.valueOf(barangs.size()));
         tabelStokBarang.setRoot(root);
         tabelStokBarang.setShowRoot(false);
+    }
+    
+    private void setbuttonAction() {
+        btnTambah.setOnAction((event) -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/admin/barang/stok/ManageDataStokBarang.fxml"));
+                Parent formManage = loader.load();
+                Stage stage = new Stage();
+                stage.initOwner(btnEdit.getScene().getWindow());
+                stage.initStyle(StageStyle.UTILITY);
+                stage.setScene(new Scene(formManage));
+                stage.show();
+            } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
+            }
+        });
+        btnEdit.setOnAction((event) -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/admin/barang/stok/ManageDataStokBarang.fxml"));
+                Parent formManage = loader.load();
+                ManageDataStokBarangController controller = loader.getController();
+                Stage stage = new Stage();
+                stage.initOwner(btnEdit.getScene().getWindow());
+                stage.initStyle(StageStyle.UTILITY);
+                stage.setScene(new Scene(formManage));
+                stage.show();
+                controller.setIdBarang(getIdBarang());
+                controller.action = "edit";
+                controller.showData();
+            } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
+            }
+        });
+        btnHapus.setOnAction ( (event) -> {
+            deleteData();
+        });
+        btnRefresh.setOnAction((event) -> {
+            readData();
+        });
+    }
+    
+    private String getIdBarang() {
+        if (tabelStokBarang.getSelectionModel().getSelectedItem() != null) {
+            Barang barang = tabelStokBarang.getSelectionModel().getSelectedItem().getValue();
+            return barang.getIdBarang();
+        } else {
+            JOptionPane.showMessageDialog(null, "Pilih Row yang akan di hapus", "Error", 0);
+            return "";
+        }
     }
     
     public String[] getDataBarang(ResultSet rs) {
