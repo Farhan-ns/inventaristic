@@ -23,6 +23,12 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.logging.Logger;
 import java.util.logging.Level;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -163,6 +169,8 @@ public class RekapPeminjaman extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbl_peminjaman.getTableHeader().setResizingAllowed(false);
+        tbl_peminjaman.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tbl_peminjaman);
 
         jButton1.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
@@ -218,13 +226,19 @@ public class RekapPeminjaman extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        MessageFormat title = new MessageFormat("Laporan Data Peminjaman");
-        MessageFormat footer = new MessageFormat("page(0,number,integer)");
+        String Source = null;
+        String Report = null;
         
         try {
-            tbl_peminjaman.print(JTable.PrintMode.NORMAL, title, footer);
-        } catch(PrinterException ex) {
-            System.err.print("Error Printer");
+            Source = System.getProperty("user.dir") + "/lib/rekap/RekapPinjam.jrxml";
+            Report = System.getProperty("user.dir") + "/lib/rekap/RekapPinjam.jasper";
+            
+            JasperReport jasperReport = JasperCompileManager.compileReport(Source);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, koneksi);
+            JasperExportManager.exportReportToHtmlFile(jasperPrint, Report);
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch(Exception e) {
+            System.out.println(e);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
