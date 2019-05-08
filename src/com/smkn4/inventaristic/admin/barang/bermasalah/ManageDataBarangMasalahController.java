@@ -59,7 +59,9 @@ public class ManageDataBarangMasalahController implements Initializable {
     
     Connection connection;
     String idBarang;
+    String idBarangMasalah;
     ToggleGroup groupJenis;
+    String action = "tambah";
 
     /**
      * Initializes the controller class.
@@ -70,12 +72,17 @@ public class ManageDataBarangMasalahController implements Initializable {
         tFieldTglMasalah.setText(DateFormatUtils.format(Calendar.getInstance().getTime(), "dd-MM-yyyy"));
         dpTglMasuk.setDisable(true);
         
+        setComponentsAction();
         setToggleGroup();
     }    
     
     private void setComponentsAction() {
         btnSimpan.setOnAction((event) -> {
-            simpanData();
+            if (this.action.equals("edit")) {
+                editData();
+            } else {
+                simpanData();
+            }
         });
         dpTglMasuk.setOnAction((event) -> {
             Date d = Date.from(dpTglMasuk.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -101,6 +108,7 @@ public class ManageDataBarangMasalahController implements Initializable {
     private void simpanData() {
         String tglBermasalah = getTanggalMasuk();
         String idBarang = this.idBarang;
+        System.out.println(idBarang);
         String deskripsi = tAreaDeskripsi.getText();
         String jenisMasalah = getMasalah();
         try {
@@ -111,7 +119,39 @@ public class ManageDataBarangMasalahController implements Initializable {
             ps.setString(2, idBarang);
             ps.setString(3, deskripsi);
             ps.setString(4, jenisMasalah);
-            ps.execute();
+            ps.executeUpdate();
+//            String query = "INSERT INTO barang_bermasalah(tgl_bemasalah, id_barang, deskripsi, jenis_masalah) "
+//                    + " VALUES( tgl_bermasalah = " + tglBermasalah + ", id_barang = " + idBarang 
+//                    + ", deskripsi = " + deskripsi + ", jenis_masalah = " + jenisMasalah + ")";
+//            Statement stmt = this.connection.createStatement();
+//            System.out.println(query);
+//            stmt.execute(query);
+            lblNotifSuccess.setVisible(true);
+        } catch (SQLException e) {
+            lblNotifFail.setVisible(true);
+            e.getCause();
+            e.printStackTrace();
+        }
+    }
+    private void editData() {
+        String tglBermasalah = getTanggalMasuk();
+        String idBarang = this.idBarang;
+        String idBarangMasalah = this.idBarangMasalah;
+        String deskripsi = tAreaDeskripsi.getText();
+        String jenisMasalah = getMasalah();
+        try {
+            String query = "UPDATE barang_bermasalah SET tgl_bermasalah = ?, id_barang = ?, "
+                    + " deskripsi = ?, jenis_masalah = ?"
+                    + " WHERE id_barang_masalah = ?";
+            PreparedStatement ps = this.connection.prepareStatement(query);
+            ps.setString(1, tglBermasalah);
+            ps.setString(2, idBarang);
+            ps.setString(3, deskripsi);
+            ps.setString(4, jenisMasalah);
+            ps.setString(5, idBarangMasalah);
+            ps.executeUpdate();
+            System.out.println(idBarangMasalah);
+            System.out.println(idBarang);
             lblNotifSuccess.setVisible(true);
         } catch (SQLException e) {
             lblNotifFail.setVisible(true);
@@ -122,10 +162,12 @@ public class ManageDataBarangMasalahController implements Initializable {
     
     public void showData(String idBarangMasalah) {
         try {
-            String query = "SELECT * FROM barang_bermasalah WHERE id_barang_bermasalah = " + idBarangMasalah
-                    + " INNER JOIN barang_masuk ON barang_masuk.idBarang = barang_bermasalah.idBarang";
+            String query = "SELECT * FROM barang_bermasalah "
+                    + "INNER JOIN barang_masuk ON barang_masuk.id_Barang = barang_bermasalah.id_Barang "
+                    + "WHERE id_barang_masalah = " + idBarangMasalah;
             Statement stmt =  this.connection.createStatement();
             ResultSet rs = stmt.executeQuery(query);
+            rs.first();
             tFieldNama.setText(rs.getString("nama_barang"));
             tFieldTglMasalah.setText(DateFormatUtils.format(rs.getDate("tgl_bermasalah"), "dd-MM-yyyy"));
             String jenis = rs.getString("jenis_masalah").toLowerCase();
@@ -134,6 +176,7 @@ public class ManageDataBarangMasalahController implements Initializable {
             } else {
                 rbHilang.setSelected(true);
             }
+            tAreaDeskripsi.setText(rs.getString("deskripsi"));
         } catch (SQLException e) {
             e.getCause();
             e.printStackTrace();

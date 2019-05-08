@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="1049.0" style="-fx-background-color: #ecf0f1;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.smkn4.inventaristic.admin.barang.bermasalah.BarangMasalahController">
+   <left>
+      <VBox prefHeight="571.0" prefWidth="200.0" style="-fx-background-color: #2ecc71;" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="55.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="btnBack" fitHeight="58.0" fitWidth="87.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../../../resource/back-arrow-circular-symbol.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin>
+                  </ImageView>
+               </children>
+            </HBox>
+            <HBox prefHeight="75.0" prefWidth="200.0">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+               <children>
+                  <JFXButton fx:id="btnStokBarang" prefHeight="80.0" prefWidth="213.0" text="Stok Barang" textFill="#ecf0f1">
+                     <font>
+                        <Font name="Lato Bold" size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </JFXButton>
+               </children>
+            </HBox>
+            <HBox prefHeight="75.0" prefWidth="200.0">
+               <children>
+                  <JFXButton fx:id="btnBarangBermasalah" prefHeight="80.0" prefWidth="213.0" text="Barang Bermasalah" textFill="#ecf0f1">
+                     <font>
+                        <Font name="Lato Bold" size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </JFXButton>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" layoutX="5.0" layoutY="11.0" prefHeight="55.0" prefWidth="233.0" text="Barang Bermasalah">
+               <font>
+                  <Font name="Lato Bold" size="24.0" />
+               </font>
+            </Label>
+            <VBox layoutX="712.0" layoutY="59.0" prefHeight="102.0" prefWidth="116.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="33.0" prefWidth="128.0" text="Total Barang" textFill="#615c5c">
+                     <font>
+                        <Font name="Lato Bold" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblBBermasalah" alignment="CENTER" prefHeight="33.0" prefWidth="128.0" text="0" textFill="#e34529">
+                     <font>
+                        <Font name="Lato Bold" size="29.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <JFXTreeTableView fx:id="tabelBarangBermasalah" layoutX="23.0" layoutY="140.0" prefHeight="404.0" prefWidth="800.0" />
+            <JFXButton fx:id="btnEdit" layoutX="23.0" layoutY="86.0" prefHeight="33.0" prefWidth="90.0" ripplerFill="#ebebeb" style="-fx-background-color: #2ecc71;" text="Edit">
+               <font>
+                  <Font name="Lato Regular" size="14.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnHapus" layoutX="119.0" layoutY="86.0" prefHeight="33.0" prefWidth="90.0" ripplerFill="#ebebeb" style="-fx-background-color: #2ecc71;" text="Hapus">
+               <font>
+                  <Font name="Lato Regular" size="14.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnRefresh" layoutX="215.0" layoutY="86.0" prefHeight="33.0" prefWidth="90.0" ripplerFill="#ebebeb" style="-fx-background-color: #2ecc71;" text="Refresh">
+               <font>
+                  <Font name="Lato Regular" size="14.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
