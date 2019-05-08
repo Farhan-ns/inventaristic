@@ -13,6 +13,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import com.smkn4.inventaristic.util.MySqlConnection;
 import java.util.ArrayList;
+import java.util.List;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import javax.swing.table.TableRowSorter;
 /**
  *
  * @author andrew
@@ -27,15 +31,12 @@ public class permintaan_barang extends javax.swing.JFrame {
     public permintaan_barang() {
         initComponents();
         koneksi = MySqlConnection.getConnection();
-        showData(false, null, null, "nama_barang", "ASC");
-        
-        btnGrup_waktu.add(rb_harian);
-        btnGrup_waktu.add(rb_bulanan);
+        showData(Filter(0));
     }
     
     DefaultTableModel dtm;
     
-    public void showData(Boolean search, ArrayList<String> filter, ArrayList<String> value, String order_by, String asc_desc) {
+    public void showData(String qryFilter) {
         String[] kolom = {"No", "Nama Barang", "Jenis Barang", "Tanggal Permintaan", "Jumlah Permintaan", "Deskripsi"};
         
         dtm = new DefaultTableModel(null, kolom);
@@ -44,21 +45,8 @@ public class permintaan_barang extends javax.swing.JFrame {
             Statement stmt = koneksi.createStatement();
             String query = "SELECT nama_barang, jenis_barang, tgl_permintaan, jumlah_permintaan, deskripsi "
                          + "FROM permintaan_barang "
-                         + "GROUP BY tgl_permintaan ";
-            
-            if (search) {
-                query += " WHERE ";
-                    for (int i = 0; i < filter.size(); i++) {
-                        if (i != 0) {
-                            query += " AND ";
-                        }
-                        query += filter.get(i) + " LIKE '%" + value.get(i) + "%'";
-                    }
-            }
-            
-            query += " ORDER BY " + order_by + " " + asc_desc;
-            System.out.println(query);
-            
+                         + "GROUP BY tgl_permintaan " + qryFilter;
+                        
             ResultSet rs = stmt.executeQuery(query);
             int no = 1;
             while(rs.next()) {
@@ -84,6 +72,26 @@ public class permintaan_barang extends javax.swing.JFrame {
         int j = tbl_permintaan.getRowCount();
         lbl_jumlah.setText("Jumlah Permintaan Baran : "+j);
     }
+    
+    public String Filter(int i) {
+        String qryFilter = null;
+        switch(i) {
+            case 1:
+                qryFilter = "AND barang_masuk.jenis_barang = '" + cb_jenis.getSelectedItem().toString() + "';";
+                break;       
+            default:
+                qryFilter = "ORDER BY nama_barang ASC;";
+        }
+        return qryFilter;
+    }
+    
+    public void filterData() {
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(dtm);
+        tbl_permintaan.setRowSorter(tr);
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>(25);
+        sortKeys.add(new RowSorter.SortKey(1, SortOrder.ASCENDING));
+        tr.setSortKeys(sortKeys);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -96,12 +104,8 @@ public class permintaan_barang extends javax.swing.JFrame {
 
         btnGrup_waktu = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        rb_harian = new javax.swing.JRadioButton();
-        rb_bulanan = new javax.swing.JRadioButton();
         cb_jenis = new javax.swing.JComboBox<>();
-        btn_terapkan = new javax.swing.JButton();
         btn_batal = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jButton1 = new javax.swing.JButton();
@@ -116,33 +120,13 @@ public class permintaan_barang extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "F I L T E R", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(255, 255, 255))); // NOI18N
 
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Periode Waktu");
-
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Jenis Barang");
-
-        rb_harian.setBackground(new java.awt.Color(102, 102, 102));
-        btnGrup_waktu.add(rb_harian);
-        rb_harian.setForeground(new java.awt.Color(255, 255, 255));
-        rb_harian.setText("Harian");
-
-        rb_bulanan.setBackground(new java.awt.Color(102, 102, 102));
-        btnGrup_waktu.add(rb_bulanan);
-        rb_bulanan.setForeground(new java.awt.Color(255, 255, 255));
-        rb_bulanan.setText("Bulanan");
 
         cb_jenis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua Jenis Barang", "Habis Pakai", "Asset" }));
         cb_jenis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cb_jenisActionPerformed(evt);
-            }
-        });
-
-        btn_terapkan.setText("Terapkan");
-        btn_terapkan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_terapkanActionPerformed(evt);
             }
         });
 
@@ -162,54 +146,39 @@ public class permintaan_barang extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSeparator1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(rb_harian)
-                                        .addGap(29, 29, 29)
-                                        .addComponent(rb_bulanan))
-                                    .addComponent(cb_jenis, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(60, 60, 60)
+                                .addComponent(btn_batal, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(btn_terapkan)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_batal, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 10, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSeparator1)))
+                                .addGap(36, 36, 36)
+                                .addComponent(jButton1)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 21, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(cb_jenis, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rb_harian)
-                    .addComponent(rb_bulanan))
-                .addGap(30, 30, 30)
+                .addGap(28, 28, 28)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cb_jenis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addGap(87, 87, 87)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_terapkan)
-                    .addComponent(btn_batal))
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_batal)
+                .addGap(40, 40, 40)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         tbl_permintaan.setModel(new javax.swing.table.DefaultTableModel(
@@ -262,7 +231,6 @@ public class permintaan_barang extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 950, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
@@ -298,31 +266,8 @@ public class permintaan_barang extends javax.swing.JFrame {
 
     private void cb_jenisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_jenisActionPerformed
         // TODO add your handling code here:
-        if (cb_jenis.getSelectedItem() != null) {
-        }
+       showData(Filter(1));
     }//GEN-LAST:event_cb_jenisActionPerformed
-
-    private void btn_terapkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_terapkanActionPerformed
-        // TODO add your handling code here:
-        ArrayList<String> filter = new ArrayList();
-        ArrayList<String> value = new ArrayList();
-
-        if (!cb_jenis.getSelectedItem().toString().equals("Semua Jenis Barang")) {
-            filter.add("jenis_barang ");
-            value.add(cb_jenis.getSelectedItem().toString());
-            showData(true,filter,value,"nama_barang","ASC");
-        }
-
-        if (rb_harian.isSelected()) {
-            filter.add("tgl_permintaan ");
-            value.add("Harian");
-            showData(true,filter,value,"tgl_permintaan","ASC");
-        } else if (rb_bulanan.isSelected()) {
-            filter.add("tgl_permintaan");
-            value.add("Bulanan");
-            showData(true,filter,value,"tgl_permintaan","ASC");
-        }
-    }//GEN-LAST:event_btn_terapkanActionPerformed
 
     private void btn_batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batalActionPerformed
         // TODO add your handling code here:
@@ -337,7 +282,7 @@ int baris;
 
     private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
         // TODO add your handling code here:
-        showData(false, null, null, "tgl_permintaan", "ASC");
+        showData(Filter(0));
     }//GEN-LAST:event_btn_refreshActionPerformed
 
     /**
@@ -379,18 +324,14 @@ int baris;
     private javax.swing.ButtonGroup btnGrup_waktu;
     private javax.swing.JButton btn_batal;
     private javax.swing.JButton btn_refresh;
-    private javax.swing.JButton btn_terapkan;
     private javax.swing.JComboBox<String> cb_jenis;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lbl_jumlah;
-    private javax.swing.JRadioButton rb_bulanan;
-    private javax.swing.JRadioButton rb_harian;
     private javax.swing.JTable tbl_permintaan;
     // End of variables declaration//GEN-END:variables
 }

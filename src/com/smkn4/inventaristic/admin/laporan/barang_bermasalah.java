@@ -15,6 +15,10 @@ import com.smkn4.inventaristic.util.MySqlConnection;
 import java.util.ArrayList;
 import com.smkn4.inventaristic.util.enums.JenisBarang;
 import com.smkn4.inventaristic.util.enums.JenisMasalah;
+import java.util.List;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import javax.swing.table.TableRowSorter;
 /**
  *
  * @author andrew
@@ -29,16 +33,12 @@ public class barang_bermasalah extends javax.swing.JFrame {
     public barang_bermasalah() {
         initComponents();
         koneksi = MySqlConnection.getConnection();
-        showData(false, null, null, "tgl_bermasalah", "ASC");
-
-        
-        btnGrup_waktu.add(rb_harian);
-        btnGrup_waktu.add(rb_bulanan);
+        showData(Filter(0));
     }
     
     DefaultTableModel dtm;
     
-    public void showData(Boolean search, ArrayList<String> filter, ArrayList<String> value, String order_by, String asc_desc) {
+    public void showData(String qryFilter) {
         String[] kolom = {"No", "Tanggal Bermasalah", "Nama Barang", "Tahun Barang", "Jenis Barang", "Sumber Perolehan Barang", "Jenis Masalah", "Deskripsi Masalah"};
         
         dtm = new DefaultTableModel(null, kolom);
@@ -48,20 +48,7 @@ public class barang_bermasalah extends javax.swing.JFrame {
             String query = "SELECT barang_bermasalah.tgl_bermasalah, barang_masuk.nama_barang, barang_masuk.thn_barang, "
                          + "barang_masuk.jenis_barang, barang_masuk.sumber_perolehan, barang_bermasalah.jenis_masalah, barang_bermasalah.deskripsi "
                          + "FROM barang_bermasalah, barang_masuk "
-                         + "WHERE barang_bermasalah.id_barang = barang_masuk.id_barang";
-            
-            if (search) {
-                query += " WHERE ";
-                    for (int i = 0; i < filter.size(); i++) {
-                        if (i != 0) {
-                            query += " AND ";
-                        }
-                        query += filter.get(i) + " LIKE '%" + value.get(i) + "%'";
-                    }
-            }
-            
-            query += " ORDER BY " + order_by + " " + asc_desc;
-            System.out.println(query);
+                         + "WHERE barang_bermasalah.id_barang = barang_masuk.id_barang" + qryFilter;
             
             ResultSet rs = stmt.executeQuery(query);
             int no = 1;
@@ -94,7 +81,28 @@ public class barang_bermasalah extends javax.swing.JFrame {
         lbl_jumlah.setText("Jumlah Barang Bermasalah : "+j);
     }
     
+    public String Filter(int i) {
+        String qryFilter = null;
+        switch(i) {
+            case 1:
+                qryFilter = "AND barang_masuk.jenis_barang = '" + cb_jenis.getSelectedItem().toString() + "';";
+                break;
+            case 2:
+                qryFilter = "AND barang_bermasalah.jenis_masalah = '" + cb_permasalahan.getSelectedItem().toString() + "';";
+                break;
+            default:
+                qryFilter = "ORDER BY tgl_bermasalah ASC;";
+        }
+        return qryFilter;
+    }
 
+    public void filterData() {
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(dtm);
+        tbl_bermasalah.setRowSorter(tr);
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>(25);
+        sortKeys.add(new RowSorter.SortKey(1, SortOrder.ASCENDING));
+        tr.setSortKeys(sortKeys);
+    }
     
 
     /**
@@ -108,14 +116,10 @@ public class barang_bermasalah extends javax.swing.JFrame {
 
         btnGrup_waktu = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        rb_harian = new javax.swing.JRadioButton();
-        rb_bulanan = new javax.swing.JRadioButton();
         cb_jenis = new javax.swing.JComboBox<>();
         cb_permasalahan = new javax.swing.JComboBox<>();
-        btn_terapkan = new javax.swing.JButton();
         btn_batal = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jButton1 = new javax.swing.JButton();
@@ -130,24 +134,11 @@ public class barang_bermasalah extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "F I L T E R", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(255, 255, 255))); // NOI18N
 
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Periode Waktu");
-
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Jenis Barang");
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Jenis Permasalahan Barang");
-
-        rb_harian.setBackground(new java.awt.Color(102, 102, 102));
-        btnGrup_waktu.add(rb_harian);
-        rb_harian.setForeground(new java.awt.Color(255, 255, 255));
-        rb_harian.setText("Harian");
-
-        rb_bulanan.setBackground(new java.awt.Color(102, 102, 102));
-        btnGrup_waktu.add(rb_bulanan);
-        rb_bulanan.setForeground(new java.awt.Color(255, 255, 255));
-        rb_bulanan.setText("Bulanan");
 
         cb_jenis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua Jenis Masalah", "Rusak", "Hilang" }));
         cb_jenis.addActionListener(new java.awt.event.ActionListener() {
@@ -160,13 +151,6 @@ public class barang_bermasalah extends javax.swing.JFrame {
         cb_permasalahan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cb_permasalahanActionPerformed(evt);
-            }
-        });
-
-        btn_terapkan.setText("Terapkan");
-        btn_terapkan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_terapkanActionPerformed(evt);
             }
         });
 
@@ -184,60 +168,45 @@ public class barang_bermasalah extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(btn_terapkan)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_batal, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(jSeparator1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jSeparator1)
-                        .addContainerGap())))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel3)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(rb_harian)
-                                .addGap(29, 29, 29)
-                                .addComponent(rb_bulanan))
-                            .addComponent(cb_jenis, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cb_permasalahan, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jButton1)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                                .addGap(20, 20, 20)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel3)
+                                    .addComponent(cb_jenis, 0, 149, Short.MAX_VALUE)
+                                    .addComponent(cb_permasalahan, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(41, 41, 41)
+                                .addComponent(jButton1)))
+                        .addGap(0, 15, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(64, 64, 64)
+                .addComponent(btn_batal, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rb_harian)
-                    .addComponent(rb_bulanan))
-                .addGap(30, 30, 30)
+                .addGap(37, 37, 37)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cb_jenis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addGap(40, 40, 40)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cb_permasalahan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_terapkan)
-                    .addComponent(btn_batal))
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_batal)
+                .addGap(87, 87, 87)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -317,40 +286,13 @@ public class barang_bermasalah extends javax.swing.JFrame {
 
     private void cb_jenisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_jenisActionPerformed
         // TODO add your handling code here:
-        if (cb_jenis.getSelectedItem() != null) {
-        }
+        showData(Filter(1));
     }//GEN-LAST:event_cb_jenisActionPerformed
 
     private void cb_permasalahanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_permasalahanActionPerformed
         // TODO add your handling code here:
-        if (cb_permasalahan.getSelectedItem() != null) {
-        }
+        showData(Filter(2));
     }//GEN-LAST:event_cb_permasalahanActionPerformed
-
-    private void btn_terapkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_terapkanActionPerformed
-        // TODO add your handling code here:
-        ArrayList<String> filter = new ArrayList();
-        ArrayList<String> value = new ArrayList();
-        if (!cb_permasalahan.getSelectedItem().toString().equals("Semua Jenis Masalah")) {
-            filter.add("jenis_masalah ");
-            value.add(cb_permasalahan.getSelectedItem().toString());
-            showData(true,filter,value,"nama_barang","ASC");
-        }
-
-        if (!cb_jenis.getSelectedItem().toString().equals("Semua Jenis Barang")) {
-            filter.add("jenis_barang ");
-            value.add(cb_jenis.getSelectedItem().toString());
-            showData(true,filter,value,"nama_barang","ASC");
-        }
-
-        if (rb_harian.isSelected()) {
-            filter.add("tgl_bermasalah ");
-            value.add("Harian");
-            showData(true,filter,value,"tgl_bermasalah","ASC");
-        } else if (rb_bulanan.isSelected()) {
-            showData(true,filter,value,"tgl_bermasalah","DESC");
-        }
-    }//GEN-LAST:event_btn_terapkanActionPerformed
 
     private void btn_batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batalActionPerformed
         // TODO add your handling code here:
@@ -366,7 +308,7 @@ int baris;
 
     private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
         // TODO add your handling code here:
-        showData(false, null, null, "tgl_bermasalah", "ASC");
+        showData(Filter(0));
     }//GEN-LAST:event_btn_refreshActionPerformed
 
     /**
@@ -408,11 +350,9 @@ int baris;
     private javax.swing.ButtonGroup btnGrup_waktu;
     private javax.swing.JButton btn_batal;
     private javax.swing.JButton btn_refresh;
-    private javax.swing.JButton btn_terapkan;
     private javax.swing.JComboBox<String> cb_jenis;
     private javax.swing.JComboBox<String> cb_permasalahan;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
@@ -420,8 +360,6 @@ int baris;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lbl_jumlah;
-    private javax.swing.JRadioButton rb_bulanan;
-    private javax.swing.JRadioButton rb_harian;
     private javax.swing.JTable tbl_bermasalah;
     // End of variables declaration//GEN-END:variables
 }
