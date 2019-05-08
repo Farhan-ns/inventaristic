@@ -86,6 +86,8 @@ public class ManageDataStokBarangController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {   
        this.connection = MySqlConnection.getConnection();
+       tFieldTglMasuk.setText(DateFormatUtils.format(Calendar.getInstance().getTime(), "dd-MM-yyyy"));
+       dpTglMasuk.setDisable(true);
        setToggleGroup();
        setComponentsAction();
     }
