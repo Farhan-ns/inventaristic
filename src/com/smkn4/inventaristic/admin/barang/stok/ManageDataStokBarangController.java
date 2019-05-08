@@ -9,23 +9,18 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXRadioButton;
 import com.smkn4.inventaristic.util.MySqlConnection;
-import customDateFormatter.CustomDateFormatter;
+import com.smkn4.inventaristic.util.barcode.BarcodeGen;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -33,7 +28,6 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javax.swing.JOptionPane;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 /**
@@ -84,7 +78,7 @@ public class ManageDataStokBarangController implements Initializable {
     ToggleGroup groupJenis;
     ToggleGroup groupKondisi;
     private String idBarang;      
-    public String action = "";
+    public String action = "tambah";
 
     /**
      * Initializes the controller class.
@@ -253,6 +247,13 @@ public class ManageDataStokBarangController implements Initializable {
             ps.setString(11, deskripsi);
             ps.execute();
             lblNotifSuccess.setVisible(true);
+            query = "SELECT * FROM barang_masuk ORDER BY id_barang DESC LIMIT 1";
+            Statement stmt = this.connection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            rs.first();
+            if (cbGenerate.isSelected()) {
+                BarcodeGen.generate("4BDG-"+rs.getString("id_barang"));
+            }
         } catch (SQLException ex) {
             lblNotifFail.setVisible(true);
             ex.getCause();
