@@ -23,6 +23,12 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -165,6 +171,8 @@ public class RekapBarangBermasalah extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbl_bermasalah.getTableHeader().setResizingAllowed(false);
+        tbl_bermasalah.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tbl_bermasalah);
 
         Print.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
@@ -224,13 +232,19 @@ public class RekapBarangBermasalah extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void PrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrintActionPerformed
-        MessageFormat title = new MessageFormat("Laporan Data Barang Bermasalah");
-        MessageFormat footer = new MessageFormat("SMKN 4 Bandung - Inventaris App");
+        String Source = null;
+        String Report = null;
         
         try {
-            tbl_bermasalah.print(JTable.PrintMode.NORMAL, title, footer);
-        } catch(PrinterException ex) {
-            System.err.print("Error Printer");
+            Source = System.getProperty("user.dir") + "/lib/rekap/RekapMasalah.jrxml";
+            Report = System.getProperty("user.dir") + "/lib/rekap/RekapMasalah.jasper";
+            
+            JasperReport jasperReport = JasperCompileManager.compileReport(Source);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, koneksi);
+            JasperExportManager.exportReportToHtmlFile(jasperPrint, Report);
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch(Exception e) {
+            System.out.println(e);
         }
     }//GEN-LAST:event_PrintActionPerformed
 
