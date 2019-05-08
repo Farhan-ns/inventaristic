@@ -10,6 +10,7 @@
 <project name="Inventaristic" default="default" basedir=".">
     <description>Builds, tests, and runs the project Inventaristic.</description>
     <import file="nbproject/build-impl.xml"/>
+    
 	<target name="-post-compile">
 		<copy todir="${build.classes.dir}/res">
 			<fileset dir="resources/">

@@ -10,8 +10,10 @@ import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import com.smkn4.inventaristic.admin.barang.bermasalah.ManageDataBarangMasalahController;
 import com.smkn4.inventaristic.util.EnumParser;
 import com.smkn4.inventaristic.util.MySqlConnection;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -25,8 +27,10 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
@@ -36,7 +40,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javax.swing.JOptionPane;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.text.WordUtils;
 
 /**
  * FXML Controller class
@@ -71,6 +77,10 @@ public class StokBarangController implements Initializable {
 
     @FXML
     private JFXTreeTableView<Barang> tabelStokBarang;
+    @FXML
+    private JFXButton btnRefresh;
+    @FXML
+    private JFXButton btnTambahBermasalah;
     
     Connection connection;
 
@@ -122,18 +132,7 @@ public class StokBarangController implements Initializable {
         tabelStokBarang.getColumns().setAll(colNama, colJenis, colTgl, colKondisi, colLokasi, colUmur, colPinjaman);
 //        tabelStokBarang.setRoot(root);
 //        tabelStokBarang.setShowRoot(false);
-        
-        //Event Handler - Hapus
-        btnHapus.setOnAction ( (event) -> {
-//            Stage dialog = new Stage();
-//            dialog.initStyle(StageStyle.UTILITY);
-//            Scene scene = new Scene(new Group(new Text(25, 25, "Hello World!")));
-//            dialog.setScene(scene);
-//            dialog.show();
-
-            deleteData();
-        });
-
+        setbuttonAction();
     }
     
     public void deleteData() {
@@ -179,19 +178,96 @@ public class StokBarangController implements Initializable {
         tabelStokBarang.setShowRoot(false);
     }
     
+    private void setbuttonAction() {
+        btnTambah.setOnAction((event) -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/admin/barang/stok/ManageDataStokBarang.fxml"));
+                Parent formManage = loader.load();
+                Stage stage = new Stage();
+                stage.initOwner(btnEdit.getScene().getWindow());
+                stage.initStyle(StageStyle.UTILITY);
+                stage.setScene(new Scene(formManage));
+                stage.show();
+            } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
+            }
+        });
+        btnEdit.setOnAction((event) -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/admin/barang/stok/ManageDataStokBarang.fxml"));
+                Parent formManage = loader.load();
+                ManageDataStokBarangController controller = loader.getController();
+                Stage stage = new Stage();
+                stage.initOwner(btnEdit.getScene().getWindow());
+                stage.initStyle(StageStyle.UTILITY);
+                stage.setScene(new Scene(formManage));
+                stage.show();
+                controller.setIdBarang(getIdBarang());
+                controller.action = "edit";
+                controller.showData();
+            } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
+            }
+        });
+        btnTambahBermasalah.setOnAction((event) -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/admin/barang/bermasalah/ManageDataBarangMasalah.fxml"));
+                Parent formManage = loader.load();
+                ManageDataBarangMasalahController controller = loader.getController();
+                Stage stage = new Stage();
+                stage.initOwner(btnTambahBermasalah.getScene().getWindow());
+                stage.initStyle(StageStyle.UTILITY);
+                stage.setScene(new Scene(formManage));
+                stage.show();
+                controller.readData(getIdBarang(), getNamaBarang());
+            } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
+            }
+        });
+        btnHapus.setOnAction ( (event) -> {
+            deleteData();
+        });
+        btnRefresh.setOnAction((event) -> {
+            readData();
+        });
+    }
+    
+    private String getIdBarang() {
+        if (tabelStokBarang.getSelectionModel().getSelectedItem() != null) {
+            Barang barang = tabelStokBarang.getSelectionModel().getSelectedItem().getValue();
+            return barang.getIdBarang();
+        } else {
+            JOptionPane.showMessageDialog(null, "Pilih Row terlebih dahulu", "Error", 0);
+            return "";
+        }
+    }
+    
+    private String getNamaBarang() {
+        if (tabelStokBarang.getSelectionModel().getSelectedItem() != null) {
+            Barang barang = tabelStokBarang.getSelectionModel().getSelectedItem().getValue();
+            return barang.getNamaBarang();
+        } else {
+            JOptionPane.showMessageDialog(null, "Pilih Row terlebih dahulu", "Error", 0);
+            return "";
+        }
+    }
+    
     public String[] getDataBarang(ResultSet rs) {
         try {
             String idBarang = rs.getString("id_barang");
             String namaBarang = rs.getString("nama_barang");
             String jenisBarang = rs.getString("jenis_barang");
-            jenisBarang = EnumParser.format(jenisBarang);
+            jenisBarang =  WordUtils.capitalizeFully(EnumParser.format(jenisBarang));
             Date tgl = rs.getDate("tgl_masuk");
             String tanggalMasuk = DateFormatUtils.format(tgl, "dd-MM-yyy");
-            String kondisi = rs.getString("kondisi");
+            String kondisi = WordUtils.capitalizeFully(rs.getString("kondisi"));
             String lokasi = rs.getString("lokasi");
             String kuantitas = rs.getString("COUNT(nama_barang)");
             String umur = rs.getString("total_penggunaan");
-            String dapatDipinjam = rs.getString("dapat_dipinjam");
+            String dapatDipinjam = WordUtils.capitalizeFully(rs.getString("dapat_dipinjam"));
             /*
             namaBarang;
             jenisBarang;

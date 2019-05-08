@@ -15,6 +15,18 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import com.smkn4.inventaristic.util.MySqlConnection;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -32,8 +44,59 @@ public class RekapPeminjaman extends javax.swing.JFrame {
     
     DefaultTableModel dtm;
     
+    
+     private String getCellValue(int x,int y){
+        return dtm.getValueAt(x,y).toString();
+    }
+    
+//    export data
+    private void exportToExcel(){
+        XSSFWorkbook wb = new XSSFWorkbook();
+        XSSFSheet ws = wb.createSheet();
+        
+//        header
+
+        MessageFormat title = new MessageFormat("Laporan Data Barang Bermasalah");
+        
+//        load data
+        TreeMap<String,Object[]> data = new TreeMap<>();
+        data.put("-1",new Object[]{dtm.getColumnName(0),dtm.getColumnName(1),dtm.getColumnName(2),dtm.getColumnName(3),dtm.getColumnName(4),dtm.getColumnName(5),dtm.getColumnName(6)});
+        
+//    load data cell row
+        for(int i = 0;i<dtm.getRowCount();i++){
+            data.put(Integer.toString(i),new Object[]{getCellValue(i,0),getCellValue(i,1),getCellValue(i,2),getCellValue(i,3),getCellValue(i,4),getCellValue(i,5),getCellValue(i,6)});
+        }
+//     Write to excel
+        Set<String> ids = data.keySet();
+        XSSFRow row;
+        int rowID = 0;
+        
+        for(String key : ids){
+            row=ws.createRow(rowID++);
+            
+            Object[] values=data.get(key);
+            int cellID = 0;
+            for(Object o: values){
+                Cell cell = row.createCell(cellID++);
+                cell.setCellValue(o.toString());
+            }
+            
+        }
+        
+//        Save File
+        try{
+            FileOutputStream fos = new FileOutputStream(new File("D:/Excel/RekapPeminjaman.xls"));
+            wb.write(fos);
+            fos.close();
+        }catch(FileNotFoundException ex){
+            Logger.getLogger(RekapPeminjaman.class.getName()).log(Level.SEVERE,null,ex);
+        }catch(IOException ex){
+            Logger.getLogger(RekapBarang.class.getName()).log(Level.SEVERE,null,ex);
+        }
+    }
+    
     public void showData() {
-        String[] kolom = {"No", "ID Peminjaman", "Tanggal Peminjaman", "Rincian", "ID Barang", "Tanggal Kembali"};
+        String[] kolom = {"No", "ID Peminjaman", "Tanggal Peminjaman", "NIS", "Jumlah dipinjam","Tanggal Kembali","Status Peminjaman" };
 
         dtm = new DefaultTableModel(null, kolom);
         JTableHeader header = tbl_peminjaman.getTableHeader();
@@ -48,13 +111,14 @@ public class RekapPeminjaman extends javax.swing.JFrame {
             System.out.println("" +query);
             int no = 1;
             while (rs.next()) {
-                String no_peminjaman = rs.getString("no_peminjaman");
-                String tanggal_peminjaman = rs.getString("tanggal_peminjaman");
-                String no_rincian_peminjaman = rs.getString("no_rincian_peminjaman");
-                String id_barang = rs.getString("id_barang");
-                String tanggal_kembali = rs.getString("tanggal_kembali");
+                String id_peminjaman = rs.getString("id_peminjaman");
+                String tanggal_peminjaman = rs.getString("tgl_peminjaman");
+                String nis = rs.getString("nis");
+                String jumlah_dipinjam = rs.getString("jumlah_dipinjam");
+                String tgl_kembali = rs.getString("tgl_kembali");
+                String status_peminjaman = rs.getString("status_peminjaman");
 
-                dtm.addRow(new String[]{no + "", no_peminjaman, tanggal_peminjaman, no_rincian_peminjaman, id_barang, tanggal_kembali});
+                dtm.addRow(new String[]{no + "", id_peminjaman, tanggal_peminjaman, nis , jumlah_dipinjam, tgl_kembali,status_peminjaman});
                 no++;
             }
         } catch (SQLException ex) {
@@ -74,11 +138,14 @@ public class RekapPeminjaman extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_peminjaman = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+
+        jTextField1.setText("jTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -107,7 +174,12 @@ public class RekapPeminjaman extends javax.swing.JFrame {
         });
 
         jButton2.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
-        jButton2.setText("Batal");
+        jButton2.setText("Export Excel");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -117,11 +189,11 @@ public class RekapPeminjaman extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 735, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(33, 33, 33)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -155,6 +227,10 @@ public class RekapPeminjaman extends javax.swing.JFrame {
             System.err.print("Error Printer");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        exportToExcel();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -199,6 +275,7 @@ public class RekapPeminjaman extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tbl_peminjaman;
     // End of variables declaration//GEN-END:variables
 }
