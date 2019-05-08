@@ -127,6 +127,7 @@ public class StokBarangController implements Initializable {
         this.connection = MySqlConnection.getConnection();
         
         readData();
+        readBarangMasalahCount();
         //Menambah Objek Barang ke tabel
 //        final TreeItem<Barang> root = new RecursiveTreeItem<>(barangs, RecursiveTreeObject::getChildren);
         tabelStokBarang.getColumns().setAll(colNama, colJenis, colTgl, colKondisi, colLokasi, colUmur, colPinjaman);
@@ -176,6 +177,19 @@ public class StokBarangController implements Initializable {
         lblTotalBarang.setText(String.valueOf(barangs.size()));
         tabelStokBarang.setRoot(root);
         tabelStokBarang.setShowRoot(false);
+    }
+    
+    private void readBarangMasalahCount() {
+        try {
+            Statement stmt = this.connection.createStatement();
+            String query = "SELECT COUNT(id_barang_masalah) as jumlah FROM barang_bermasalah";
+            ResultSet rs = stmt.executeQuery(query);
+            rs.first();
+            lblBBermasalah.setText(rs.getString("jumlah"));
+        } catch (SQLException ex) {
+            ex.getCause();
+            ex.printStackTrace();
+        }
     }
     
     private void setbuttonAction() {
