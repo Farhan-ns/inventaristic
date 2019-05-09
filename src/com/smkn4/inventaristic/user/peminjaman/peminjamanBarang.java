@@ -35,6 +35,7 @@ public class peminjamanBarang extends javax.swing.JFrame {
      */
     Connection koneksi;
     public int no = 1;
+    
     public peminjamanBarang() {
         initComponents();
         createTable();
