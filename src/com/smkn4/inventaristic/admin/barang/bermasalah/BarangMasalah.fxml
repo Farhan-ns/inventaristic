@@ -4,99 +4,122 @@
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="1049.0" style="-fx-background-color: #ecf0f1;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.smkn4.inventaristic.admin.barang.bermasalah.BarangMasalahController">
-   <left>
-      <VBox prefHeight="571.0" prefWidth="200.0" style="-fx-background-color: #2ecc71;" BorderPane.alignment="CENTER">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1050.0" style="-fx-background-color: #02030A;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.smkn4.inventaristic.admin.barang.bermasalah.BarangMasalahController">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="576.0" prefWidth="258.0" style="-fx-background-color: #00b894;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox prefHeight="55.0" prefWidth="200.0">
-               <children>
-                  <ImageView fx:id="btnBack" fitHeight="58.0" fitWidth="87.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../../../../resource/back-arrow-circular-symbol.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets left="10.0" top="10.0" />
-                     </HBox.margin>
-                  </ImageView>
-               </children>
-            </HBox>
-            <HBox prefHeight="75.0" prefWidth="200.0">
+            <ImageView fitHeight="73.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/jimmy-fallon.png" />
+               </image>
                <VBox.margin>
-                  <Insets top="20.0" />
+                  <Insets bottom="10.0" top="50.0" />
+               </VBox.margin></ImageView>
+            <Label text="Hallo,Admin !" textFill="#e7e5e5">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
                </VBox.margin>
-               <children>
-                  <JFXButton fx:id="btnStokBarang" prefHeight="80.0" prefWidth="213.0" text="Stok Barang" textFill="#ecf0f1">
-                     <font>
-                        <Font name="Lato Bold" size="20.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </JFXButton>
-               </children>
-            </HBox>
-            <HBox prefHeight="75.0" prefWidth="200.0">
-               <children>
-                  <JFXButton fx:id="btnBarangBermasalah" prefHeight="80.0" prefWidth="213.0" text="Barang Bermasalah" textFill="#ecf0f1">
-                     <font>
-                        <Font name="Lato Bold" size="20.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </JFXButton>
-               </children>
-            </HBox>
+            </Label>
+            <JFXButton fx:id="btnDashboard" text="Dashboard" textFill="#e7e5e5">
+               <VBox.margin>
+                  <Insets top="22.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton fx:id="btnDataUser" graphicTextGap="22.0" text="Data User" textFill="#e7e5e5">
+               <VBox.margin>
+                  <Insets top="22.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton fx:id="btnPengajuan" graphicTextGap="22.0" text="Pengajuan Barang" textFill="#e7e5e5">
+               <VBox.margin>
+                  <Insets top="22.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton fx:id="btnMenu" graphicTextGap="22.0" text="Menu" textFill="#e7e5e5">
+               <VBox.margin>
+                  <Insets top="22.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton fx:id="btnSignOut" graphicTextGap="22.0" text="Sign Out" textFill="#e7e5e5">
+               <VBox.margin>
+                  <Insets top="22.0" />
+               </VBox.margin>
+            </JFXButton>
          </children>
       </VBox>
-   </left>
-   <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <StackPane layoutX="258.0" prefHeight="576.0" prefWidth="793.0" style="-fx-background-color: #02030A;">
          <children>
-            <Label alignment="CENTER" layoutX="5.0" layoutY="11.0" prefHeight="55.0" prefWidth="233.0" text="Barang Bermasalah">
-               <font>
-                  <Font name="Lato Bold" size="24.0" />
-               </font>
-            </Label>
-            <VBox layoutX="712.0" layoutY="59.0" prefHeight="102.0" prefWidth="116.0">
+            <Pane fx:id="pnlCustomer" prefHeight="200.0" prefWidth="200.0" />
+            <Pane fx:id="pnlOrders" prefHeight="200.0" prefWidth="200.0" />
+            <Pane fx:id="pnlMenus" prefHeight="200.0" prefWidth="200.0" />
+            <Pane fx:id="pnlOverview" prefHeight="554.0" prefWidth="793.0" style="-fx-background-color: #FFFFFF;">
                <children>
-                  <Label alignment="CENTER" prefHeight="33.0" prefWidth="128.0" text="Total Barang" textFill="#615c5c">
+                  <TextField fx:id="tFieldSearch" layoutX="590.0" layoutY="47.0" prefHeight="27.0" prefWidth="183.0" promptText="search" style="-fx-background-color: #FFFF; -fx-border-color: #B7C3D7; -fx-border-radius: 2em;" />
+                  <Label layoutX="38.0" layoutY="36.0" style="-fx-text-fill: #2d3436;" text="Data Barang" textFill="#e7e5e5">
                      <font>
-                        <Font name="Lato Bold" size="19.0" />
+                        <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblBBermasalah" alignment="CENTER" prefHeight="33.0" prefWidth="128.0" text="0" textFill="#e34529">
-                     <font>
-                        <Font name="Lato Bold" size="29.0" />
-                     </font>
-                  </Label>
+                  <ImageView fitHeight="17.0" fitWidth="16.0" layoutX="749.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Project/RestaurantMgtSampleUI-master/out/production/RestaurantMgt/images/icons8_Search_52px.png" />
+                     </image>
+                  </ImageView>
+                  <Pane layoutX="24.0" layoutY="86.0" prefHeight="87.0" prefWidth="546.0">
+                     <children>
+                        <JFXButton fx:id="btnTambah" layoutX="14.0" layoutY="27.0" prefHeight="33.0" prefWidth="90.0" ripplerFill="#ebebeb" style="-fx-background-color: #00b894;" text="Tambah" textFill="WHITE">
+                           <font>
+                              <Font name="Lato Bold" size="14.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="btnEdit" layoutX="113.0" layoutY="27.0" prefHeight="33.0" prefWidth="90.0" ripplerFill="#ebebeb" style="-fx-background-color: #00b894;" text="Edit" textFill="WHITE">
+                           <font>
+                              <Font name="Lato Bold" size="14.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="btnRefresh" layoutX="214.0" layoutY="27.0" prefHeight="33.0" prefWidth="90.0" ripplerFill="#ebebeb" style="-fx-background-color: #00b894;" text="Refresh" textFill="WHITE">
+                           <font>
+                              <Font name="Lato Bold" size="14.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="btnHapus" layoutX="315.0" layoutY="27.0" prefHeight="33.0" prefWidth="90.0" ripplerFill="#ebebeb" style="-fx-background-color: #00b894;" text="Hapus" textFill="WHITE">
+                           <font>
+                              <Font name="Lato Bold" size="14.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </Pane>
+                  <JFXTreeTableView fx:id="tabelBarangBermasalah" layoutX="38.0" layoutY="162.0" prefHeight="400.0" prefWidth="730.0" />
+                  <VBox layoutX="612.0" layoutY="86.0" prefHeight="102.0" prefWidth="116.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="33.0" prefWidth="128.0" text="Total Barang" textFill="#615c5c">
+                           <font>
+                              <Font name="Lato Bold" size="19.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblBBermasalah" alignment="CENTER" prefHeight="33.0" prefWidth="128.0" text="0" textFill="#e41010">
+                           <font>
+                              <Font name="Lato Bold" size="29.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                </children>
-            </VBox>
-            <JFXTreeTableView fx:id="tabelBarangBermasalah" layoutX="23.0" layoutY="140.0" prefHeight="404.0" prefWidth="800.0" />
-            <JFXButton fx:id="btnEdit" layoutX="23.0" layoutY="86.0" prefHeight="33.0" prefWidth="90.0" ripplerFill="#ebebeb" style="-fx-background-color: #2ecc71;" text="Edit">
-               <font>
-                  <Font name="Lato Regular" size="14.0" />
-               </font>
-            </JFXButton>
-            <JFXButton fx:id="btnHapus" layoutX="119.0" layoutY="86.0" prefHeight="33.0" prefWidth="90.0" ripplerFill="#ebebeb" style="-fx-background-color: #2ecc71;" text="Hapus">
-               <font>
-                  <Font name="Lato Regular" size="14.0" />
-               </font>
-            </JFXButton>
-            <JFXButton fx:id="btnRefresh" layoutX="215.0" layoutY="86.0" prefHeight="33.0" prefWidth="90.0" ripplerFill="#ebebeb" style="-fx-background-color: #2ecc71;" text="Refresh">
-               <font>
-                  <Font name="Lato Regular" size="14.0" />
-               </font>
-            </JFXButton>
+            </Pane>
          </children>
-      </AnchorPane>
-   </center>
-</BorderPane>
+      </StackPane>
+   </children>
+   <effect>
+      <DropShadow color="#1b1eeb" />
+   </effect>
+</AnchorPane>

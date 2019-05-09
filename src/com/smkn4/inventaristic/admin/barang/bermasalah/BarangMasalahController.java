@@ -28,9 +28,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -45,14 +47,6 @@ import org.apache.commons.text.WordUtils;
  */
 public class BarangMasalahController implements Initializable {
 
-    @FXML
-    private ImageView btnBack;
-
-    @FXML
-    private JFXButton btnStokBarang;
-
-    @FXML
-    private JFXButton btnBarangBermasalah;
 
     @FXML
     private Label lblBBermasalah;
@@ -73,6 +67,26 @@ public class BarangMasalahController implements Initializable {
     private JFXButton btnRefresh;
     
     Connection connection;
+    @FXML
+    private JFXButton btnDashboard;
+    @FXML
+    private JFXButton btnDataUser;
+    @FXML
+    private JFXButton btnPengajuan;
+    @FXML
+    private JFXButton btnMenu;
+    @FXML
+    private JFXButton btnSignOut;
+    @FXML
+    private Pane pnlCustomer;
+    @FXML
+    private Pane pnlOrders;
+    @FXML
+    private Pane pnlMenus;
+    @FXML
+    private Pane pnlOverview;
+    @FXML
+    private TextField tFieldSearch;
     
     /**
      * Initializes the controller class.
