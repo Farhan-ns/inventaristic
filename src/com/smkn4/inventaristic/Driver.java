@@ -23,9 +23,16 @@ public class Driver extends Application{
         try {
             
             //Menjalankan Stokbarang
-            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/admin/barang/stok/StokBarang.fxml"));
+//            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/admin/barang/stok/StokBarang.fxml"));
             //Barang Bermasalah
 //            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/admin/barang/bermasalah/BarangMasalah.fxml"));
+            //Dashboard
+//            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/Dashboard.fxml"));
+            //scann
+            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/ScanUser.fxml"));
+            //user menu
+//            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/MenuUser.fxml"));
+            
             
             Scene scene = new Scene(root);
             scene.getStylesheets().add("/com/smkn4/inventaristic/center-column.css");

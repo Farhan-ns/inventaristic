@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="1049.0" style="-fx-background-color: #ecf0f1;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.smkn4.inventaristic.DashboardController">
+   <left>
+      <VBox prefHeight="571.0" prefWidth="200.0" style="-fx-background-color: #2ecc71;" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="55.0" prefWidth="200.0" />
+            <HBox prefHeight="75.0" prefWidth="200.0">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="75.0" prefWidth="200.0" />
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" layoutX="27.0" layoutY="14.0" prefHeight="55.0" prefWidth="84.0" text="Home">
+               <font>
+                  <Font name="Lato Bold" size="24.0" />
+               </font>
+            </Label>
+            <Pane id="paneDataBarang" fx:id="boxBarang" layoutX="95.0" layoutY="78.0" prefHeight="202.0" prefWidth="195.0" style="-fx-background-color: white;">
+               <effect>
+                  <DropShadow blurType="GAUSSIAN" height="12.1" radius="6.2925" width="15.07" />
+               </effect>
+               <children>
+                  <Label layoutX="33.0" layoutY="133.0" text="Data Barang">
+                     <font>
+                        <Font name="Lato Regular" size="24.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="88.0" fitWidth="117.0" layoutX="54.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/storage.png" />
+                     </image>
+                  </ImageView>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Pane>
+            <Pane fx:id="boxLaporan" layoutX="327.0" layoutY="78.0" prefHeight="202.0" prefWidth="195.0" style="-fx-background-color: white;">
+               <effect>
+                  <DropShadow blurType="GAUSSIAN" height="12.1" radius="6.2925" width="15.07" />
+               </effect>
+               <children>
+                  <Label layoutX="56.0" layoutY="130.0" text="Laporan">
+                     <font>
+                        <Font name="Lato Regular" size="24.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="84.0" fitWidth="88.0" layoutX="54.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/file.png" />
+                     </image>
+                  </ImageView>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Pane>
+            <Pane fx:id="boxSiswa" layoutX="560.0" layoutY="78.0" prefHeight="202.0" prefWidth="195.0" style="-fx-background-color: white;">
+               <effect>
+                  <DropShadow blurType="GAUSSIAN" height="12.1" radius="6.2925" width="15.07" />
+               </effect>
+               <children>
+                  <Label layoutX="68.0" layoutY="127.0" text="Siswa">
+                     <font>
+                        <Font name="Lato Regular" size="24.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="82.0" fitWidth="82.0" layoutX="57.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/user.png" />
+                     </image>
+                  </ImageView>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Pane>
+            <Pane fx:id="boxPengajuan" layoutX="463.0" layoutY="298.0" prefHeight="202.0" prefWidth="195.0" style="-fx-background-color: white;">
+               <effect>
+                  <DropShadow blurType="GAUSSIAN" height="12.1" radius="6.2925" width="15.07" />
+               </effect>
+               <children>
+                  <Label layoutX="13.0" layoutY="132.0" text="Pengajuan Siswa">
+                     <font>
+                        <Font name="Lato Regular" size="23.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="88.0" fitWidth="117.0" layoutX="50.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/approval.png" />
+                     </image>
+                  </ImageView>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Pane>
+            <Pane fx:id="boxPeminjaman" layoutX="193.0" layoutY="298.0" prefHeight="202.0" prefWidth="195.0" style="-fx-background-color: white;">
+               <effect>
+                  <DropShadow blurType="GAUSSIAN" height="12.1" radius="6.2925" width="15.07" />
+               </effect>
+               <children>
+                  <Label layoutX="33.0" layoutY="131.0" text="Peminjaman">
+                     <font>
+                        <Font name="Lato Regular" size="24.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="88.0" fitWidth="117.0" layoutX="57.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/order.png" />
+                     </image>
+                  </ImageView>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
