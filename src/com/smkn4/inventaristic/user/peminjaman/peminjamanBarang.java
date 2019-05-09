@@ -273,11 +273,10 @@ public class peminjamanBarang extends javax.swing.JFrame {
             System.out.println(id_barang);
         }
     }
-    
-    public void showIdentitas(String id) {
+    public void cekSanksi(String id) {
         try {
             Statement stat = koneksi.createStatement();
-            String query = "SELECT nis, nama_siswa, kelas  FROM siswa WHERE nis = '"+id+"'";
+            String query = "SELECT * FROM siswa WHERE nis = '"+id+"'";
             ResultSet rs = stat.executeQuery(query);
             while (rs.next()) {
                 txt_nis.setText(rs.getString(1));
@@ -285,6 +284,30 @@ public class peminjamanBarang extends javax.swing.JFrame {
                 txt_kelas.setText(rs.getString(3));
             }
             rs.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void showIdentitas(String id) {
+        try {
+            int sanksi = 0;
+            Statement stat = koneksi.createStatement();
+            String query = "SELECT nis, nama_siswa, kelas, sanksi  FROM siswa WHERE nis = '"+id+"'";
+            ResultSet rs = stat.executeQuery(query);
+            while (rs.next()) {
+                txt_nis.setText(rs.getString(1));
+                txt_nama.setText(rs.getString(2));
+                txt_kelas.setText(rs.getString(3));
+                sanksi = rs.getInt(4);
+            }
+            rs.close();
+            if(sanksi != 0) {
+                JOptionPane.showMessageDialog(null ,"Anda Tidak dapat melakukan peminjaman\n karena masih memiliki Sanksi.", "Pemberitahuan", JOptionPane.WARNING_MESSAGE);
+                pilihanMenu menu = new pilihanMenu();
+                menu.setVisible(true);
+                this.dispose();
+            }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
