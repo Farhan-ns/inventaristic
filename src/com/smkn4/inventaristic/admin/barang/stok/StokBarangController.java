@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import com.smkn4.inventaristic.DashboardController;
 import com.smkn4.inventaristic.admin.barang.bermasalah.ManageDataBarangMasalahController;
 import com.smkn4.inventaristic.util.EnumParser;
 import com.smkn4.inventaristic.util.MySqlConnection;
@@ -50,18 +51,30 @@ import org.apache.commons.text.WordUtils;
  * @author Farhanunnasih
  */
 public class StokBarangController implements Initializable {
+    
+    @FXML
+    private JFXButton btnDashboard;
 
     @FXML
-    private ImageView btnBack;
+    private JFXButton btnDataUser;
 
     @FXML
-    private JFXButton btnStokBarang;
+    private JFXButton btnPengajuan;
+
+    @FXML
+    private JFXButton btnMenu;
+
+    @FXML
+    private JFXButton btnSignOut;
 
     @FXML
     private JFXButton btnBarangBermasalah;
     
     @FXML
     private JFXButton btnTambah;
+    
+    @FXML
+    private JFXButton btnTBermasalah;
 
     @FXML
     private JFXButton btnEdit;
@@ -71,9 +84,6 @@ public class StokBarangController implements Initializable {
 
     @FXML
     private Label lblTotalBarang;
-
-    @FXML
-    private Label lblBBermasalah;
 
     @FXML
     private JFXTreeTableView<Barang> tabelStokBarang;
@@ -127,7 +137,6 @@ public class StokBarangController implements Initializable {
         this.connection = MySqlConnection.getConnection();
         
         readData();
-        readBarangMasalahCount();
         //Menambah Objek Barang ke tabel
 //        final TreeItem<Barang> root = new RecursiveTreeItem<>(barangs, RecursiveTreeObject::getChildren);
         tabelStokBarang.getColumns().setAll(colNama, colJenis, colTgl, colKondisi, colLokasi, colUmur, colPinjaman);
@@ -174,22 +183,9 @@ public class StokBarangController implements Initializable {
         }
         //Menghitung jumlah total barang
         final TreeItem<Barang> root = new RecursiveTreeItem<>(barangs, RecursiveTreeObject::getChildren);
-        lblTotalBarang.setText(String.valueOf(barangs.size()));
+        lblTotalBarang.setText(String.valueOf(barangs.size()));;
         tabelStokBarang.setRoot(root);
         tabelStokBarang.setShowRoot(false);
-    }
-    
-    private void readBarangMasalahCount() {
-        try {
-            Statement stmt = this.connection.createStatement();
-            String query = "SELECT COUNT(id_barang_masalah) as jumlah FROM barang_bermasalah";
-            ResultSet rs = stmt.executeQuery(query);
-            rs.first();
-            lblBBermasalah.setText(rs.getString("jumlah"));
-        } catch (SQLException ex) {
-            ex.getCause();
-            ex.printStackTrace();
-        }
     }
     
     private void setbuttonAction() {
@@ -225,7 +221,7 @@ public class StokBarangController implements Initializable {
                 ex.printStackTrace();
             }
         });
-        btnTambahBermasalah.setOnAction((event) -> {
+        btnTBermasalah.setOnAction((event) -> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/admin/barang/bermasalah/ManageDataBarangMasalah.fxml"));
                 Parent formManage = loader.load();
