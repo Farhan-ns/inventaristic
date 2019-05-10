@@ -143,15 +143,15 @@ public class ManageDataBarangMasalahController implements Initializable {
             String query = "UPDATE barang_bermasalah SET tgl_bermasalah = ?, id_barang = ?, "
                     + " deskripsi = ?, jenis_masalah = ?"
                     + " WHERE id_barang_masalah = ?";
-            PreparedStatement ps = this.connection.prepareStatement(query);
+            System.out.println(idBarang);
+            System.out.println(idBarangMasalah);
+            PreparedStatement ps = this.connection.prepareStatement (query);
             ps.setString(1, tglBermasalah);
             ps.setString(2, idBarang);
             ps.setString(3, deskripsi);
             ps.setString(4, jenisMasalah);
             ps.setString(5, idBarangMasalah);
             ps.executeUpdate();
-            System.out.println(idBarangMasalah);
-            System.out.println(idBarang);
             lblNotifSuccess.setVisible(true);
         } catch (SQLException e) {
             lblNotifFail.setVisible(true);

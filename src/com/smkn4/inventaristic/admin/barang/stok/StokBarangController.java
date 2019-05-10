@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.smkn4.inventaristic.DashboardController;
 import com.smkn4.inventaristic.admin.barang.bermasalah.ManageDataBarangMasalahController;
 import com.smkn4.inventaristic.util.EnumParser;
@@ -165,8 +166,13 @@ public class StokBarangController implements Initializable {
                 if (success == 1) {
                     this.readData();
                 }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
+            } catch (MySQLIntegrityConstraintViolationException integrity) {
+                JOptionPane.showMessageDialog(null, "Barang ini gunakan di tabel lain\nhapus record barang ini di tabel lain terlebih dahulu");
+                integrity.getCause();
+                integrity.printStackTrace();
+            } catch (SQLException sql) {
+                sql.getCause();
+                sql.printStackTrace();
             }
         } else {
             JOptionPane.showMessageDialog(null, "Pilih Row yang akan di hapus", "Error", 0);
@@ -247,7 +253,7 @@ public class StokBarangController implements Initializable {
                 Parent formManage = loader.load();
                 ManageDataBarangMasalahController controller = loader.getController();
                 Stage stage = new Stage();
-                stage.initOwner(btnTambahBermasalah.getScene().getWindow());
+                stage.initOwner(btnTBermasalah.getScene().getWindow());
                 stage.initStyle(StageStyle.UTILITY);
                 stage.setScene(new Scene(formManage));
                 stage.show();

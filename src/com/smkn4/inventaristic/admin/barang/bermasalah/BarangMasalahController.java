@@ -31,7 +31,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -46,27 +45,17 @@ import org.apache.commons.text.WordUtils;
  * @author Farhanunnasih
  */
 public class BarangMasalahController implements Initializable {
-
-
+    
     @FXML
     private Label lblBBermasalah;
-
     @FXML
     private JFXTreeTableView<Barang> tabelBarangBermasalah;
-
-    @FXML
-    private JFXButton btnTambah;
-
     @FXML
     private JFXButton btnEdit;
-
     @FXML
     private JFXButton btnHapus;
-
     @FXML
     private JFXButton btnRefresh;
-    
-    Connection connection;
     @FXML
     private JFXButton btnDashboard;
     @FXML
@@ -78,15 +67,9 @@ public class BarangMasalahController implements Initializable {
     @FXML
     private JFXButton btnSignOut;
     @FXML
-    private Pane pnlCustomer;
-    @FXML
-    private Pane pnlOrders;
-    @FXML
-    private Pane pnlMenus;
-    @FXML
-    private Pane pnlOverview;
-    @FXML
     private TextField tFieldSearch;
+    
+    Connection connection;
     
     /**
      * Initializes the controller class.
@@ -127,7 +110,6 @@ public class BarangMasalahController implements Initializable {
     private void setbuttonAction() {
         btnEdit.setOnAction((event) -> {
             try {
-                System.out.println("EDIT");
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/admin/barang/bermasalah/ManageDataBarangMasalah.fxml"));
                 Parent formManage = loader.load();
                 ManageDataBarangMasalahController controller = loader.getController();
@@ -145,8 +127,9 @@ public class BarangMasalahController implements Initializable {
                 } else {
                     JOptionPane.showMessageDialog(null, "Pilih Row Terlebih dahulu");
                 }
-                controller.idBarang = getIdBarang();
-                controller.idBarangMasalah = idBarangMasalah;
+                //Bug note entah kenapa 2 value ini terbalik
+                controller.idBarang = idBarangMasalah;
+                controller.idBarangMasalah = getIdBarang();
                 controller.showData(getIdBarang());
             } catch (IOException ex) {
                 ex.getCause();
@@ -191,7 +174,7 @@ public class BarangMasalahController implements Initializable {
     public void deleteData() {
         if (tabelBarangBermasalah.getSelectionModel().getSelectedItem() != null) {
             Barang barang = tabelBarangBermasalah.getSelectionModel().getSelectedItem().getValue();
-            String idBarangBermasalah = barang.getIdBarangMasalah();
+            String idBarangBermasalah = barang.getIdBarang();
             try {
                 String query = "DELETE FROM barang_bermasalah WHERE id_barang_masalah = '" + idBarangBermasalah + "'";
                 Statement stmt = this.connection.createStatement();

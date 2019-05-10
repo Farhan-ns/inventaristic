@@ -64,15 +64,15 @@ public class MenuUserController implements Initializable {
     
     private void setButtonsAction() {
         boxPeminjaman.setOnMouseClicked((event) -> {
-            try {
-                Parent viewBarang = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/PeminjamanBarang.fxml"));
-                Stage stage = new Stage();
-                stage.initOwner(boxPeminjaman.getScene().getWindow());
-                stage.setScene(new Scene(viewBarang));
-                stage.show();
-                //pass the map
-            } catch (IOException ex) {
-            }
+//            try {
+//                Parent viewBarang = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/PeminjamanBarang.fxml"));
+//                Stage stage = new Stage();
+//                stage.initOwner(boxPeminjaman.getScene().getWindow());
+//                stage.setScene(new Scene(viewBarang));
+//                stage.show();
+//                //pass the map
+//            } catch (IOException ex) {
+//            }
         });
     }
     
