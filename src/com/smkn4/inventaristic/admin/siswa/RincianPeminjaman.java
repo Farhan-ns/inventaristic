@@ -127,7 +127,7 @@ public class RincianPeminjaman extends javax.swing.JDialog {
      * @param args the command line arguments
      */
      private void readData(String id){
-        String[] kolomTabel = {"ID Barang", "Nama Barang", "Tanggal Peminjaman", "Tanggal kembali"};
+        String[] kolomTabel = {"ID Barang", "Nama Barang", "Tanggal Peminjaman"};
         defaultTableModel   = new DefaultTableModel(null, kolomTabel);
         try {
             connection      = MySqlConnection.getConnection();
@@ -148,9 +148,7 @@ public class RincianPeminjaman extends javax.swing.JDialog {
                 String nama_barang       = result.getString("barang_masuk.nama_barang");
                 String tgl_peminjaman    =   result.getDate("peminjaman.tgl_peminjaman").toString();
                
- //               String tgl_kembali       =   result.getDate("peminjaman.tgl_kembali").toString();    
-//                System.out.println(tgl_kembali);
-                defaultTableModel.addRow(new String[]{id_barang,nama_barang,tgl_peminjaman,""});
+                defaultTableModel.addRow(new String[]{id_barang,nama_barang,tgl_peminjaman});
                 System.out.println(preStatement);
                 names.setText(nama);
             }

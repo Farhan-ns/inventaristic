@@ -35,7 +35,7 @@ public class DataPeminjam extends javax.swing.JFrame {
     }
     
     protected void readData() {
-        String[] kolomTabel = {"NIS", "Nama","Tanggal Lahir", "Jenis Kelamin", "Kelas", "Jurusan", "Tahun Ajaran"};
+        String[] kolomTabel = {"NIS", "Nama","Tanggal Lahir", "Jenis Kelamin", "Kelas", "Jurusan", "Tahun Ajaran", "sanksi"};
         defaultTableModel   = new DefaultTableModel(null, kolomTabel);
         try {
             connection      = MySqlConnection.getConnection();
@@ -44,13 +44,16 @@ public class DataPeminjam extends javax.swing.JFrame {
             while(result.next()){
                 String nis = result.getString("nis");
                 String nama = result.getString("nama_siswa");
-                String tanggal_lahir = result.getDate("tgl_lahir").toString();
+                String tanggal_lahir = result.getString("tgl_lahir");
                 String jenis_kelamin = result.getString("jenkel");
                 String kelas = result.getString("kelas");
                 String jurusan = result.getString("jurusan");
-                String tahun_ajaran = result.getString("thn_ajaran");
+                String tahun_ajaran = result.getString("thn_ajaran");                
+                String sanksi = result.getString("sanksi");
 
-                defaultTableModel.addRow(new String[]{nis,nama,tanggal_lahir,jenis_kelamin,kelas,jurusan,tahun_ajaran});
+                
+
+                defaultTableModel.addRow(new String[]{nis,nama,tanggal_lahir,jenis_kelamin,kelas,jurusan,tahun_ajaran,sanksi});
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -204,6 +207,11 @@ public class DataPeminjam extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tabel_peminjam.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tabel_peminjamMouseReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabel_peminjam);
 
         fKelas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Default", "X", "XI", "XII" }));
@@ -327,6 +335,18 @@ public class DataPeminjam extends javax.swing.JFrame {
     private void fNoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fNoneActionPerformed
         filterData();
     }//GEN-LAST:event_fNoneActionPerformed
+
+//    String id;
+    private void tabel_peminjamMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_peminjamMouseReleased
+        // TODO add your handling code here:
+        barisPilihan = tabel_peminjam.getSelectedRow();
+        String id  = tabel_peminjam.getValueAt(barisPilihan, 0).toString();
+       System.out.println(id);
+       Berisanksid bs = new Berisanksid (this, true, "rincian", id);
+       bs.setVisible(true);
+       readData();
+        
+    }//GEN-LAST:event_tabel_peminjamMouseReleased
 
     /**
      * @param args the command line arguments
