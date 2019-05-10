@@ -82,16 +82,16 @@ public class barang_bermasalah extends javax.swing.JFrame {
     }
     
     public String Filter(int i) {
-        String qryFilter = null;
+        String qryFilter = "";
         switch(i) {
             case 1:
-                qryFilter = "AND barang_masuk.jenis_barang = '" + cb_jenis.getSelectedItem().toString() + "';";
+                qryFilter = " AND barang_masuk.jenis_barang = '" + cb_jenis.getSelectedItem().toString() + "'";
                 break;
             case 2:
-                qryFilter = "AND barang_bermasalah.jenis_masalah = '" + cb_permasalahan.getSelectedItem().toString() + "';";
+                qryFilter = " AND barang_bermasalah.jenis_masalah = '" + cb_permasalahan.getSelectedItem().toString() + "'";
                 break;
             default:
-                qryFilter = "ORDER BY tgl_bermasalah ASC;";
+                qryFilter = " ORDER BY tgl_bermasalah ASC";
         }
         return qryFilter;
     }

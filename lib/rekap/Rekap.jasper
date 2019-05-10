@@ -1,0 +1,776 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <style type="text/css">
+    a {text-decoration: none}
+  </style>
+</head>
+<body text="#000000" link="#000000" alink="#000000" vlink="#000000">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr><td width="50%">&nbsp;</td><td align="center">
+
+<a name="JR_PAGE_ANCHOR_0_1"></a>
+<table class="jrPage" cellpadding="0" cellspacing="0" border="0" style="empty-cells: show; width: 860px; border-collapse: collapse; background-color: white;">
+<tr valign="top" style="height:0">
+<td style="width:20px"></td>
+<td style="width:2px"></td>
+<td style="width:111px"></td>
+<td style="width:86px"></td>
+<td style="width:27px"></td>
+<td style="width:29px"></td>
+<td style="width:84px"></td>
+<td style="width:8px"></td>
+<td style="width:10px"></td>
+<td style="width:36px"></td>
+<td style="width:67px"></td>
+<td style="width:11px"></td>
+<td style="width:32px"></td>
+<td style="width:52px"></td>
+<td style="width:14px"></td>
+<td style="width:23px"></td>
+<td style="width:33px"></td>
+<td style="width:28px"></td>
+<td style="width:14px"></td>
+<td style="width:10px"></td>
+<td style="width:20px"></td>
+<td style="width:8px"></td>
+<td style="width:22px"></td>
+<td style="width:11px"></td>
+<td style="width:19px"></td>
+<td style="width:11px"></td>
+<td style="width:29px"></td>
+<td style="width:5px"></td>
+<td style="width:38px"></td>
+</tr>
+<tr valign="top" style="height:20px">
+<td colspan="29">
+</td>
+</tr>
+<tr valign="top" style="height:66px">
+<td colspan="6">
+</td>
+<td colspan="11" style="padding: 4px; text-indent: 0px;  vertical-align: bottom;text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 50px; line-height: 1.1499023;">Rekap Barang</span></td>
+<td colspan="12">
+</td>
+</tr>
+<tr valign="top" style="height:4px">
+<td colspan="29">
+</td>
+</tr>
+<tr valign="top" style="height:12px">
+<td>
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td>
+</td>
+</tr>
+<tr valign="top" style="height:20px">
+<td>
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td style="background-color: #CC0000; ">
+</td>
+<td colspan="9" style="background-color: #CC0000; text-indent: 0px; text-align: right;">
+<span style="font-family: SansSerif; color: #FFFFFF; font-size: 12px; line-height: 1.2578125;">Wednesday 08 May 2019</span></td>
+<td style="background-color: #CC0000; ">
+</td>
+<td>
+</td>
+</tr>
+<tr valign="top" style="height:18px">
+<td>
+</td>
+<td colspan="2" style="text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">ID Barang</span></td>
+<td colspan="2" style="text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">Jenis</span></td>
+<td colspan="2" style="text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">Tanggal Masuk</span></td>
+<td>
+</td>
+<td colspan="2" style="text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">Kondisi</span></td>
+<td>
+</td>
+<td colspan="2" style="text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">Lokasi</span></td>
+<td colspan="3">
+</td>
+<td colspan="6" style="text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">Waktu Pakai</span></td>
+<td>
+</td>
+<td colspan="6" style="text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">Jumlah</span></td>
+</tr>
+<tr valign="top" style="height:3px">
+<td colspan="29">
+</td>
+</tr>
+<tr valign="top" style="height:24px">
+<td>
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td colspan="19" style="background-color: #000000; text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #FFFFFF; font-size: 18px; line-height: 1.1499023;">Kabel</span></td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td>
+</td>
+</tr>
+<tr valign="top" style="height:18px">
+<td>
+</td>
+<td colspan="2" rowspan="2" style="text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">SMKN4BDG-121324</span></td>
+<td colspan="2" rowspan="2" style="text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">Barang Jangka Pendek</span></td>
+<td colspan="2" style="text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">5/2/19 9:33 PM</span></td>
+<td>
+</td>
+<td>
+</td>
+<td style="text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">ada</span></td>
+<td>
+</td>
+<td>
+</td>
+<td colspan="3" style="text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">A5</span></td>
+<td>
+</td>
+<td colspan="3" style="text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">null</span></td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td colspan="2" style="text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">1</span></td>
+<td>
+</td>
+<td colspan="2">
+</td>
+</tr>
+<tr valign="top" style="height:14px">
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td colspan="2">
+</td>
+</tr>
+<tr valign="top" style="height:9px">
+<td colspan="29">
+</td>
+</tr>
+<tr valign="top" style="height:24px">
+<td>
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td colspan="19" style="background-color: #000000; text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #FFFFFF; font-size: 18px; line-height: 1.1499023;">laptop</span></td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td>
+</td>
+</tr>
+<tr valign="top" style="height:18px">
+<td>
+</td>
+<td colspan="2" style="background-color: #F0EFEF; text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">123</span></td>
+<td colspan="2" style="background-color: #F0EFEF; text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">jangka_panjang</span></td>
+<td colspan="2" style="background-color: #F0EFEF; text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">5/9/19 12:00 AM</span></td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">ada</span></td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td colspan="3" style="background-color: #F0EFEF; text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">ada</span></td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td colspan="3" style="background-color: #F0EFEF; text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">null</span></td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td colspan="2" style="background-color: #F0EFEF; text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">1</span></td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td colspan="2">
+</td>
+</tr>
+<tr valign="top" style="height:9px">
+<td colspan="29">
+</td>
+</tr>
+<tr valign="top" style="height:24px">
+<td>
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td colspan="19" style="background-color: #000000; text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #FFFFFF; font-size: 18px; line-height: 1.1499023;">RD-45</span></td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td>
+</td>
+</tr>
+<tr valign="top" style="height:18px">
+<td>
+</td>
+<td colspan="2" style="text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">005</span></td>
+<td colspan="2" style="text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">habis_pakai</span></td>
+<td colspan="2" style="text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">5/4/19 9:45 AM</span></td>
+<td>
+</td>
+<td>
+</td>
+<td style="text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">ada</span></td>
+<td>
+</td>
+<td>
+</td>
+<td colspan="3" style="text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">A1</span></td>
+<td>
+</td>
+<td colspan="3" style="text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">null</span></td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td colspan="2" style="text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">1</span></td>
+<td>
+</td>
+<td colspan="2">
+</td>
+</tr>
+<tr valign="top" style="height:9px">
+<td colspan="29">
+</td>
+</tr>
+<tr valign="top" style="height:24px">
+<td>
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td colspan="19" style="background-color: #000000; text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #FFFFFF; font-size: 18px; line-height: 1.1499023;">Terminal</span></td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td>
+</td>
+</tr>
+<tr valign="top" style="height:18px">
+<td>
+</td>
+<td colspan="2" rowspan="2" style="background-color: #F0EFEF; text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">SMKN4BDG-12121</span></td>
+<td colspan="2" style="background-color: #F0EFEF; text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">Jangka Panjang</span></td>
+<td colspan="2" style="background-color: #F0EFEF; text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">5/1/19 12:00 AM</span></td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">null</span></td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td colspan="3" style="background-color: #F0EFEF; text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">A1</span></td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td colspan="3" style="background-color: #F0EFEF; text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">null</span></td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td colspan="2" style="background-color: #F0EFEF; text-indent: 0px; text-align: left;">
+<span style="font-family: Times New Roman; color: #000000; font-size: 14px; line-height: 1.1499023;">1</span></td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td colspan="2">
+</td>
+</tr>
+<tr valign="top" style="height:14px">
+<td>
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td style="background-color: #F0EFEF; ">
+</td>
+<td colspan="2">
+</td>
+</tr>
+<tr valign="top" style="height:180px">
+<td colspan="29">
+</td>
+</tr>
+<tr valign="top" style="height:1px">
+<td>
+</td>
+<td colspan="13" style="border-top: 1px solid #999999; ">
+</td>
+<td colspan="15">
+</td>
+</tr>
+<tr valign="top" style="height:3px">
+<td colspan="29">
+</td>
+</tr>
+<tr valign="top" style="height:3px">
+<td>
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td>
+</td>
+</tr>
+<tr valign="top" style="height:20px">
+<td>
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td colspan="2" style="background-color: #000000; text-indent: 0px;  vertical-align: middle;text-align: left;">
+<span style="font-family: Times New Roman; color: #FFFFFF; font-size: 10px; line-height: 1.1499023;">Wednesday 08 May 2019</span></td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td colspan="5" style="background-color: #000000; text-indent: 0px;  vertical-align: middle;text-align: right;">
+<span style="font-family: Times New Roman; color: #FFFFFF; font-size: 10px; line-height: 1.1499023;">Page 1 of</span></td>
+<td colspan="2" style="background-color: #000000; text-indent: 0px;  vertical-align: middle;text-align: left;">
+<span style="font-family: Times New Roman; color: #FFFFFF; font-size: 10px; line-height: 1.1499023;">&nbsp;1</span></td>
+<td style="background-color: #000000; ">
+</td>
+<td>
+</td>
+</tr>
+<tr valign="top" style="height:2px">
+<td>
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td style="background-color: #000000; ">
+</td>
+<td>
+</td>
+</tr>
+<tr valign="top" style="height:20px">
+<td colspan="29">
+</td>
+</tr>
+</table>
+
+<![if IE]>
+<script>
+var links = document.querySelectorAll('link.jrWebFont');
+setTimeout(function(){ if (links) { for (var i = 0; i < links.length; i++) { links.item(i).href = links.item(i).href; } } }, 0);
+</script>
+<![endif]>
+</td><td width="50%">&nbsp;</td></tr>
+</table>
+</body>
+</html>

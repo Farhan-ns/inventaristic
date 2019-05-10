@@ -85,7 +85,7 @@ public class barang_masuk extends javax.swing.JFrame {
         String qryFilter = null;
         switch(i) {
             case 1:
-                qryFilter = "AND barang_masuk.jenis_barang = '" + cb_jenis.getSelectedItem().toString() + "';";
+                qryFilter = "171AND barang_masuk.jenis_barang = '" + cb_jenis.getSelectedItem().toString() + "';";
                 break;
             case 2:
                 qryFilter = "AND barang_masuk.kondisi = '" + cb_kondisi.getSelectedItem().toString() + "';";
