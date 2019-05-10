@@ -34,9 +34,11 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -52,8 +54,6 @@ import org.apache.commons.text.WordUtils;
  */
 public class StokBarangController implements Initializable {
     
-    @FXML
-    private JFXButton btnDashboard;
 
     @FXML
     private JFXButton btnDataUser;
@@ -89,10 +89,19 @@ public class StokBarangController implements Initializable {
     private JFXTreeTableView<Barang> tabelStokBarang;
     @FXML
     private JFXButton btnRefresh;
-    @FXML
     private JFXButton btnTambahBermasalah;
     
     Connection connection;
+    @FXML
+    private Pane pnlCustomer;
+    @FXML
+    private Pane pnlOrders;
+    @FXML
+    private Pane pnlMenus;
+    @FXML
+    private Pane pnlOverview;
+    @FXML
+    private TextField tFieldSearch;
 
 
     /**
@@ -219,6 +228,17 @@ public class StokBarangController implements Initializable {
             } catch (IOException ex) {
                 ex.getCause();
                 ex.printStackTrace();
+            }
+        });
+        btnBarangBermasalah.setOnAction((event) -> {
+            try {
+                Stage stage = new Stage();
+                Parent root = FXMLLoader.load((getClass().getResource("/com/smkn4/inventaristic/admin/barang/bermasalah/BarangMasalah.fxml")));
+                stage.initOwner(btnBarangBermasalah.getScene().getWindow());
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException ex) {
+                
             }
         });
         btnTBermasalah.setOnAction((event) -> {

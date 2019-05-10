@@ -29,10 +29,11 @@ public class Driver extends Application{
             //Dashboard
 //            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/Dashboard.fxml"));
             //scann
-            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/ScanUser.fxml"));
+//            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/ScanUser.fxml"));
             //user menu
 //            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/MenuUser.fxml"));
-            
+            //ADMIN HOME
+            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/admin/AdminHome.fxml"));
             
             Scene scene = new Scene(root);
             scene.getStylesheets().add("/com/smkn4/inventaristic/center-column.css");
