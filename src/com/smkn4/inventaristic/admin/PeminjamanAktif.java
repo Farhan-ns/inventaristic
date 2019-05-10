@@ -225,10 +225,10 @@ public class PeminjamanAktif extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String dihapus = peminjaman.getValueAt(baris, 1).toString();
+        String dihapus = peminjaman.getValueAt(baris, 0).toString();
         try {
             Statement stmt = koneksi.createStatement();
-            String query = "DELETE FROM peminjaman WHERE no_peminjaman = " + dihapus + ";";
+            String query = "DELETE FROM peminjaman WHERE id_peminjaman = " + dihapus + ";";
             int berhasil = stmt.executeUpdate(query);
             if (berhasil == 1) {
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");

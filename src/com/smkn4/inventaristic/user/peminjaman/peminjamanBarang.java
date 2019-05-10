@@ -266,8 +266,11 @@ public class peminjamanBarang extends javax.swing.JFrame {
     //end belum kepake
     
     public void scanBarang(){
-       if(txt_barang.getText().length() == 12){
+       if(txt_barang.getText().length() == 3){
             String id_barang = txt_barang.getText();
+//                    String[] str = id_barang.split("-");
+//        id_barang = str[1];
+
             txt_barang.setText("");
             showBarang(id_barang);
 //            cekBarang(id_barang);

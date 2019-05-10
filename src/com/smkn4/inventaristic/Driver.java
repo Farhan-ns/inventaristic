@@ -37,7 +37,7 @@ public class Driver extends Application{
             
             Scene scene = new Scene(root);
             scene.getStylesheets().add("/com/smkn4/inventaristic/center-column.css");
-            //#ea2a2a
+            //#ea2a2a..
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {
