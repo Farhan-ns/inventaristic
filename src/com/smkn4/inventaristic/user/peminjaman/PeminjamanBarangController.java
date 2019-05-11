@@ -25,6 +25,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,6 +35,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
+import javax.swing.JOptionPane;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 /**
@@ -158,9 +160,26 @@ public class PeminjamanBarangController implements Initializable {
     protected void setUserMap(Map map) {
         this.map = map;
         setUsername();
+        Platform.runLater(() -> {
+            cekSanksiSiswa();
+        });
     }
     private void setUsername() {
         lblUsername.setText("Halo, "+ this.map.get("nama") + " !");
+    }
+    
+    private void cekSanksiSiswa() {
+        int sanksi = Integer.parseInt(this.map.get("sanksi"));
+        String namaMsg = "Nama Siswa : " + this.map.get("nama");
+        String sanksiMsg = "Jumlah Sanksi : " + this.map.get("sanksi");
+        if (sanksi >= 3) {
+            String msg = "Anda tidak dapat meminjam di karenakan sanksi anda telah melebihi batas\n"
+                    + "harap lunasi sanksi Anda terlebih dahulu untuk melanjutkan";
+            JOptionPane.showMessageDialog(null, namaMsg + "\n" + sanksiMsg + "\n" + msg) ;
+        } else if (sanksi > 0 && sanksi < 3) {
+            String msg = "Anda memiliki sanksi, segera lunasi";
+            JOptionPane.showMessageDialog(null, namaMsg + "\n" + sanksiMsg + "\n" + msg);
+        }
     }
     
     class Barang extends RecursiveTreeObject<Barang> {
