@@ -18,8 +18,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -111,9 +113,11 @@ public class PeminjamanBarangController implements Initializable {
         setButtonAction();
     }
     
+    //Event 
     private void setButtonAction() {
         btnPinjam.setOnAction((event) -> {
-            
+            createRecordPeminjaman();
+            createRecordRincian();
         });
     }
     
@@ -150,6 +154,39 @@ public class PeminjamanBarangController implements Initializable {
         }
     }
     
+    private void createRecordRincian() {
+        String idPinjam = cariRecordPeminjaman();
+        List<String> list = new ArrayList<>();
+//        tabelPinjamBarang.getItems().stream().forEach((o) -> System.out.println(colNama.getCellData(o)));
+        for (Object o : tabelPinjamBarang.getItems()) {
+            String idBarang = colKode.getCellData(0);
+            list.add(idBarang);
+        }
+        try {
+            Statement stmt = connection.createStatement();
+            for (String idBarang : list) {
+                String query = "INSERT INTO rincian(id_peminjaman, id_barang, status_barang) " +
+                        "VALUES('" + idPinjam + "', " + "'" + idBarang + "', 'Dipinjam')";
+                stmt.executeUpdate(query);
+            }
+            createJumlahDipinjam(String.valueOf(list.size()));
+        } catch (SQLException e) {
+            e.getCause();
+        }
+    }
+    
+    private void createJumlahDipinjam(String jumlah) {
+        String idPinjam = cariRecordPeminjaman();
+        String query = "UPDATE peminjaman SET jumlah_dipinjam = '"+ jumlah +"' WHERE peminjaman.id_peminjaman = "+ idPinjam;
+        try {
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate(query);
+        } catch (SQLException ex) {
+            ex.getCause();
+        }
+        
+    }
+    
     private String cariRecordPeminjaman() {
         String nis = this.map.get("nis");
         String query = "SELECT id_peminjaman FROM peminjaman WHERE nis ='"+nis+"' AND tgl_kembali IS NULL";
@@ -180,9 +217,6 @@ public class PeminjamanBarangController implements Initializable {
             
             String namaBarang = rs.getString("nama_barang");
             String noUrut = String.valueOf(this.noUrut);
-            System.out.println(noUrut);
-            System.out.println(idBarang);
-            System.out.println(namaBarang);
             barangs.add(new Barang(noUrut, idBarang, namaBarang));
             this.noUrut++;
             lblNotAset.setVisible(false);
