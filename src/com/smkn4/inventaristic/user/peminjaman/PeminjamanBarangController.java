@@ -18,6 +18,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -33,6 +34,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
+import org.apache.commons.lang3.time.DateFormatUtils;
 
 /**
  * FXML Controller class
@@ -90,6 +92,13 @@ public class PeminjamanBarangController implements Initializable {
 //        this.noUrut = 1;
         
         setScanAction();
+        setButtonAction();
+    }
+    
+    private void setButtonAction() {
+        btnPinjam.setOnAction((event) -> {
+            getTanggalToday();
+        });
     }
     
     private void setScanAction() {
@@ -127,6 +136,7 @@ public class PeminjamanBarangController implements Initializable {
             String noUrut = String.valueOf(this.noUrut);
             this.barangs.add(new Barang(noUrut, idBarang, namaBarang, kodeBarang));
             this.noUrut++;
+            lblNotAset.setVisible(false);
         } catch (SQLException ex) {
             ex.getCause();
             ex.printStackTrace();
@@ -139,6 +149,10 @@ public class PeminjamanBarangController implements Initializable {
     
     private boolean isNotBarangDuplicate(String idBarang) {
         return dTracker.add(idBarang);
+    }
+    
+    private String getTanggalToday() {
+        return DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss");
     }
     
     protected void setUserMap(Map map) {
