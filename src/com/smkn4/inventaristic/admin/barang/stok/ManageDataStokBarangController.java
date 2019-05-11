@@ -73,6 +73,8 @@ public class ManageDataStokBarangController implements Initializable {
     private Label lblNotifSuccess;
     @FXML
     private Label lblNotifFail;
+    @FXML
+    private Label lblAction;
     
     Connection connection;
     ToggleGroup groupJenis;
@@ -88,6 +90,9 @@ public class ManageDataStokBarangController implements Initializable {
        this.connection = MySqlConnection.getConnection();
        tFieldTglMasuk.setText(DateFormatUtils.format(Calendar.getInstance().getTime(), "dd-MM-yyyy"));
        dpTglMasuk.setDisable(true);
+        if (this.action.equalsIgnoreCase("edit")) {
+            lblAction.setText("Edit Barang");
+        }
        setToggleGroup();
        setComponentsAction();
     }
@@ -164,8 +169,14 @@ public class ManageDataStokBarangController implements Initializable {
             ps.setString(10, deskripsi);
             ps.setString(11, this.idBarang);
             ps.execute();
+            if (this.action.equalsIgnoreCase("Edit")) {
+                lblNotifSuccess.setText("Barang Berhasil Di Edit");
+            }
             lblNotifSuccess.setVisible(true);
         } catch (SQLException e) {
+            if (this.action.equalsIgnoreCase("Edit")) {
+                lblNotifFail.setText("Edit Barang gagal");
+            }
             lblNotifFail.setVisible(true);
             e.getCause();
             e.printStackTrace();
@@ -186,6 +197,7 @@ public class ManageDataStokBarangController implements Initializable {
             String tglMasuk = DateFormatUtils.format(rs.getDate("tgl_masuk"), "dd-MM-YYY");
             tFieldTglMasuk.setText(tglMasuk);
             tAreaDeskripsi.setText(rs.getString("deskripsi"));
+            cbPinjaman.setSelected((rs.getString("dapat_dipinjam")).equalsIgnoreCase("Ya") ? true : false);
             
             String jenis = rs.getString("jenis_barang");
             String kondisi = rs.getString("kondisi");

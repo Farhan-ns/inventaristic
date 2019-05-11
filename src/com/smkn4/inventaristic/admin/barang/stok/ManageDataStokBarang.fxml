@@ -15,7 +15,7 @@
    <children>
       <Pane prefHeight="520.0" prefWidth="390.0" style="-fx-border-width: 3px; -fx-background-color: #ecf0f1;">
          <children>
-            <Label layoutX="14.0" layoutY="14.0" prefHeight="37.0" prefWidth="148.0" text="Tambah Barang">
+            <Label fx:id="lblAction" layoutX="14.0" layoutY="14.0" prefHeight="37.0" prefWidth="148.0" text="Tambah Barang">
                <font>
                   <Font name="Lato Bold" size="20.0" />
                </font>
