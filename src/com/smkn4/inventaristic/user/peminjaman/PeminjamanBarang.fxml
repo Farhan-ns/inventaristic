@@ -2,9 +2,10 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
@@ -63,7 +64,6 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <JFXTreeTableView fx:id="tabelBarangPinjam" layoutX="38.0" layoutY="161.0" prefHeight="364.0" prefWidth="730.0" />
                   <VBox layoutX="38.0" layoutY="86.0" prefHeight="102.0" prefWidth="116.0">
                      <children>
                         <Label alignment="CENTER" prefHeight="33.0" prefWidth="128.0" text="Total Pinjam" textFill="#615c5c">
@@ -86,6 +86,13 @@
                         <Font name="Lato Regular" size="19.0" />
                      </font>
                   </Label>
+                  <TableView fx:id="tabelPinjamBarang" layoutX="38.0" layoutY="162.0" prefHeight="359.0" prefWidth="729.0">
+                     <columns>
+                        <TableColumn fx:id="colNo" prefWidth="93.0" text="No" />
+                        <TableColumn fx:id="colKode" prefWidth="214.0" text="Kode Barang" />
+                        <TableColumn fx:id="colNama" prefWidth="421.0" text="Nama Barang" />
+                     </columns>
+                  </TableView>
                </children>
             </Pane>
          </children>

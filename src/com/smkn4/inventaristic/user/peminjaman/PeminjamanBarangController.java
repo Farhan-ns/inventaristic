@@ -32,9 +32,12 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javax.swing.JOptionPane;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
@@ -54,8 +57,6 @@ public class PeminjamanBarangController implements Initializable {
     @FXML
     private JFXButton btnSignOut;
     @FXML
-    private JFXTreeTableView<Barang> tabelBarangPinjam;
-    @FXML
     private Label lblTotal;
     @FXML
     private JFXButton btnPinjam;
@@ -65,6 +66,17 @@ public class PeminjamanBarangController implements Initializable {
     private TextField tFieldScanBarang;        
     @FXML
     private Label lblNotAset;
+    @FXML
+    private TableView<Barang> tabelPinjamBarang;
+
+    @FXML
+    private TableColumn<Barang, String> colNo;
+
+    @FXML
+    private TableColumn<Barang, String> colNama;
+
+    @FXML
+    private TableColumn<Barang, String> colKode;
     
     ObservableList<Barang> barangs = FXCollections.observableArrayList();
     Set<String> dTracker = new HashSet<>();
@@ -77,21 +89,23 @@ public class PeminjamanBarangController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        JFXTreeTableColumn<Barang, String> colNo = new JFXTreeTableColumn<>("No");
-        colNo.setPrefWidth(150);
-        colNo.setCellValueFactory((TreeTableColumn.CellDataFeatures<Barang, String> param) -> param.getValue().getValue().noUrut);
-        
-        JFXTreeTableColumn<Barang, String> colNama = new JFXTreeTableColumn<>("Nama");
-        colNama.setPrefWidth(150);
-        colNama.getStyleClass().add("tree-table-cell");
-        colNama.setCellValueFactory((TreeTableColumn.CellDataFeatures<Barang, String> param) -> param.getValue().getValue().namaBarang);
-        
-        JFXTreeTableColumn<Barang, String> colKode = new JFXTreeTableColumn<>("Kode Barang");
-        colKode.setPrefWidth(150);
-        colKode.setCellValueFactory((TreeTableColumn.CellDataFeatures<Barang, String> param) -> param.getValue().getValue().kodeBarang);
-        tabelBarangPinjam.getColumns().setAll(colNo, colNama, colKode);
+//        JFXTreeTableColumn<Barang, String> colNo = new JFXTreeTableColumn<>("No");
+//        colNo.setPrefWidth(150);
+//        colNo.setCellValueFactory((TreeTableColumn.CellDataFeatures<Barang, String> param) -> param.getValue().getValue().noUrut);
+//        
+//        JFXTreeTableColumn<Barang, String> colNama = new JFXTreeTableColumn<>("Nama");
+//        colNama.setPrefWidth(150);
+//        colNama.getStyleClass().add("tree-table-cell");
+//        colNama.setCellValueFactory((TreeTableColumn.CellDataFeatures<Barang, String> param) -> param.getValue().getValue().namaBarang);
+//        
+//        JFXTreeTableColumn<Barang, String> colKode = new JFXTreeTableColumn<>("Kode Barang");
+//        colKode.setPrefWidth(150);
+//        colKode.setCellValueFactory((TreeTableColumn.CellDataFeatures<Barang, String> param) -> param.getValue().getValue().kodeBarang);
+//        tabelBarangPinjam.getColumns().setAll(colNo, colNama, colKode);
+
         this.connection = MySqlConnection.getConnection();
-//        this.noUrut = 1;
+
+
         
         setScanAction();
         setButtonAction();
@@ -99,8 +113,7 @@ public class PeminjamanBarangController implements Initializable {
     
     private void setButtonAction() {
         btnPinjam.setOnAction((event) -> {
-            String l = tabelBarangPinjam.getColumns().get(1).getCellData(1).toString();
-            System.out.println(l);
+            
         });
     }
     
@@ -114,7 +127,7 @@ public class PeminjamanBarangController implements Initializable {
             } else {
                 if (isNotBarangDuplicate(str[1])) {
                     try {
-                        showBarang(str[1], kodeBarang);
+                        showBarang(str[1]);
                     } catch (JenisBarangException e) {
                         lblNotAset.setVisible(true);
                     }
@@ -153,7 +166,7 @@ public class PeminjamanBarangController implements Initializable {
         return idPeminjaman;
     }
     
-    private void showBarang(String idBarang, String  kodeBarang) throws JenisBarangException {
+    private void showBarang(String idBarang) throws JenisBarangException {
         //BUG CSS PROBLEM
         String query = "SELECT id_barang, nama_barang, jenis_barang FROM barang_masuk WHERE id_barang = " + idBarang;
         try {
@@ -167,7 +180,10 @@ public class PeminjamanBarangController implements Initializable {
             
             String namaBarang = rs.getString("nama_barang");
             String noUrut = String.valueOf(this.noUrut);
-            this.barangs.add(new Barang(noUrut, idBarang, namaBarang, kodeBarang));
+            System.out.println(noUrut);
+            System.out.println(idBarang);
+            System.out.println(namaBarang);
+            barangs.add(new Barang(noUrut, idBarang, namaBarang));
             this.noUrut++;
             lblNotAset.setVisible(false);
         } catch (SQLException ex) {
@@ -175,9 +191,10 @@ public class PeminjamanBarangController implements Initializable {
             ex.printStackTrace();
         }
         System.out.println(barangs.size());
-        final TreeItem<Barang> root = new RecursiveTreeItem<>(barangs, RecursiveTreeObject::getChildren);
-        tabelBarangPinjam.setRoot(root);
-        tabelBarangPinjam.setShowRoot(false);
+        colNo.setCellValueFactory(new PropertyValueFactory<>("noUrut"));
+        colKode.setCellValueFactory(new PropertyValueFactory<>("idBarang"));
+        colNama.setCellValueFactory(new PropertyValueFactory<>("namaBarang"));
+        tabelPinjamBarang.setItems(barangs);
     }
     
     private boolean isNotBarangDuplicate(String idBarang) {
@@ -213,36 +230,28 @@ public class PeminjamanBarangController implements Initializable {
         }
     }
     
-    class Barang extends RecursiveTreeObject<Barang> {
-        SimpleStringProperty noUrut;
-        SimpleStringProperty idBarang;
-        SimpleStringProperty namaBarang;
-        SimpleStringProperty kodeBarang;
+    public class Barang extends RecursiveTreeObject<Barang> {
+        String noUrut;
+        String idBarang;
+        String namaBarang;
 
-        public Barang(String noUrut, String idBarang, String namaBarang, String kodeBarang) {
-            this.noUrut = new SimpleStringProperty(noUrut);
-            this.idBarang = new SimpleStringProperty(idBarang);
-            this.namaBarang = new SimpleStringProperty(namaBarang);
-            this.kodeBarang = new SimpleStringProperty(kodeBarang);
+        public Barang(String noUrut, String idBarang, String namaBarang) {
+            this.noUrut = noUrut;
+            this.idBarang = idBarang;
+            this.namaBarang = namaBarang;
+        }
+
+        public String getNoUrut() {
+            return noUrut;
         }
 
         public String getIdBarang() {
-            return idBarang.get();
+            return idBarang;
         }
 
         public String getNamaBarang() {
-            return namaBarang.get();
+            return namaBarang;
         }
-
-        public String getnoUrut() {
-            return noUrut.get();
-        }
-        
-        public String getKodeBarang() {
-            return kodeBarang.get();
-        }
-
-        
     }
     
 }
