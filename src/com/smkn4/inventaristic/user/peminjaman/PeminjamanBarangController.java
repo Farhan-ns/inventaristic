@@ -99,7 +99,8 @@ public class PeminjamanBarangController implements Initializable {
     
     private void setButtonAction() {
         btnPinjam.setOnAction((event) -> {
-            getTanggalToday();
+            String l = tabelBarangPinjam.getColumns().get(1).getCellData(1).toString();
+            System.out.println(l);
         });
     }
     
@@ -120,6 +121,36 @@ public class PeminjamanBarangController implements Initializable {
                 }
             }
         });
+    }
+    
+    private void createRecordPeminjaman() {
+        String tanggalPinjam = getTanggalToday();
+        String nis = this.map.get("nis");
+        String query = "INSERT INTO peminjaman(tgl_peminjaman, nis, status_peminjaman) " +
+                "VALUES('"+tanggalPinjam+"', " + "'" + nis + "', 'Belum Kembali')";
+        Statement stmt;
+        try {
+            stmt = connection.createStatement();
+            stmt.executeUpdate(query);
+        } catch (SQLException ex) {
+        
+        }
+    }
+    
+    private String cariRecordPeminjaman() {
+        String nis = this.map.get("nis");
+        String query = "SELECT id_peminjaman FROM peminjaman WHERE nis ='"+nis+"' AND tgl_kembali IS NULL";
+        Statement stmt;
+        String idPeminjaman = "";
+        try {
+            stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            rs.first();
+            idPeminjaman = rs.getString("id_peminjaman");
+        } catch (SQLException ex) {
+        
+        }
+        return idPeminjaman;
     }
     
     private void showBarang(String idBarang, String  kodeBarang) throws JenisBarangException {
