@@ -11,6 +11,7 @@ import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import com.smkn4.inventaristic.util.JenisBarangException;
 import com.smkn4.inventaristic.util.MySqlConnection;
 import java.net.URL;
 import java.sql.Connection;
@@ -58,6 +59,8 @@ public class PeminjamanBarangController implements Initializable {
     private JFXTextField tFieldSearch;
     @FXML
     private TextField tFieldScanBarang;        
+    @FXML
+    private Label lblNotAset;
     
     ObservableList<Barang> barangs = FXCollections.observableArrayList();
     Set<String> dTracker = new HashSet<>();
@@ -98,19 +101,28 @@ public class PeminjamanBarangController implements Initializable {
                 System.out.println("bukan barang smkn 4");
             } else {
                 if (isNotBarangDuplicate(str[1])) {
-                    showBarang(str[1], kodeBarang);
+                    try {
+                        showBarang(str[1], kodeBarang);
+                    } catch (JenisBarangException e) {
+                        lblNotAset.setVisible(true);
+                    }
                 }
             }
         });
     }
     
-    private void showBarang(String idBarang, String  kodeBarang) {
+    private void showBarang(String idBarang, String  kodeBarang) throws JenisBarangException {
         //BUG CSS PROBLEM
-        String query = "SELECT id_barang, nama_barang FROM barang_masuk WHERE id_barang = " + idBarang;
+        String query = "SELECT id_barang, nama_barang, jenis_barang FROM barang_masuk WHERE id_barang = " + idBarang;
         try {
             Statement stmt = this.connection.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             rs.first();
+            
+            if (!rs.getString("jenis_barang").toLowerCase().equals("aset")) {
+                throw new JenisBarangException("Bukan Barang jenis aset");
+            }
+            
             String namaBarang = rs.getString("nama_barang");
             String noUrut = String.valueOf(this.noUrut);
             this.barangs.add(new Barang(noUrut, idBarang, namaBarang, kodeBarang));
