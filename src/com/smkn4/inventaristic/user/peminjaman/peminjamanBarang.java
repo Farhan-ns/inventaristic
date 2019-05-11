@@ -374,7 +374,7 @@ public class peminjamanBarang extends javax.swing.JFrame {
             ResultSet rs = stmt.executeQuery(query);
             rs.next();
             idPinjam = rs.getString("id_peminjaman");
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Terjadi Kesalahan di Query");
         }

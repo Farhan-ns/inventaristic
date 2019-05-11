@@ -68,7 +68,16 @@
                         <Font size="27.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="tFieldUser" layoutX="322.0" layoutY="409.0" />
+                  <TextField fx:id="tFieldUser" layoutX="322.0" layoutY="409.0" style="-fx-opacity: 0;" />
+                  <StackPane layoutX="139.0" layoutY="440.0" prefHeight="59.0" prefWidth="545.0">
+                     <children>
+                        <Label fx:id="lblFail" layoutX="93.0" layoutY="23.0" text="User tidak ditemukan harap coba lagi" textFill="#ee1212" visible="false">
+                           <font>
+                              <Font size="23.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </StackPane>
                </children>
             </Pane>
          </children>

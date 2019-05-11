@@ -18,11 +18,13 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -50,6 +52,8 @@ public class ScanUserController implements Initializable {
     private Pane pnlOverview;
     @FXML
     private TextField tFieldUser;
+    @FXML
+    private Label lblFail;
 
     /**
      * Initializes the controller class.
@@ -57,6 +61,9 @@ public class ScanUserController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setFieldAction();
+        Platform.runLater(() -> {
+            tFieldUser.requestFocus();
+        });
     }
     
     private void setFieldAction() {
@@ -69,7 +76,7 @@ public class ScanUserController implements Initializable {
         System.out.println("called");
         String nis = tFieldUser.getText();
         if (nis == null || nis.length() < 10) {
-            //show error
+            lblFail.setVisible(true);
             return;
         } else {
             checkUser(nis);

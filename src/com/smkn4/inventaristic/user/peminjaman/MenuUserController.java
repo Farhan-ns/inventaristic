@@ -33,29 +33,22 @@ public class MenuUserController implements Initializable {
     @FXML
     private JFXButton btnSignOut;
     @FXML
-    private Pane pnlCustomer;
-    @FXML
-    private Pane pnlOrders;
-    @FXML
-    private Pane pnlMenus;
-    @FXML
-    private Pane pnlOverview;
-    @FXML
     private Pane boxPeminjaman;
     @FXML
     private Pane boxPermintaan;
     @FXML
     private Pane boxPengajuan;
-
-    Map map;
     @FXML
     private Label lblNama;
+    
+    FXMLLoader loader;
+    Map map;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    
+        setButtonsAction();
     }   
     
     private void setIdentitas() {
@@ -64,15 +57,17 @@ public class MenuUserController implements Initializable {
     
     private void setButtonsAction() {
         boxPeminjaman.setOnMouseClicked((event) -> {
-//            try {
-//                Parent viewBarang = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/PeminjamanBarang.fxml"));
-//                Stage stage = new Stage();
-//                stage.initOwner(boxPeminjaman.getScene().getWindow());
-//                stage.setScene(new Scene(viewBarang));
-//                stage.show();
-//                //pass the map
-//            } catch (IOException ex) {
-//            }
+            try {
+                this.loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/PeminjamanBarang.fxml"));
+                Parent viewPinjamBarang = loader.load();
+                Stage stage = new Stage();
+                stage.initOwner(boxPeminjaman.getScene().getWindow());
+                stage.setScene(new Scene(viewPinjamBarang));
+                stage.show();
+                PeminjamanBarangController controller = loader.getController();
+                controller.setUserMap(this.map);
+            } catch (IOException ex) {
+            }
         });
     }
     

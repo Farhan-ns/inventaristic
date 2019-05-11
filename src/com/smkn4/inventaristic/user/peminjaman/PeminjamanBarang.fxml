@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -25,10 +26,13 @@
                <VBox.margin>
                   <Insets bottom="10.0" top="50.0" />
                </VBox.margin></ImageView>
-            <Label text="Hallo, User!" textFill="#e7e5e5">
+            <Label fx:id="lblUsername" text="Hallo, User!" textFill="#e7e5e5">
                <VBox.margin>
                   <Insets bottom="20.0" />
                </VBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
             </Label>
             <JFXButton fx:id="btnMenu" prefHeight="25.0" prefWidth="130.0" text="Menu" textFill="#e7e5e5">
                <VBox.margin>
@@ -54,18 +58,12 @@
             <Pane fx:id="pnlMenus" prefHeight="200.0" prefWidth="200.0" />
             <Pane fx:id="pnlOverview" prefHeight="554.0" prefWidth="793.0" style="-fx-background-color: #FFFFFF;">
                <children>
-                  <TextField fx:id="tFieldSearch" layoutX="590.0" layoutY="47.0" prefHeight="27.0" prefWidth="183.0" promptText="search" style="-fx-background-color: #FFFF; -fx-border-color: #B7C3D7; -fx-border-radius: 2em;" />
                   <Label layoutX="38.0" layoutY="36.0" style="-fx-text-fill: #2d3436;" text="Peminjaman Barang" textFill="#e7e5e5">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="17.0" fitWidth="16.0" layoutX="749.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Project/RestaurantMgtSampleUI-master/out/production/RestaurantMgt/images/icons8_Search_52px.png" />
-                     </image>
-                  </ImageView>
-                  <JFXTreeTableView fx:id="tabelBarangPinjam" layoutX="38.0" layoutY="161.0" prefHeight="389.0" prefWidth="730.0" />
+                  <JFXTreeTableView fx:id="tabelBarangPinjam" layoutX="38.0" layoutY="161.0" prefHeight="364.0" prefWidth="730.0" />
                   <VBox layoutX="38.0" layoutY="86.0" prefHeight="102.0" prefWidth="116.0">
                      <children>
                         <Label alignment="CENTER" prefHeight="33.0" prefWidth="128.0" text="Total Pinjam" textFill="#615c5c">
@@ -80,6 +78,14 @@
                         </Label>
                      </children>
                   </VBox>
+                  <JFXButton fx:id="btnPinjam" layoutX="669.0" layoutY="537.0" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #00b894;" text="Pinjam" />
+                  <JFXTextField fx:id="tFieldSearch" focusColor="#00b894" layoutX="553.0" layoutY="54.0" prefHeight="25.0" prefWidth="189.0" promptText="Search" />
+                  <TextField fx:id="tFieldScanBarang" layoutX="192.0" layoutY="86.0" prefHeight="25.0" prefWidth="181.0" style="-fx-opacity: 1;" />
+                  <Label fx:id="lblNotAset" alignment="CENTER" layoutX="192.0" layoutY="121.0" prefHeight="33.0" prefWidth="181.0" text="Bukan Barang Aset" textFill="#fc1e1e" visible="false">
+                     <font>
+                        <Font name="Lato Regular" size="19.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
          </children>
