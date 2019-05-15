@@ -169,6 +169,7 @@ public class PermintaanBarangController implements Initializable {
                         "VALUES('" + tanggalPermintaan + "', " + "'" + nis + "'," + "'" + idBarang + "')";
                 stmt.executeUpdate(query);
             }
+            JOptionPane.showMessageDialog(null, "Peminjaman Berhasil", "Notifikasi", 1);
         } catch (SQLException ex) {
             ex.getCause();
             ex.printStackTrace();
