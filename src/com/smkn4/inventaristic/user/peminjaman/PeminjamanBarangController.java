@@ -93,6 +93,9 @@ public class PeminjamanBarangController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.connection = MySqlConnection.getConnection();
+        colNo.setCellValueFactory(new PropertyValueFactory<>("noUrut"));
+        colKode.setCellValueFactory(new PropertyValueFactory<>("idBarang"));
+        colNama.setCellValueFactory(new PropertyValueFactory<>("namaBarang"));
         setScanAction();
         setButtonAction();
     }
@@ -234,9 +237,6 @@ public class PeminjamanBarangController implements Initializable {
             ex.printStackTrace();
         }
         System.out.println(barangs.size());
-        colNo.setCellValueFactory(new PropertyValueFactory<>("noUrut"));
-        colKode.setCellValueFactory(new PropertyValueFactory<>("idBarang"));
-        colNama.setCellValueFactory(new PropertyValueFactory<>("namaBarang"));
         tabelPinjamBarang.setItems(barangs);
     }
     
