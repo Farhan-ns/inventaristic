@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.smkn4.inventaristic.user.peminjaman;
+package com.smkn4.inventaristic.user;
 
 import com.jfoenix.controls.JFXButton;
+import com.smkn4.inventaristic.user.peminjaman.MenuUserController;
 import com.smkn4.inventaristic.util.MySqlConnection;
 import java.io.IOException;
 import java.net.URL;
