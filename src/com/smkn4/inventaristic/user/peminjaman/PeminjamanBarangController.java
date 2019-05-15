@@ -26,10 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -41,8 +38,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
@@ -106,7 +101,6 @@ public class PeminjamanBarangController implements Initializable {
     private void setButtonAction() {
         btnPinjam.setOnAction((event) -> {
             createRecordPeminjaman();
-            createRecordRincian();
         });
         btnMenu.setOnAction((event) -> {
             try {
@@ -166,13 +160,13 @@ public class PeminjamanBarangController implements Initializable {
         try {
             stmt = connection.createStatement();
             stmt.executeUpdate(query);
+            createRecordRincian(getLatestRecordPeminjaman());
         } catch (SQLException ex) {
         
         }
     }
     
-    private void createRecordRincian() {
-        String idPinjam = cariRecordPeminjaman();
+    private void createRecordRincian(String idPinjam) {
         List<String> list = new ArrayList<>();
         for (Object o : tabelPinjamBarang.getItems()) {
             String idBarang = colKode.getCellData(0);
@@ -185,27 +179,26 @@ public class PeminjamanBarangController implements Initializable {
                         "VALUES('" + idPinjam + "', " + "'" + idBarang + "', 'Dipinjam')";
                 stmt.executeUpdate(query);
             }
-            createJumlahDipinjam(String.valueOf(list.size()));
+            createJumlahDipinjam(idPinjam, String.valueOf(list.size()));
         } catch (SQLException e) {
             e.getCause();
         }
     }
     
-    private void createJumlahDipinjam(String jumlah) {
-        String idPinjam = cariRecordPeminjaman();
+    private void createJumlahDipinjam(String idPinjam, String jumlah) {
         String query = "UPDATE peminjaman SET jumlah_dipinjam = '"+ jumlah +"' WHERE peminjaman.id_peminjaman = "+ idPinjam;
         try {
             Statement stmt = connection.createStatement();
             stmt.executeUpdate(query);
+            JOptionPane.showMessageDialog(null, "Peminjaman Berhasil", "Notifikasi", 1);
         } catch (SQLException ex) {
             ex.getCause();
         }
-        
     }
     
-    private String cariRecordPeminjaman() {
-        String nis = this.map.get("nis");
-        String query = "SELECT id_peminjaman FROM peminjaman WHERE nis ='"+nis+"' AND tgl_kembali IS NULL";
+    private String getLatestRecordPeminjaman() {
+//        String nis = this.map.get("nis");
+        String query = "SELECT id_peminjaman FROM peminjaman ORDER BY id_peminjaman DESC LIMIT 1";
         Statement stmt;
         String idPeminjaman = "";
         try {
