@@ -57,7 +57,7 @@ public class BarangMasalahController implements Initializable {
     @FXML
     private JFXButton btnRefresh;
     @FXML
-    private JFXButton btnDashboard;
+    private JFXButton btnSwitch;
     @FXML
     private JFXButton btnDataUser;
     @FXML
@@ -134,6 +134,16 @@ public class BarangMasalahController implements Initializable {
             } catch (IOException ex) {
                 ex.getCause();
                 ex.printStackTrace();
+            }
+        });
+        btnSwitch.setOnAction((event) -> {
+            try {
+                Stage stage = (Stage) btnSwitch.getScene().getWindow();
+                Parent root = FXMLLoader.load((getClass().getResource("/com/smkn4/inventaristic/admin/barang/stok/StokBarang.fxml")));
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException ex) {
+                
             }
         });
         btnHapus.setOnAction ( (event) -> {

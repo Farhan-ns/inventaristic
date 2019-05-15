@@ -69,7 +69,7 @@ public class StokBarangController implements Initializable {
     private JFXButton btnSignOut;
 
     @FXML
-    private JFXButton btnBarangBermasalah;
+    private JFXButton btnSwitch;
     
     @FXML
     private JFXButton btnTambah;
@@ -88,11 +88,12 @@ public class StokBarangController implements Initializable {
 
     @FXML
     private JFXTreeTableView<Barang> tabelStokBarang;
+    
     @FXML
     private JFXButton btnRefresh;
-    private JFXButton btnTambahBermasalah;
     
-    Connection connection;
+    @FXML
+    private JFXButton btnTambahBermasalah;
     @FXML
     private Pane pnlCustomer;
     @FXML
@@ -104,6 +105,7 @@ public class StokBarangController implements Initializable {
     @FXML
     private TextField tFieldSearch;
 
+    Connection connection;
 
     /**
      * Inisialisi controller class.
@@ -138,10 +140,6 @@ public class StokBarangController implements Initializable {
         JFXTreeTableColumn<Barang, String> colPinjaman = new JFXTreeTableColumn<>("Pinjaman");
         colPinjaman.setPrefWidth(150);
         colPinjaman.setCellValueFactory((TreeTableColumn.CellDataFeatures<Barang, String> param) -> param.getValue().getValue().dapatDipinjam);
-        
-        //ObservableList digunakan untuk menyimpan data objek Barang dan ditambahkan ke tabel
-//        ObservableList<Barang> barangs = FXCollections.observableArrayList();
-//        barangs.add(new Barang("Proyektor", "Aset", "10-10-2019", "Baik", "A2", "10 jam", "Ya"));
 
         //READ DATA
         this.connection = MySqlConnection.getConnection();
@@ -236,11 +234,10 @@ public class StokBarangController implements Initializable {
                 ex.printStackTrace();
             }
         });
-        btnBarangBermasalah.setOnAction((event) -> {
+        btnSwitch.setOnAction((event) -> {
             try {
-                Stage stage = new Stage();
+                Stage stage = (Stage) btnSwitch.getScene().getWindow();
                 Parent root = FXMLLoader.load((getClass().getResource("/com/smkn4/inventaristic/admin/barang/bermasalah/BarangMasalah.fxml")));
-                stage.initOwner(btnBarangBermasalah.getScene().getWindow());
                 stage.setScene(new Scene(root));
                 stage.show();
             } catch (IOException ex) {

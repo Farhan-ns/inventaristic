@@ -30,7 +30,7 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </Label>
-            <JFXButton fx:id="btnDashboard" text="Dashboard" textFill="#e7e5e5">
+            <JFXButton fx:id="btnSwitch" text="Stok Barang" textFill="#e7e5e5">
                <VBox.margin>
                   <Insets top="22.0" />
                </VBox.margin>

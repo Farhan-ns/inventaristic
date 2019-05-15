@@ -60,7 +60,7 @@ public class AdminHomeController implements Initializable {
     private Pane bocPeminjaman;
     
     FXMLLoader loader;
-    Stage stage = new Stage();
+    Stage stage;
 
     /**
      * Initializes the controller class.
@@ -73,9 +73,8 @@ public class AdminHomeController implements Initializable {
     private void setBoxAction() {
         boxBarang.setOnMouseClicked((event) -> {
             try {
-                Stage stage = new Stage();
+                stage = (Stage) boxBarang.getScene().getWindow();
                 Parent root = FXMLLoader.load((getClass().getResource("/com/smkn4/inventaristic/admin/barang/stok/StokBarang.fxml")));
-                stage.initOwner(boxBarang.getScene().getWindow());
                 stage.setScene(new Scene(root));
                 stage.show();
             } catch (IOException ex) {
