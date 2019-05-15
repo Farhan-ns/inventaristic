@@ -106,13 +106,12 @@ public class ScanUserController implements Initializable {
     
     private void grant(Map map) {
         FXMLLoader loader = new FXMLLoader();
-        Stage stage = new Stage();
         try {
             loader.setLocation(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/MenuUser.fxml"));
             Parent viewBarang = loader.load();
-            stage.initOwner(tFieldUser.getScene().getWindow());
+            Stage stage = (Stage) tFieldUser.getScene().getWindow();
             stage.setScene(new Scene(viewBarang));
-            tFieldUser.getScene().getWindow().hide();
+//            tFieldUser.getScene().getWindow().hide();
             stage.show();
             MenuUserController controller = loader.getController();
             controller.setUserMap(map);
