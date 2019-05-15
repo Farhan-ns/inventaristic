@@ -25,11 +25,7 @@ import javafx.stage.Stage;
  * @author Farhanunnasih
  */
 public class MenuUserController implements Initializable {
-
-    @FXML
-    private JFXButton btnMenu;
-    @FXML
-    private JFXButton btnPengajuan;
+    
     @FXML
     private JFXButton btnSignOut;
     @FXML
@@ -60,13 +56,28 @@ public class MenuUserController implements Initializable {
             try {
                 this.loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/PeminjamanBarang.fxml"));
                 Parent viewPinjamBarang = loader.load();
-                Stage stage = new Stage();
-                stage.initOwner(boxPeminjaman.getScene().getWindow());
+                Stage stage = (Stage) boxPeminjaman.getScene().getWindow();
                 stage.setScene(new Scene(viewPinjamBarang));
                 stage.show();
                 PeminjamanBarangController controller = loader.getController();
                 controller.setUserMap(this.map);
             } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
+            }
+        });
+        boxPermintaan.setOnMouseClicked((event) -> {
+            try {
+                this.loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/PermintaanBarang.fxml"));
+                Parent viewMintaBarang = loader.load();
+                Stage stage = (Stage) boxPeminjaman.getScene().getWindow();
+                stage.setScene(new Scene(viewMintaBarang));
+                stage.show();
+                PermintaanBarangController controller = loader.getController();
+                controller.setUserMap(this.map);
+            } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
             }
         });
     }

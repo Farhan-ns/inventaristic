@@ -32,16 +32,6 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <JFXButton fx:id="btnMenu" prefHeight="25.0" prefWidth="130.0" text="Menu" textFill="#e7e5e5">
-               <VBox.margin>
-                  <Insets top="22.0" />
-               </VBox.margin>
-            </JFXButton>
-            <JFXButton fx:id="btnPengajuan" graphicTextGap="22.0" prefHeight="25.0" prefWidth="130.0" text="Pengajuan Barang" textFill="#e7e5e5">
-               <VBox.margin>
-                  <Insets top="22.0" />
-               </VBox.margin>
-            </JFXButton>
             <JFXButton fx:id="btnSignOut" graphicTextGap="22.0" prefHeight="25.0" prefWidth="130.0" text="Sign Out" textFill="#e7e5e5">
                <VBox.margin>
                   <Insets top="22.0" />
@@ -54,7 +44,7 @@
             <Pane fx:id="pnlCustomer" prefHeight="200.0" prefWidth="200.0" />
             <Pane fx:id="pnlOrders" prefHeight="200.0" prefWidth="200.0" />
             <Pane fx:id="pnlMenus" prefHeight="200.0" prefWidth="200.0" />
-            <Pane fx:id="pnlOverview" prefHeight="554.0" prefWidth="793.0" style="-fx-background-color: #FFFFFF;">
+            <Pane fx:id="pnlOverview" prefHeight="576.0" prefWidth="755.0" style="-fx-background-color: #FFFFFF;">
                <children>
                   <Label layoutX="38.0" layoutY="36.0" style="-fx-text-fill: #2d3436;" text="Menu" textFill="#e7e5e5">
                      <font>
@@ -111,6 +101,11 @@
                               <Font name="Lato Regular" size="24.0" />
                            </font>
                         </Label>
+                        <ImageView fitHeight="88.0" fitWidth="117.0" layoutX="54.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../assets/task-list.png" />
+                           </image>
+                        </ImageView>
                      </children>
                      <cursor>
                         <Cursor fx:constant="HAND" />

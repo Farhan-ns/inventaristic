@@ -13,6 +13,7 @@ import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import com.smkn4.inventaristic.util.JenisBarangException;
 import com.smkn4.inventaristic.util.MySqlConnection;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -32,7 +33,10 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -40,6 +44,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
@@ -55,7 +60,7 @@ public class PeminjamanBarangController implements Initializable {
     @FXML
     private JFXButton btnMenu;
     @FXML
-    private JFXButton btnPengajuan;
+    private JFXButton btnSwitch;
     @FXML
     private JFXButton btnSignOut;
     @FXML
@@ -84,6 +89,7 @@ public class PeminjamanBarangController implements Initializable {
     Set<String> dTracker = new HashSet<>();
     Map<String, String> map;
     Connection connection;
+    FXMLLoader loader;
     int noUrut = 1;
     
     /**
@@ -91,24 +97,7 @@ public class PeminjamanBarangController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-//        JFXTreeTableColumn<Barang, String> colNo = new JFXTreeTableColumn<>("No");
-//        colNo.setPrefWidth(150);
-//        colNo.setCellValueFactory((TreeTableColumn.CellDataFeatures<Barang, String> param) -> param.getValue().getValue().noUrut);
-//        
-//        JFXTreeTableColumn<Barang, String> colNama = new JFXTreeTableColumn<>("Nama");
-//        colNama.setPrefWidth(150);
-//        colNama.getStyleClass().add("tree-table-cell");
-//        colNama.setCellValueFactory((TreeTableColumn.CellDataFeatures<Barang, String> param) -> param.getValue().getValue().namaBarang);
-//        
-//        JFXTreeTableColumn<Barang, String> colKode = new JFXTreeTableColumn<>("Kode Barang");
-//        colKode.setPrefWidth(150);
-//        colKode.setCellValueFactory((TreeTableColumn.CellDataFeatures<Barang, String> param) -> param.getValue().getValue().kodeBarang);
-//        tabelBarangPinjam.getColumns().setAll(colNo, colNama, colKode);
-
         this.connection = MySqlConnection.getConnection();
-
-
-        
         setScanAction();
         setButtonAction();
     }
@@ -118,6 +107,34 @@ public class PeminjamanBarangController implements Initializable {
         btnPinjam.setOnAction((event) -> {
             createRecordPeminjaman();
             createRecordRincian();
+        });
+        btnMenu.setOnAction((event) -> {
+            try {
+                this.loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/MenuUser.fxml"));
+                Parent viewMintaBarang = loader.load();
+                Stage stage = (Stage) btnSwitch.getScene().getWindow();
+                stage.setScene(new Scene(viewMintaBarang));
+                stage.show();
+                MenuUserController controller = loader.getController();
+                controller.setUserMap(this.map);
+            } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
+            }
+        });
+        btnSwitch.setOnAction((event) -> {
+            try {
+                this.loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/PermintaanBarang.fxml"));
+                Parent viewMintaBarang = loader.load();
+                Stage stage = (Stage) btnSwitch.getScene().getWindow();
+                stage.setScene(new Scene(viewMintaBarang));
+                stage.show();
+                PermintaanBarangController controller = loader.getController();
+                controller.setUserMap(this.map);
+            } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
+            }
         });
     }
     
@@ -157,7 +174,6 @@ public class PeminjamanBarangController implements Initializable {
     private void createRecordRincian() {
         String idPinjam = cariRecordPeminjaman();
         List<String> list = new ArrayList<>();
-//        tabelPinjamBarang.getItems().stream().forEach((o) -> System.out.println(colNama.getCellData(o)));
         for (Object o : tabelPinjamBarang.getItems()) {
             String idBarang = colKode.getCellData(0);
             list.add(idBarang);
