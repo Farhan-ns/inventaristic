@@ -7,9 +7,6 @@ package com.smkn4.inventaristic.user.peminjaman;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXTreeTableColumn;
-import com.jfoenix.controls.JFXTreeTableView;
-import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import com.smkn4.inventaristic.util.JenisBarangException;
 import com.smkn4.inventaristic.util.MySqlConnection;
@@ -158,7 +155,7 @@ public class PeminjamanBarangController implements Initializable {
         String tanggalPinjam = getTanggalToday();
         String nis = this.map.get("nis");
         String query = "INSERT INTO peminjaman(tgl_peminjaman, nis, status_peminjaman) " +
-                "VALUES('"+tanggalPinjam+"', " + "'" + nis + "', 'Belum Kembali')";
+                "VALUES('"+tanggalPinjam+"', " + "'" + nis + "', 'belum_kembali')";
         Statement stmt;
         try {
             stmt = connection.createStatement();

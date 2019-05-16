@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1050.0" style="-fx-background-color: #02030A;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.smkn4.inventaristic.user.peminjaman.PengembalianBarangController">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="576.0" prefWidth="258.0" style="-fx-background-color: #00b894;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fitHeight="73.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/jimmy-fallon.png" />
+               </image>
+               <VBox.margin>
+                  <Insets bottom="10.0" top="50.0" />
+               </VBox.margin></ImageView>
+            <Label fx:id="lblUsername" text="Hallo, User!" textFill="#e7e5e5">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <JFXButton fx:id="btnMenu" prefHeight="25.0" prefWidth="130.0" text="Menu" textFill="#e7e5e5">
+               <VBox.margin>
+                  <Insets top="22.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton fx:id="btnSignOut" graphicTextGap="22.0" prefHeight="25.0" prefWidth="130.0" text="Sign Out" textFill="#e7e5e5">
+               <VBox.margin>
+                  <Insets top="22.0" />
+               </VBox.margin>
+            </JFXButton>
+         </children>
+      </VBox>
+      <StackPane layoutX="258.0" prefHeight="576.0" prefWidth="793.0" style="-fx-background-color: #02030A;">
+         <children>
+            <Pane fx:id="pnlCustomer" prefHeight="200.0" prefWidth="200.0" />
+            <Pane fx:id="pnlOrders" prefHeight="200.0" prefWidth="200.0" />
+            <Pane fx:id="pnlMenus" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" />
+            <Pane fx:id="pnlOverview" prefHeight="554.0" prefWidth="793.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <Label layoutX="38.0" layoutY="36.0" style="-fx-text-fill: #2d3436;" text="Pengembalian Barang" textFill="#e7e5e5">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <VBox layoutX="38.0" layoutY="86.0" prefHeight="102.0" prefWidth="130.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="33.0" prefWidth="144.0" text="Total Pinjaman" textFill="#615c5c">
+                           <font>
+                              <Font name="Lato Bold" size="19.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblTotal" alignment="CENTER" prefHeight="33.0" prefWidth="128.0" text="0" textFill="#7c7c7c">
+                           <font>
+                              <Font name="Lato Bold" size="29.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <JFXButton fx:id="btnSelesai" layoutX="669.0" layoutY="537.0" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #00b894;" text="Selesai" />
+                  <JFXTextField fx:id="tFieldSearch" focusColor="#00b894" layoutX="553.0" layoutY="54.0" prefHeight="25.0" prefWidth="189.0" promptText="Search" />
+                  <TextField fx:id="tFieldScanBarang" layoutX="557.0" layoutY="125.0" prefHeight="25.0" prefWidth="181.0" style="-fx-opacity: 1;" />
+                  <Label fx:id="lblNotAset" alignment="CENTER" layoutX="192.0" layoutY="121.0" prefHeight="33.0" prefWidth="181.0" text="Bukan Barang Aset" textFill="#fc1e1e" visible="false">
+                     <font>
+                        <Font name="Lato Regular" size="19.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="tabelPinjamBarang" layoutX="38.0" layoutY="162.0" prefHeight="359.0" prefWidth="729.0">
+                     <columns>
+                        <TableColumn fx:id="colNo" prefWidth="93.0" text="No" />
+                        <TableColumn fx:id="colTanggal" prefWidth="148.0" text="Tgl Peminjaman" />
+                        <TableColumn fx:id="colKode" prefWidth="173.0" text="Kode Barang" />
+                        <TableColumn fx:id="colNama" prefWidth="389.0" text="Nama Barang" />
+                     </columns>
+                  </TableView>
+                  <VBox layoutX="181.0" layoutY="86.0" prefHeight="102.0" prefWidth="130.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="33.0" prefWidth="144.0" text="Dikembalikan" textFill="#615c5c">
+                           <font>
+                              <Font name="Lato Bold" size="19.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblTotalKembali" alignment="CENTER" prefHeight="33.0" prefWidth="128.0" text="0" textFill="#28bf79">
+                           <font>
+                              <Font name="Lato Bold" size="29.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </Pane>
+         </children>
+      </StackPane>
+   </children>
+   <effect>
+      <DropShadow color="#1b1eeb" />
+   </effect>
+</AnchorPane>
