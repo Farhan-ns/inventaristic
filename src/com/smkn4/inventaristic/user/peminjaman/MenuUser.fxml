@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1050.0" style="-fx-background-color: #02030A;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.smkn4.inventaristic.user.peminjaman.MenuUserController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="737.0" style="-fx-background-color: #02030A;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.smkn4.inventaristic.user.peminjaman.MenuUserController">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="576.0" prefWidth="258.0" style="-fx-background-color: #00b894;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -39,7 +39,7 @@
             </JFXButton>
          </children>
       </VBox>
-      <StackPane layoutX="258.0" prefHeight="576.0" prefWidth="793.0" style="-fx-background-color: #02030A;">
+      <StackPane layoutX="258.0" prefHeight="576.0" prefWidth="481.0" style="-fx-background-color: #02030A;">
          <children>
             <Pane fx:id="pnlCustomer" prefHeight="200.0" prefWidth="200.0" />
             <Pane fx:id="pnlOrders" prefHeight="200.0" prefWidth="200.0" />
@@ -51,17 +51,17 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Pane fx:id="boxPeminjaman" layoutX="517.0" layoutY="163.0" prefHeight="202.0" prefWidth="195.0" style="-fx-background-color: white;">
+                  <Pane fx:id="boxPermintaan" layoutX="253.0" layoutY="321.0" prefHeight="194.0" prefWidth="187.0" style="-fx-background-color: white;">
                      <effect>
                         <DropShadow blurType="GAUSSIAN" height="12.1" radius="6.2925" width="15.07" />
                      </effect>
                      <children>
-                        <Label layoutX="33.0" layoutY="135.0" text="Peminjaman">
+                        <Label layoutX="33.0" layoutY="129.0" text="Permintaan">
                            <font>
                               <Font name="Lato Regular" size="24.0" />
                            </font>
                         </Label>
-                        <ImageView fitHeight="88.0" fitWidth="117.0" layoutX="57.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="88.0" fitWidth="117.0" layoutX="49.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../assets/order.png" />
                            </image>
@@ -71,39 +71,59 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Pane>
-                  <Pane fx:id="boxPermintaan" layoutX="281.0" layoutY="163.0" prefHeight="202.0" prefWidth="195.0" style="-fx-background-color: white;">
+                  <Pane fx:id="boxPengajuan" layoutX="38.0" layoutY="105.0" prefHeight="194.0" prefWidth="187.0" style="-fx-background-color: white;">
                      <effect>
                         <DropShadow blurType="GAUSSIAN" height="12.1" radius="6.2925" width="15.07" />
                      </effect>
                      <children>
-                        <Label layoutX="41.0" layoutY="135.0" text="Permintaan">
+                        <Label layoutX="39.0" layoutY="129.0" text="Pengajuan">
                            <font>
                               <Font name="Lato Regular" size="24.0" />
                            </font>
                         </Label>
-                        <ImageView fitHeight="88.0" fitWidth="117.0" layoutX="57.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../assets/order.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Pane>
-                  <Pane fx:id="boxPengajuan" layoutX="38.0" layoutY="163.0" prefHeight="202.0" prefWidth="195.0" style="-fx-background-color: white;">
-                     <effect>
-                        <DropShadow blurType="GAUSSIAN" height="12.1" radius="6.2925" width="15.07" />
-                     </effect>
-                     <children>
-                        <Label layoutX="43.0" layoutY="132.0" text="Pengajuan">
-                           <font>
-                              <Font name="Lato Regular" size="24.0" />
-                           </font>
-                        </Label>
-                        <ImageView fitHeight="88.0" fitWidth="117.0" layoutX="54.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="88.0" fitWidth="117.0" layoutX="50.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../assets/task-list.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Pane>
+                  <Pane fx:id="boxPeminjaman" layoutX="38.0" layoutY="321.0" prefHeight="194.0" prefWidth="187.0" style="-fx-background-color: white;">
+                     <effect>
+                        <DropShadow blurType="GAUSSIAN" height="12.1" radius="6.2925" width="15.07" />
+                     </effect>
+                     <children>
+                        <Label layoutX="29.0" layoutY="129.0" text="Peminjaman">
+                           <font>
+                              <Font name="Lato Regular" size="24.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="88.0" fitWidth="117.0" layoutX="53.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../assets/order.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Pane>
+                  <Pane fx:id="boxPengembalian" layoutX="253.0" layoutY="105.0" prefHeight="194.0" prefWidth="187.0" style="-fx-background-color: white;">
+                     <effect>
+                        <DropShadow blurType="GAUSSIAN" height="12.1" radius="6.2925" width="15.07" />
+                     </effect>
+                     <children>
+                        <Label layoutX="20.0" layoutY="130.0" text="Pengembalian">
+                           <font>
+                              <Font name="Lato Regular" size="24.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="88.0" fitWidth="117.0" layoutX="53.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../assets/order.png" />
                            </image>
                         </ImageView>
                      </children>

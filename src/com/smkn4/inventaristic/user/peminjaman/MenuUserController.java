@@ -35,6 +35,8 @@ public class MenuUserController implements Initializable {
     @FXML
     private Pane boxPengajuan;
     @FXML
+    private Pane boxPengembalian;
+    @FXML
     private Label lblNama;
     
     FXMLLoader loader;
@@ -52,6 +54,20 @@ public class MenuUserController implements Initializable {
     }
     
     private void setButtonsAction() {
+        boxPengembalian.setOnMouseClicked((event) -> {
+            try {
+                this.loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/PengembalianBarang.fxml"));
+                Parent viewPengembalian = loader.load();
+                Stage stage = (Stage) boxPeminjaman.getScene().getWindow();
+                stage.setScene(new Scene(viewPengembalian));
+                stage.show();
+                PengembalianBarangController controller = loader.getController();
+                controller.setUserMap(this.map);
+            } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
+            }
+        });
         boxPeminjaman.setOnMouseClicked((event) -> {
             try {
                 this.loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/PeminjamanBarang.fxml"));
