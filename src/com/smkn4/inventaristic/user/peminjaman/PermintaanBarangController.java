@@ -155,8 +155,8 @@ public class PermintaanBarangController implements Initializable {
     
     private void createRecordPermintaan() {
         List<String> list = new ArrayList<>();
-        for (Object o : tabelPermintaanBarang.getItems()) {
-            String idBarang = colKode.getCellData(0);
+        for (Barang barang : tabelPermintaanBarang.getItems()) {
+            String idBarang = barang.getIdBarang();
             list.add(idBarang);
         }
         String tanggalPermintaan = getTanggalToday();

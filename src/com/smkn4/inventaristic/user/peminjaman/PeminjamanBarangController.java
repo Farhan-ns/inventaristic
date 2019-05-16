@@ -168,8 +168,8 @@ public class PeminjamanBarangController implements Initializable {
     
     private void createRecordRincian(String idPinjam) {
         List<String> list = new ArrayList<>();
-        for (Object o : tabelPinjamBarang.getItems()) {
-            String idBarang = colKode.getCellData(0);
+        for (Barang barang : tabelPinjamBarang.getItems()) {
+            String idBarang = barang.getIdBarang();
             list.add(idBarang);
         }
         try {
@@ -233,7 +233,7 @@ public class PeminjamanBarangController implements Initializable {
             ex.getCause();
             ex.printStackTrace();
         }
-        System.out.println(barangs.size());
+        lblTotal.setText(String.valueOf(barangs.size()));
         tabelPinjamBarang.setItems(barangs);
     }
     
