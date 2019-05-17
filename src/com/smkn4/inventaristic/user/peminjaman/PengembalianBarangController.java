@@ -174,6 +174,8 @@ public class PengembalianBarangController implements Initializable {
                 updatePengembalianLunas(idPeminjaman);
             }
         }
+        JOptionPane.showMessageDialog(null, "Pengembalian Berhasil");
+        backToMenu();
     }
     
     private void updatePengembalianLunas(String idPeminjaman) {
@@ -336,6 +338,21 @@ public class PengembalianBarangController implements Initializable {
         } else if (sanksi > 0 && sanksi < 3) {
             String msg = "Anda memiliki sanksi, segera lunasi";
             JOptionPane.showMessageDialog(null, namaMsg + "\n" + sanksiMsg + "\n" + msg);
+        }
+    }
+    
+    private void backToMenu() {
+        try {
+            this.loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/MenuUser.fxml"));
+            Parent viewMintaBarang = loader.load();
+            Stage stage = (Stage) btnMenu.getScene().getWindow();
+            stage.setScene(new Scene(viewMintaBarang));
+            stage.show();
+            MenuUserController controller = loader.getController();
+            controller.setUserMap(this.map);
+        } catch (IOException ex) {
+            ex.getCause();
+            ex.printStackTrace();
         }
     }
     

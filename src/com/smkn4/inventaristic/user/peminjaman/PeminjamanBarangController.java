@@ -162,7 +162,8 @@ public class PeminjamanBarangController implements Initializable {
             stmt.executeUpdate(query);
             createRecordRincian(getLatestRecordPeminjaman());
         } catch (SQLException ex) {
-        
+            ex.getCause();
+            ex.printStackTrace();
         }
     }
     
@@ -191,6 +192,7 @@ public class PeminjamanBarangController implements Initializable {
             Statement stmt = connection.createStatement();
             stmt.executeUpdate(query);
             JOptionPane.showMessageDialog(null, "Peminjaman Berhasil", "Notifikasi", 1);
+            backToMenu();
         } catch (SQLException ex) {
             ex.getCause();
         }
@@ -267,6 +269,21 @@ public class PeminjamanBarangController implements Initializable {
         } else if (sanksi > 0 && sanksi < 3) {
             String msg = "Anda memiliki sanksi, segera lunasi";
             JOptionPane.showMessageDialog(null, namaMsg + "\n" + sanksiMsg + "\n" + msg);
+        }
+    }
+    
+    private void backToMenu() {
+        try {
+            this.loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/MenuUser.fxml"));
+            Parent viewMintaBarang = loader.load();
+            Stage stage = (Stage) btnSwitch.getScene().getWindow();
+            stage.setScene(new Scene(viewMintaBarang));
+            stage.show();
+            MenuUserController controller = loader.getController();
+            controller.setUserMap(this.map);
+        } catch (IOException ex) {
+            ex.getCause();
+            ex.printStackTrace();
         }
     }
     
