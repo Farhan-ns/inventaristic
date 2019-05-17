@@ -176,7 +176,7 @@ public class PeminjamanBarangController implements Initializable {
             Statement stmt = connection.createStatement();
             for (String idBarang : list) {
                 String query = "INSERT INTO rincian(id_peminjaman, id_barang, status_barang) " +
-                        "VALUES('" + idPinjam + "', " + "'" + idBarang + "', 'Dipinjam')";
+                        "VALUES('" + idPinjam + "', " + "'" + idBarang + "', 'dipinjam')";
                 stmt.executeUpdate(query);
             }
             createJumlahDipinjam(idPinjam, String.valueOf(list.size()));

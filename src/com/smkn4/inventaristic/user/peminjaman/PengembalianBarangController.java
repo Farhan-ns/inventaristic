@@ -10,14 +10,17 @@ import com.smkn4.inventaristic.util.JenisBarangException;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import com.smkn4.inventaristic.util.MySqlConnection;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -27,12 +30,17 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.AccessibleAttribute;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
@@ -62,11 +70,9 @@ public class PengembalianBarangController implements Initializable {
     @FXML
     private JFXButton btnSelesai;
     @FXML
-    private JFXTextField tFieldSearch;
-    @FXML
     private TextField tFieldScanBarang;
     @FXML
-    private Label lblNotAset;
+    private Label lblWarn;
     @FXML
     private Label lblTotalKembali;
     @FXML
@@ -82,6 +88,7 @@ public class PengembalianBarangController implements Initializable {
     
     ObservableList<Barang> barangs = FXCollections.observableArrayList();
     Set<String> dTracker = new HashSet<>();
+    List<String> listIdBarang = new ArrayList<>();
     Map<String, String> map;
     Connection connection;
     FXMLLoader loader;
@@ -97,26 +104,161 @@ public class PengembalianBarangController implements Initializable {
         colTanggal.setCellValueFactory(new PropertyValueFactory<>("tanggalPinjam"));
         colKode.setCellValueFactory(new PropertyValueFactory<>("idBarang"));
         colNama.setCellValueFactory(new PropertyValueFactory<>("namaBarang"));
+        setScanAction();
+        setButtonAction();
+        setSideBarButtons();
+    }
+    
+    private void setSideBarButtons() {
+        btnMenu.setOnAction((event) -> {
+            try {
+                this.loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/MenuUser.fxml"));
+                Parent viewMintaBarang = loader.load();
+                Stage stage = (Stage) btnMenu.getScene().getWindow();
+                stage.setScene(new Scene(viewMintaBarang));
+                stage.show();
+                MenuUserController controller = loader.getController();
+                controller.setUserMap(this.map);
+            } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
+            }
+        });
+    }
+    
+    private void setButtonAction() {
+        btnSelesai.setOnAction((event) -> {
+            updateRecordRincian(this.dTracker);
+        });
     }
     
     private void setScanAction() {
         tFieldScanBarang.setOnAction((event) -> {
-//            String kodeBarang = tFieldScanBarang.getText();
-//            String[] str = kodeBarang.split("-");
-//            if (!str[0].equals("TI4")) {
-//                System.out.println(kodeBarang);
-//                System.out.println("bukan barang smkn 4");
-//            } else {
-//                if (isNotBarangDuplicate(str[1])) {
-//                    try {
-////                        showBarang(str[1]);
-//                    } catch (JenisBarangException e) {
-//                        lblNotAset.setVisible(true);
-//                    }
-//                }
-//            }
+            String kodeBarang = tFieldScanBarang.getText();
+            String[] str = kodeBarang.split("-");
+            if (!str[0].equals("TI4")) {
+                System.out.println(kodeBarang);
+                System.out.println("bukan barang smkn 4");
+            } else {
+                if (isNotBarangDuplicate(str[1])) {
+                    for (String idBarang : this.listIdBarang) {
+                        if (idBarang.equals(str[1])) {
+                            dTracker.add(idBarang);
+                            colorValidasiBarang(listIdBarang.indexOf(idBarang));
+                        }
+                    }
+                }
+            }
         });
     }
+    
+    private void updateRecordRincian(Set<String> set) {
+        String query = "UPDATE rincian SET status_barang = 'dikembalikan' WHERE rincian.id_barang = ?";
+        try {
+            PreparedStatement ps = this.connection.prepareStatement(query);
+            for (String string : set) {
+                ps.setString(1, string);
+                ps.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            ex.getCause();
+            ex.printStackTrace();
+        }
+        Set<String> idsPeminjaman = getIdPeminjaman(this.map.get("nis"));
+        cekStatusPeminjaman(idsPeminjaman);
+    }
+    
+    private void cekStatusPeminjaman(Set<String> set) {
+        for (String idPeminjaman : set) {
+            if (isDikembalikanSemua(idPeminjaman)) {
+                updatePengembalianLunas(idPeminjaman);
+            }
+        }
+    }
+    
+    private void updatePengembalianLunas(String idPeminjaman) {
+        String query = "UPDATE peminjaman SET status_peminjaman = 'sudah_kembali', tgl_kembali = ? WHERE id_peminjaman = ?";
+        try {
+            PreparedStatement ps = this.connection.prepareStatement(query);
+            ps.setString(1, getTanggalToday());
+            ps.setString(2, idPeminjaman);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.getCause();
+            ex.printStackTrace();
+        }
+    }
+    
+    private boolean isDikembalikanSemua(String idPeminjaman) {
+        String query = "SELECT status_barang FROM rincian WHERE id_peminjaman = ? AND status_barang = ?";
+        boolean isLunas = false;
+         try {
+            PreparedStatement ps = this.connection.prepareStatement(query);
+            ps.setString(1, idPeminjaman);
+            ps.setString(2, "dipinjam");
+            ResultSet rs = ps.executeQuery();
+            if (!rs.next()) {
+                isLunas = true; 
+            }
+        } catch (SQLException ex) {
+            ex.getCause();
+            ex.printStackTrace();
+        }
+         System.out.println("isLunas = " + isLunas);
+         return isLunas;
+    }
+    
+//    private void updateJumlahPeminjaman(String idPeminjaman, String jumlah) {
+//        String query = "UPDATE peminjaman SET jumlah_dipinjam = ? WHERE id_peminjaman = ?";
+//        try {
+//            PreparedStatement ps = this.connection.prepareStatement(query);
+//            ps.setString(1, jumlah);
+//            ps.setString(2, idPeminjaman);
+//            ps.executeUpdate();
+//        } catch (SQLException ex) {
+//            ex.getCause();
+//            ex.printStackTrace();
+//        }
+//    }
+    
+    private Set<String> getIdPeminjaman(String nis) {
+        String query = "SELECT id_peminjaman FROM peminjaman WHERE nis = ?";
+        Set<String> idsPeminjaman = new HashSet<>();
+        try {
+            PreparedStatement ps = this.connection.prepareStatement(query);
+            ps.setString(1, nis);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("id_peminjaman");
+                idsPeminjaman.add(id);
+            }
+        } catch (SQLException ex) {
+            ex.getCause();
+            ex.printStackTrace();
+        }
+        return idsPeminjaman;
+    }
+    
+//    private void getIdPeminjamanOf(Set<String> set) {
+//        String query = "SELECT id_peminjaman FROM rincian WHERE rincian.id_barang = ?";
+//        Set<String> idPeminjaman
+//        try {
+//            PreparedStatement ps = this.connection.prepareStatement(query);
+//            ResultSet rs = null;
+//            for (String string : set) {
+//                if (rs != null) {
+//                    rs.beforeFirst();
+//                }
+//                ps.setString(1, string);
+//                rs = ps.executeQuery();
+//                rs.first();
+//                
+//            }
+//        } catch (SQLException ex) {
+//            ex.getCause();
+//            ex.printStackTrace();
+//        }
+//    }
     
     private void showBarang(String nis) {
         String query = "SELECT rincian.id_barang, barang_masuk.nama_barang, peminjaman.tgl_peminjaman " +
@@ -125,7 +267,8 @@ public class PengembalianBarangController implements Initializable {
                 "AND rincian.id_barang = barang_masuk.id_barang " +
                 "AND peminjaman.nis = siswa.nis " +
                 "AND peminjaman.nis = ? " +
-                "AND peminjaman.status_peminjaman = 'belum_kembali'";
+                "AND peminjaman.status_peminjaman = 'belum_kembali'" +
+                "AND rincian.status_barang = 'dipinjam'";
         try {
             PreparedStatement ps = this.connection.prepareStatement(query);
             ps.setString(1, nis);
@@ -145,32 +288,21 @@ public class PengembalianBarangController implements Initializable {
             ex.getCause();
             ex.printStackTrace();
         }
+        lblTotal.setText(String.valueOf(barangs.size()));
         tabelPinjamBarang.setItems(barangs);
+        for (Barang barang : tabelPinjamBarang.getItems()) {
+            String idBarang = barang.getIdBarang();
+            listIdBarang.add(idBarang);
+        }
     }
     
-//    private void scBarang(String idBarang) throws JenisBarangException {
-//        String query = "SELECT tgl_peminjaman, id_barang, nama_barang, jenis_barang FROM barang_masuk WHERE id_barang = " + idBarang;
-//        try {
-//            Statement stmt = this.connection.createStatement();
-//            ResultSet rs = stmt.executeQuery(query);
-//            rs.first();
-//            
-//            if (!rs.getString("jenis_barang").toLowerCase().equals("aset")) {
-//                throw new JenisBarangException("Bukan Barang jenis aset");
-//            }
-//            
-//            String tglPeminjaman = rs.getString("tgl_peminjaman");
-//            String namaBarang = rs.getString("nama_barang");
-//            String noUrut = String.valueOf(this.noUrut);
-//            barangs.add(new Barang(noUrut, tglPeminjaman, idBarang, namaBarang));
-//            this.noUrut++;
-//            lblNotAset.setVisible(false);
-//        } catch (SQLException ex) {
-//            ex.getCause();
-//            ex.printStackTrace();
-//        }
-//        tabelPinjamBarang.setItems(barangs);
-//    }
+    private void colorValidasiBarang(int index) {
+        TableCell cell;
+        for (int i = 0; i < 4; i++) {
+            cell = (TableCell) tabelPinjamBarang.queryAccessibleAttribute(AccessibleAttribute.CELL_AT_ROW_COLUMN, index, i);
+            cell.setStyle("-fx-background-color : #2beec3");
+        }
+    }
     
     private boolean isNotBarangDuplicate(String idBarang) {
         return dTracker.add(idBarang);
@@ -188,6 +320,7 @@ public class PengembalianBarangController implements Initializable {
             showBarang(this.map.get("nis"));
         });
     }
+    
     private void setUsername() {
         lblUsername.setText("Halo, "+ this.map.get("nama") + " !");
     }
