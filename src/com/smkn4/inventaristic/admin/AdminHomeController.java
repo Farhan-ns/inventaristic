@@ -5,7 +5,6 @@
  */
 package com.smkn4.inventaristic.admin;
 
-import com.smkn4.inventaristic.admin.siswa.DataPeminjam;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -78,11 +77,20 @@ public class AdminHomeController implements Initializable {
                 stage.setScene(new Scene(root));
                 stage.show();
             } catch (IOException ex) {
-                
+                ex.getCause();
+                ex.printStackTrace();
             }
         });
         boxSiswa.setOnMouseClicked((event) -> {
-            new DataPeminjam().setVisible(true);
+            try {
+                stage = (Stage) boxBarang.getScene().getWindow();
+                Parent root = FXMLLoader.load((getClass().getResource("/com/smkn4/inventaristic/admin/siswa/DataSiswa.fxml")));
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
+            }
         });
     }
 
