@@ -49,6 +49,7 @@ public class DataPengajuan extends javax.swing.JFrame {
         int y = layar.height / 2 - this.getSize().height / 2;
 
         this.setLocation(x, y);
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
     }
 
     /**

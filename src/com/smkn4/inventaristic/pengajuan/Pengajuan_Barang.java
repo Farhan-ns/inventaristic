@@ -30,6 +30,7 @@ public class Pengajuan_Barang extends javax.swing.JFrame {
         initComponents();
         koneksi = MySqlConnection.getConnection();
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
     }
 
     /**
