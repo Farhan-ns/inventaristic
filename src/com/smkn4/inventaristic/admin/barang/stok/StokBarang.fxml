@@ -35,16 +35,6 @@
                   <Insets top="22.0" />
                </VBox.margin>
             </JFXButton>
-            <JFXButton fx:id="btnDataUser" graphicTextGap="22.0" prefHeight="25.0" prefWidth="105.0" text="Data User" textFill="#e7e5e5">
-               <VBox.margin>
-                  <Insets top="22.0" />
-               </VBox.margin>
-            </JFXButton>
-            <JFXButton fx:id="btnPengajuan" graphicTextGap="22.0" prefHeight="25.0" prefWidth="119.0" text="Pengajuan Barang" textFill="#e7e5e5">
-               <VBox.margin>
-                  <Insets top="22.0" />
-               </VBox.margin>
-            </JFXButton>
             <JFXButton fx:id="btnMenu" graphicTextGap="22.0" prefHeight="25.0" prefWidth="101.0" text="Menu" textFill="#e7e5e5">
                <VBox.margin>
                   <Insets top="22.0" />
