@@ -13,7 +13,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -203,8 +202,8 @@ public class DataPengajuan extends javax.swing.JFrame {
     DefaultTableModel dtm;
 
     public void showData() {
-         DateFormat inputFormat = new SimpleDateFormat("yyyy-mm-dd");
-        DateFormat outputFormat = new SimpleDateFormat("dd-mm-yyyy");
+//        DateFormat inputFormat = new SimpleDateFormat("yyyy-mm-dd");
+//        DateFormat outputFormat = new SimpleDateFormat("dd-mm-yyyy");
         
         String[] kolom = {"NO", "ID Permintaan","Nama", "Nama Barang", "Jenis Barang", "Tanggal Permintaan", "Jumlah Permintaan", "Deksripsi"};
         dtm = new DefaultTableModel(null, kolom);
@@ -225,17 +224,6 @@ public class DataPengajuan extends javax.swing.JFrame {
                 String tgl_permintaan = rs.getString("tgl_permintaan");
                 Date date;
                 Calendar cal = Calendar.getInstance();
-                try {
-                    date = inputFormat.parse(tgl_permintaan);
-                    String tanggal_kirim = outputFormat.format(date);
-                    String opTanggalLahir = tgl_permintaan.replace("-", "");
-                    date = cal.getTime();
-                    System.out.println(date);
-                    String opTanggalSekarang = inputFormat.format(date);
-                    opTanggalSekarang = opTanggalSekarang.replace("-", "");
-                 } catch (ParseException ex) {
-                    Logger.getLogger(DataPengajuan.class.getName()).log(Level.SEVERE, null, ex);
-                }
                 dtm.addRow(new String[]{no + "", id_permintaan, nama, jenis, jumlah, deks, tgl_permintaan + ""});
                 no++;
             }
@@ -327,7 +315,7 @@ public class DataPengajuan extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

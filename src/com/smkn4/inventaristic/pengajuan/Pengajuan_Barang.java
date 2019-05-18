@@ -2,24 +2,13 @@ package com.smkn4.inventaristic.pengajuan;
 
 
 import com.smkn4.inventaristic.util.MySqlConnection;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import static java.lang.Boolean.TRUE;
 import java.sql.Connection;
 import java.util.Date;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import java.awt.Frame;
-import java.util.Calendar;
+import org.apache.commons.lang3.time.DateFormatUtils;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -40,6 +29,7 @@ public class Pengajuan_Barang extends javax.swing.JFrame {
     public Pengajuan_Barang() {
         initComponents();
         koneksi = MySqlConnection.getConnection();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -119,7 +109,7 @@ public class Pengajuan_Barang extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel12.setText("Jumlah Barang:");
 
-        cmbJenis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Barang Jangka Panjang", "Barang Jangka Pendek" }));
+        cmbJenis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aset", "Habis Pakai" }));
 
         jLabel14.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel14.setText("Nama");
@@ -233,7 +223,7 @@ public class Pengajuan_Barang extends javax.swing.JFrame {
         
         String nama = txt_nama.getText();
         String nama_bar = txt_namabarang.getText();
-        String jenis = cmbJenis.getSelectedItem().toString();
+        String jenis = cmbJenis.getSelectedItem().toString().replace(" ", "_").toLowerCase();
         String jumlah = txt_jumlah.getText();
         String deks = txt_deksripsi.getText();
         String tgl =getTanggal();
@@ -256,9 +246,8 @@ public class Pengajuan_Barang extends javax.swing.JFrame {
     }
     
     public String getTanggal(){
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
-        return dateFormat.format(date);
+        return DateFormatUtils.format(date, "yyyy-MM-dd");
     } 
     /**
      * @param args the command line arguments
@@ -271,7 +260,7 @@ public class Pengajuan_Barang extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
