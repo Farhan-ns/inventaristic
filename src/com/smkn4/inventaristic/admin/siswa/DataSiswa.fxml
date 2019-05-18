@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -72,6 +73,8 @@
                   </TableView>
                   <JFXButton fx:id="btnDetail" disable="true" layoutX="38.0" layoutY="85.0" prefHeight="25.0" prefWidth="121.0" style="-fx-background-color: #00b894;" text="Lihat Peminjaman" textFill="WHITE" />
                   <JFXButton fx:id="btnBeriSanksi" disable="true" layoutX="169.0" layoutY="85.0" prefHeight="25.0" prefWidth="121.0" style="-fx-background-color: #ea0b0b;" text="Beri Sanksi" textFill="WHITE" />
+                  <JFXCheckBox fx:id="cbPinjaman" layoutX="320.0" layoutY="89.0" text="Yang Memiliki peminjaman" />
+                  <JFXButton fx:id="btnRefresh" layoutX="641.0" layoutY="85.0" prefHeight="25.0" prefWidth="121.0" style="-fx-background-color: #00b894;" text="Refresh" textFill="WHITE" />
                </children>
             </Pane>
          </children>

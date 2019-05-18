@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="555.0" prefWidth="472.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.smkn4.inventaristic.admin.siswa.RincianPinjamController">
+   <children>
+      <Label fx:id="lblNama" layoutX="14.0" layoutY="21.0" prefHeight="35.0" prefWidth="450.0" text="Nama">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblKelas" layoutX="14.0" layoutY="46.0" prefHeight="35.0" prefWidth="355.0" text="Kelas">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblSanksi" layoutX="14.0" layoutY="72.0" prefHeight="35.0" prefWidth="355.0" text="Sanksi">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tabelBarang" layoutX="12.0" layoutY="107.0" prefHeight="440.0" prefWidth="450.0">
+         <columns>
+            <TableColumn fx:id="colNama" prefWidth="219.0" text="Nama Barang" />
+            <TableColumn fx:id="colTgl" prefWidth="120.0" text="Tgl Peminjaman" />
+            <TableColumn fx:id="colStatus" prefWidth="110.0" text="Status Barang" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>

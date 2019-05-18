@@ -6,7 +6,9 @@
 package com.smkn4.inventaristic.admin.siswa;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.smkn4.inventaristic.util.MySqlConnection;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -16,12 +18,17 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -66,9 +73,14 @@ public class DataSiswaController implements Initializable {
     private JFXButton btnDetail;
     @FXML
     private JFXButton btnBeriSanksi;
+    @FXML
+    private JFXCheckBox cbPinjaman;
+
 
     ObservableList<Siswa> students = FXCollections.observableArrayList();
     Connection connection;
+    @FXML
+    private JFXButton btnRefresh;
     /**
      * Initializes the controller class.
      */
@@ -83,7 +95,7 @@ public class DataSiswaController implements Initializable {
         colJurusan.setCellValueFactory(new PropertyValueFactory<>("jurusan"));
         colSanksi.setCellValueFactory(new PropertyValueFactory<>("sanksi"));
         colAjaran.setCellValueFactory(new PropertyValueFactory<>("ajaran"));
-        readData();
+        readData(false);
         setButtonAction();
     }
     
@@ -92,13 +104,63 @@ public class DataSiswaController implements Initializable {
             btnDetail.setDisable(false);
             btnBeriSanksi.setDisable(false);
         });
+        btnDetail.setOnAction((event) -> {
+            String id = tabelSiswa.getSelectionModel().getSelectedItem().getNis();
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/admin/siswa/RincianPinjam.fxml"));
+                Parent formDetail = loader.load();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(formDetail));
+                stage.show();
+                RincianPinjamController controller = loader.getController();
+                controller.showData(id);
+            } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
+            }
+        });
+        btnBeriSanksi.setOnAction((event) -> {
+            String id = tabelSiswa.getSelectionModel().getSelectedItem().getNis();
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/admin/siswa/ManageBeriSanksi.fxml"));
+                Parent formDetail = loader.load();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(formDetail));
+                stage.initStyle(StageStyle.UTILITY);
+                stage.show();
+                ManageBeriSanksiController controller = loader.getController();
+                controller.fookinRunit(id);
+            } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
+            }
+        });
+        btnRefresh.setOnAction((event) -> {
+            readData(false);
+        });
+        cbPinjaman.setOnAction((event) -> {
+            if (cbPinjaman.isSelected()) {
+                readData(true);
+            } else {
+                readData(false);
+            }
+        });
     }
     
-    private void readData() {
+    private void readData(boolean q2) {
+        if (!students.isEmpty()) {
+            students.clear();
+        }
         String query = "SELECT * FROM siswa";
+        String query2 = "SELECT * FROM siswa JOIN peminjaman ON peminjaman.nis = siswa.nis WHERE peminjaman.status_peminjaman = 'belum_kembali'";
         try {
             Statement stmt = this.connection.createStatement();
-            ResultSet result = stmt.executeQuery(query);
+            ResultSet result;
+            if (q2) {
+                 result = stmt.executeQuery(query2);
+            } else {
+                 result = stmt.executeQuery(query);
+            }
             while (result.next()) {
                 String nis = result.getString("nis");
                 String nama = result.getString("nama_siswa");
