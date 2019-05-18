@@ -198,7 +198,7 @@ public class PermintaanBarangController implements Initializable {
             ex.getCause();
             ex.printStackTrace();
         }
-        System.out.println(barangs.size());
+        lblTotal.setText(String.valueOf(barangs.size()));
         colNo.setCellValueFactory(new PropertyValueFactory<>("noUrut"));
         colKode.setCellValueFactory(new PropertyValueFactory<>("idBarang"));
         colNama.setCellValueFactory(new PropertyValueFactory<>("namaBarang"));
