@@ -11,7 +11,6 @@ import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
-import com.smkn4.inventaristic.DashboardController;
 import com.smkn4.inventaristic.admin.barang.bermasalah.ManageDataBarangMasalahController;
 import com.smkn4.inventaristic.util.EnumParser;
 import com.smkn4.inventaristic.util.MySqlConnection;
@@ -133,6 +132,10 @@ public class StokBarangController implements Initializable {
         colLokasi.setPrefWidth(150);
         colLokasi.setCellValueFactory((TreeTableColumn.CellDataFeatures<Barang, String> param) -> param.getValue().getValue().lokasi);
         
+        JFXTreeTableColumn<Barang, String> colJumlah = new JFXTreeTableColumn<>("Jumlah");
+        colJumlah.setPrefWidth(100);
+        colJumlah.setCellValueFactory((TreeTableColumn.CellDataFeatures<Barang, String> param) -> param.getValue().getValue().lokasi);
+        
         JFXTreeTableColumn<Barang, String> colUmur = new JFXTreeTableColumn<>("Umur");
         colUmur.setPrefWidth(150);
         colUmur.setCellValueFactory((TreeTableColumn.CellDataFeatures<Barang, String> param) -> param.getValue().getValue().totalPenggunaan);
@@ -181,7 +184,7 @@ public class StokBarangController implements Initializable {
         ObservableList<Barang> barangs = FXCollections.observableArrayList();
         try {
             Statement stat = this.connection.createStatement();
-            String query = "SELECT *, COUNT(nama_barang) FROM barang_masuk GROUP BY nama_barang";
+            String query = "SELECT * FROM barang_masuk ORDER BY nama_barang";
             /*
             DEV NOTES
             Bagaimana Jika ada barang yang namanya sama namun isi di field lain berbeda?
@@ -298,7 +301,7 @@ public class StokBarangController implements Initializable {
             String tanggalMasuk = DateFormatUtils.format(tgl, "dd-MM-yyy");
             String kondisi = WordUtils.capitalizeFully(rs.getString("kondisi"));
             String lokasi = rs.getString("lokasi");
-            String kuantitas = rs.getString("COUNT(nama_barang)");
+//            String kuantitas = rs.getString("jumlah");
             String umur = rs.getString("total_penggunaan");
             String dapatDipinjam = WordUtils.capitalizeFully(rs.getString("dapat_dipinjam"));
             /*
