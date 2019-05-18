@@ -136,7 +136,7 @@ public class PengembalianBarangController implements Initializable {
         tFieldScanBarang.setOnAction((event) -> {
             String kodeBarang = tFieldScanBarang.getText();
             String[] str = kodeBarang.split("-");
-            if (!str[0].equals("TI4")) {
+            if (!str[0].equals("4BDG")) {
                 System.out.println(kodeBarang);
                 System.out.println("bukan barang smkn 4");
             } else {
