@@ -6,6 +6,7 @@
 package com.smkn4.inventaristic.user;
 
 import com.jfoenix.controls.JFXButton;
+import com.smkn4.inventaristic.pengajuan.Pengajuan_Barang;
 import com.smkn4.inventaristic.user.peminjaman.MenuUserController;
 import com.smkn4.inventaristic.util.MySqlConnection;
 import java.io.IOException;
@@ -70,6 +71,19 @@ public class ScanUserController implements Initializable {
     private void setFieldAction() {
         tFieldUser.setOnAction((event) -> {
             scanUser();
+        });
+        btnMenu.setOnAction((event) -> {
+            try {
+                Stage stage = (Stage) btnMenu.getScene().getWindow();
+                Parent root = FXMLLoader.load((getClass().getResource("/com/smkn4/inventaristic/admin/AdminHome.fxml")));
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException ex) {
+                
+            }
+        });
+        btnPengajuan.setOnAction((event) -> {
+            new Pengajuan_Barang().setVisible(true);
         });
     }
 
