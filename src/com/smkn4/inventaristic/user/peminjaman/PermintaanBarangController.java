@@ -217,6 +217,7 @@ public class PermintaanBarangController implements Initializable {
         this.map = map;
         setUsername();
         Platform.runLater(() -> {
+            tFieldScanBarang.requestFocus();
             cekSanksiSiswa();
         });
     }

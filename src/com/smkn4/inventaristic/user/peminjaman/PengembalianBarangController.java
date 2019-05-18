@@ -318,6 +318,7 @@ public class PengembalianBarangController implements Initializable {
         this.map = map;
         setUsername();
         Platform.runLater(() -> {
+            tFieldScanBarang.requestFocus();
             cekSanksiSiswa();
             showBarang(this.map.get("nis"));
         });

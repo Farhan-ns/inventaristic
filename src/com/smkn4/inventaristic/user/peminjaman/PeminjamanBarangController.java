@@ -251,6 +251,7 @@ public class PeminjamanBarangController implements Initializable {
         this.map = map;
         setUsername();
         Platform.runLater(() -> {
+            tFieldScanBarang.requestFocus();
             cekSanksiSiswa();
         });
     }
