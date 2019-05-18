@@ -5,6 +5,7 @@
  */
 package com.smkn4.inventaristic.admin;
 
+import com.smkn4.inventaristic.pengajuan.DataPengajuan;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -91,6 +92,9 @@ public class AdminHomeController implements Initializable {
                 ex.getCause();
                 ex.printStackTrace();
             }
+        });
+        boxPengajuan.setOnMouseClicked((event) -> {
+            new DataPengajuan().setVisible(true);
         });
     }
 

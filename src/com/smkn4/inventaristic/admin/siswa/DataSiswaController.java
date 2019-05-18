@@ -155,6 +155,16 @@ public class DataSiswaController implements Initializable {
                 readData(false);
             }
         });
+        btnMenu.setOnAction((event) -> {
+            try {
+                Stage stage = (Stage) btnMenu.getScene().getWindow();
+                Parent root = FXMLLoader.load((getClass().getResource("/com/smkn4/inventaristic/admin/AdminHome.fxml")));
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException ex) {
+                
+            }
+        });
     }
     
     private void readData(boolean q2) {

@@ -7,6 +7,7 @@ package com.smkn4.inventaristic;
 
 import java.io.IOException;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,32 +22,26 @@ public class Driver extends Application{
     @Override
     public void start(Stage primaryStage) {
         try {
-            
-            //Menjalankan Stokbarang
-//            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/admin/barang/stok/StokBarang.fxml"));
-            //Barang Bermasalah
-//            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/admin/barang/bermasalah/BarangMasalah.fxml"));
-            //Dashboard
-//            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/Dashboard.fxml"));
-            //scann
-//            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/ScanUser.fxml"));
-            //user menu
-//            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/MenuUser.fxml"));
+            //scan
+//            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/user/ScanUser.fxml"));
             //ADMIN HOME
             Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/admin/AdminHome.fxml"));
-            
+
             Scene scene = new Scene(root);
             scene.getStylesheets().add("/com/smkn4/inventaristic/center-column.css");
             //#ea2a2a..
             primaryStage.setScene(scene);
             primaryStage.show();
+            
         } catch (IOException e) {
             e.getCause();
             e.printStackTrace();
+            Platform.exit();
+            System.exit(0);
         }
     }
     public static void main(String[] args) {
         launch(args);
-    } 
+    }
     
 }

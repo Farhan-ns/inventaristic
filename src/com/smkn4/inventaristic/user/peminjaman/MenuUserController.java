@@ -6,6 +6,7 @@
 package com.smkn4.inventaristic.user.peminjaman;
 
 import com.jfoenix.controls.JFXButton;
+import com.smkn4.inventaristic.pengajuan.Pengajuan_Barang;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
@@ -95,6 +96,9 @@ public class MenuUserController implements Initializable {
                 ex.getCause();
                 ex.printStackTrace();
             }
+        });
+        boxPengajuan.setOnMouseClicked((event) -> {
+            new Pengajuan_Barang().setVisible(true);
         });
     }
     
