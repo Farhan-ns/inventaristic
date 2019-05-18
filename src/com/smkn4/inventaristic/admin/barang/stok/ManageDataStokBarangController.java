@@ -90,9 +90,6 @@ public class ManageDataStokBarangController implements Initializable {
        this.connection = MySqlConnection.getConnection();
        tFieldTglMasuk.setText(DateFormatUtils.format(Calendar.getInstance().getTime(), "dd-MM-yyyy"));
        dpTglMasuk.setDisable(true);
-        if (this.action.equalsIgnoreCase("edit")) {
-            lblAction.setText("Edit Barang");
-        }
        setToggleGroup();
        setComponentsAction();
     }
@@ -307,6 +304,9 @@ public class ManageDataStokBarangController implements Initializable {
     
     public void setIdBarang(String idBarang) {
         this.idBarang = idBarang;
+        if (this.action.toLowerCase().equals("edit")) {
+            lblAction.setText("Edit Barang");
+        }
     }
     
 }

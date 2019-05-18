@@ -229,8 +229,8 @@ public class StokBarangController implements Initializable {
                 stage.initStyle(StageStyle.UTILITY);
                 stage.setScene(new Scene(formManage));
                 stage.show();
-                controller.setIdBarang(getIdBarang());
                 controller.action = "edit";
+                controller.setIdBarang(getIdBarang());
                 controller.showData();
             } catch (IOException ex) {
                 ex.getCause();
