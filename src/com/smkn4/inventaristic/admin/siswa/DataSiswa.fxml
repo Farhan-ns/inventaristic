@@ -72,9 +72,10 @@
                     </columns>
                   </TableView>
                   <JFXButton fx:id="btnDetail" disable="true" layoutX="38.0" layoutY="85.0" prefHeight="25.0" prefWidth="121.0" style="-fx-background-color: #00b894;" text="Lihat Peminjaman" textFill="WHITE" />
-                  <JFXButton fx:id="btnBeriSanksi" disable="true" layoutX="169.0" layoutY="85.0" prefHeight="25.0" prefWidth="121.0" style="-fx-background-color: #ea0b0b;" text="Beri Sanksi" textFill="WHITE" />
-                  <JFXCheckBox fx:id="cbPinjaman" layoutX="320.0" layoutY="89.0" text="Yang Memiliki peminjaman" />
-                  <JFXButton fx:id="btnRefresh" layoutX="641.0" layoutY="85.0" prefHeight="25.0" prefWidth="121.0" style="-fx-background-color: #00b894;" text="Refresh" textFill="WHITE" />
+                  <JFXButton fx:id="btnBeriSanksi" disable="true" layoutX="268.0" layoutY="86.0" prefHeight="25.0" prefWidth="121.0" style="-fx-background-color: #ea0b0b;" text="Beri Sanksi" textFill="WHITE" />
+                  <JFXCheckBox fx:id="cbPinjaman" layoutX="593.0" layoutY="89.0" text="Yang Memiliki peminjaman" />
+                  <JFXButton fx:id="btnRefresh" layoutX="172.0" layoutY="85.0" prefHeight="25.0" prefWidth="81.0" style="-fx-background-color: #00b894;" text="Refresh" textFill="WHITE" />
+                  <JFXButton fx:id="btnGene" disable="true" layoutX="400.0" layoutY="86.0" prefHeight="25.0" prefWidth="121.0" style="-fx-background-color: #00b894;" text="Generate Barcode" textFill="WHITE" />
                </children>
             </Pane>
          </children>

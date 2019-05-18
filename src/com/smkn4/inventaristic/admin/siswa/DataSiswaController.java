@@ -8,6 +8,7 @@ package com.smkn4.inventaristic.admin.siswa;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.smkn4.inventaristic.util.MySqlConnection;
+import com.smkn4.inventaristic.util.barcode.BarcodeGen;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -29,6 +30,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -81,6 +83,8 @@ public class DataSiswaController implements Initializable {
     Connection connection;
     @FXML
     private JFXButton btnRefresh;
+    @FXML
+    private JFXButton btnGene;
     /**
      * Initializes the controller class.
      */
@@ -103,6 +107,7 @@ public class DataSiswaController implements Initializable {
         tabelSiswa.setOnMouseClicked((event) -> {
             btnDetail.setDisable(false);
             btnBeriSanksi.setDisable(false);
+            btnGene.setDisable(false);
         });
         btnDetail.setOnAction((event) -> {
             String id = tabelSiswa.getSelectionModel().getSelectedItem().getNis();
@@ -134,6 +139,11 @@ public class DataSiswaController implements Initializable {
                 ex.getCause();
                 ex.printStackTrace();
             }
+        });
+        btnGene.setOnAction((event) -> {
+            String id = tabelSiswa.getSelectionModel().getSelectedItem().getNis();
+            BarcodeGen.generate(id);
+            JOptionPane.showMessageDialog(null, "Berhasil");
         });
         btnRefresh.setOnAction((event) -> {
             readData(false);
