@@ -70,7 +70,8 @@
                         <TableColumn fx:id="colAjaran" minWidth="8.0" prefWidth="146.0" text="Thn Ajaran" />
                     </columns>
                   </TableView>
-                  <JFXButton disable="true" layoutX="38.0" layoutY="85.0" prefHeight="25.0" prefWidth="121.0" style="-fx-background-color: #00b894;" text="Lihat Peminjaman" textFill="WHITE" />
+                  <JFXButton fx:id="btnDetail" disable="true" layoutX="38.0" layoutY="85.0" prefHeight="25.0" prefWidth="121.0" style="-fx-background-color: #00b894;" text="Lihat Peminjaman" textFill="WHITE" />
+                  <JFXButton fx:id="btnBeriSanksi" disable="true" layoutX="169.0" layoutY="85.0" prefHeight="25.0" prefWidth="121.0" style="-fx-background-color: #ea0b0b;" text="Beri Sanksi" textFill="WHITE" />
                </children>
             </Pane>
          </children>

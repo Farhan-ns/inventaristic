@@ -5,6 +5,7 @@
  */
 package com.smkn4.inventaristic.admin.siswa;
 
+import com.jfoenix.controls.JFXButton;
 import com.smkn4.inventaristic.util.MySqlConnection;
 import java.net.URL;
 import java.sql.Connection;
@@ -61,6 +62,10 @@ public class DataSiswaController implements Initializable {
     private TableColumn<Siswa, String> colAjaran;
     @FXML
     private TableColumn<Siswa, String> colSanksi;
+    @FXML
+    private JFXButton btnDetail;
+    @FXML
+    private JFXButton btnBeriSanksi;
 
     ObservableList<Siswa> students = FXCollections.observableArrayList();
     Connection connection;
@@ -79,6 +84,14 @@ public class DataSiswaController implements Initializable {
         colSanksi.setCellValueFactory(new PropertyValueFactory<>("sanksi"));
         colAjaran.setCellValueFactory(new PropertyValueFactory<>("ajaran"));
         readData();
+        setButtonAction();
+    }
+    
+    private void setButtonAction() {
+        tabelSiswa.setOnMouseClicked((event) -> {
+            btnDetail.setDisable(false);
+            btnBeriSanksi.setDisable(false);
+        });
     }
     
     private void readData() {
