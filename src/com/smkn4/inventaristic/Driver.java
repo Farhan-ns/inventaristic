@@ -25,14 +25,12 @@ public class Driver extends Application{
             //scan
 //            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/user/ScanUser.fxml"));
             //ADMIN HOME
-            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/admin/AdminHome.fxml"));
-
+//            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/admin/AdminHome.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/LoginScreen.fxml"));
             Scene scene = new Scene(root);
             scene.getStylesheets().add("/com/smkn4/inventaristic/center-column.css");
-            //#ea2a2a..
             primaryStage.setScene(scene);
             primaryStage.show();
-            
         } catch (IOException e) {
             e.getCause();
             e.printStackTrace();
@@ -40,6 +38,7 @@ public class Driver extends Application{
             System.exit(0);
         }
     }
+    
     public static void main(String[] args) {
         launch(args);
     }
