@@ -237,6 +237,7 @@ public class Pengajuan_Barang extends javax.swing.JFrame {
                     int berhasil = stmt.executeUpdate(query);
                     if (berhasil == 1){
                     JOptionPane.showMessageDialog(null, "Data Berhasil Dimasukkan");
+                    this.dispose();
                     }else{
                     JOptionPane.showMessageDialog(null, "Data Gagal Dimasukkan");
                     }
