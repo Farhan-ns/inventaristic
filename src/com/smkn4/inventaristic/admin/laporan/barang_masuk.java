@@ -34,6 +34,7 @@ public class barang_masuk extends javax.swing.JFrame {
         
         koneksi = MySqlConnection.getConnection();
         showData(Filter(0));
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
     }
     
     DefaultTableModel dtm;

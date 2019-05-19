@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
+import static javax.swing.WindowConstants.HIDE_ON_CLOSE;
 import javax.swing.table.TableRowSorter;
 
 /**
@@ -32,6 +33,7 @@ public class pinjam_kembali extends javax.swing.JFrame {
         initComponents();
         koneksi = MySqlConnection.getConnection();
         showData(Filter(0));
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
     }
     
     DefaultTableModel dtm;

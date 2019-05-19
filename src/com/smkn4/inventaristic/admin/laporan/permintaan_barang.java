@@ -32,6 +32,7 @@ public class permintaan_barang extends javax.swing.JFrame {
         initComponents();
         koneksi = MySqlConnection.getConnection();
         showData(Filter(0));
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
     }
     
     DefaultTableModel dtm;

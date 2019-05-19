@@ -52,6 +52,7 @@ public class RekapBarang extends javax.swing.JFrame {
         koneksi = MySqlConnection.getConnection();
         setLocationRelativeTo(null);
         showData();
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
     }
 
     DefaultTableModel dtm;
