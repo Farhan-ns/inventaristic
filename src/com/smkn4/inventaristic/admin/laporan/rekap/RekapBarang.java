@@ -53,6 +53,7 @@ public class RekapBarang extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         showData();
         setDefaultCloseOperation(HIDE_ON_CLOSE);
+        setLocationRelativeTo(null);
     }
 
     DefaultTableModel dtm;

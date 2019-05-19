@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXButton;
 import com.smkn4.inventaristic.admin.laporan.rekap.MenuRekap;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
@@ -36,6 +37,9 @@ public class LaporanController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setButtonAction();
+        Platform.runLater(() -> {
+            btnBB.getScene().getWindow().centerOnScreen();
+        });
     }   
     
     private void setButtonAction() {

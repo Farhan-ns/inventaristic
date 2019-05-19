@@ -55,6 +55,9 @@ public class RincianPinjamController implements Initializable {
         colNama.setCellValueFactory(new PropertyValueFactory<>("nama"));
         colTgl.setCellValueFactory(new PropertyValueFactory<>("tgl"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        Platform.runLater(() -> {
+            tabelBarang.getScene().getWindow().centerOnScreen();
+        });
     }
     
     private void readData(String id) {

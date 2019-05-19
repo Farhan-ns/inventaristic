@@ -32,6 +32,8 @@ public class PeminjamanAktif extends javax.swing.JFrame {
         initComponents();
         koneksi = MySqlConnection.getConnection();
         showData();
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
+        setLocationRelativeTo(null);
     }
     
     DefaultTableModel dtm;

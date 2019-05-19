@@ -20,6 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -105,6 +106,9 @@ public class BarangMasalahController implements Initializable {
         readData();
         tabelBarangBermasalah.getColumns().setAll(colNama, colLokasi, colMasalah, colTgl, colUmur, colDesc);
         setbuttonAction();
+        Platform.runLater(() -> {
+            btnMenu.getScene().getWindow().centerOnScreen();
+        });
     }    
     
     private void setbuttonAction() {

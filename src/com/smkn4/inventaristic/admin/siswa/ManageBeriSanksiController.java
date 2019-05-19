@@ -44,6 +44,9 @@ public class ManageBeriSanksiController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         this.connection = MySqlConnection.getConnection();
         setOkAction();
+        Platform.runLater(() -> {
+            btnOk.getScene().getWindow().centerOnScreen();
+        });
     }    
     
     private void setOkAction() {

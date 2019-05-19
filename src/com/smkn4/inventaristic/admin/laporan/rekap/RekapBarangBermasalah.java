@@ -47,6 +47,7 @@ public class RekapBarangBermasalah extends javax.swing.JFrame {
         koneksi = MySqlConnection.getConnection();
         showData();
         setDefaultCloseOperation(HIDE_ON_CLOSE);
+        setLocationRelativeTo(null);
     }
     
     DefaultTableModel dtm;

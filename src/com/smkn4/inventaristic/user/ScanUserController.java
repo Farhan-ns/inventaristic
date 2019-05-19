@@ -66,6 +66,7 @@ public class ScanUserController implements Initializable {
         Platform.runLater(() -> {
 //            tFieldUser.requestFocus();
             setScanAction();
+            btnMenu.getScene().getWindow().centerOnScreen();
         });
     }
     

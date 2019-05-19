@@ -107,6 +107,9 @@ public class PengembalianBarangController implements Initializable {
         setScanAction();
         setButtonAction();
         setSideBarButtons();
+        Platform.runLater(() -> {
+            btnMenu.getScene().getWindow().centerOnScreen();
+        });
     }
     
     private void setSideBarButtons() {

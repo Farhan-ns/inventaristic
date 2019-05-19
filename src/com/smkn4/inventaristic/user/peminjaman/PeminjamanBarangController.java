@@ -95,6 +95,9 @@ public class PeminjamanBarangController implements Initializable {
         colNama.setCellValueFactory(new PropertyValueFactory<>("namaBarang"));
         setScanAction();
         setButtonAction();
+        Platform.runLater(() -> {
+            btnMenu.getScene().getWindow().centerOnScreen();
+        });
     }
     
     //Event 

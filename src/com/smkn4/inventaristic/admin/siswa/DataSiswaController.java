@@ -16,6 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -101,6 +102,9 @@ public class DataSiswaController implements Initializable {
         colAjaran.setCellValueFactory(new PropertyValueFactory<>("ajaran"));
         readData(false);
         setButtonAction();
+        Platform.runLater(() -> {
+            btnMenu.getScene().getWindow().centerOnScreen();
+        });
     }
     
     private void setButtonAction() {

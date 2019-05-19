@@ -98,6 +98,9 @@ public class PermintaanBarangController implements Initializable {
         this.connection = MySqlConnection.getConnection();
         setScanAction();
         setButtonAction();
+        Platform.runLater(() -> {
+            btnMenu.getScene().getWindow().centerOnScreen();
+        });
     }
     
     private void setButtonAction() {

@@ -35,6 +35,7 @@ public class barang_bermasalah extends javax.swing.JFrame {
         koneksi = MySqlConnection.getConnection();
         showData(Filter(0));
         setDefaultCloseOperation(HIDE_ON_CLOSE);
+        setLocationRelativeTo(null);
     }
     
     DefaultTableModel dtm;

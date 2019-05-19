@@ -17,6 +17,7 @@ public class MenuRekap extends javax.swing.JFrame {
     public MenuRekap() {
         initComponents();
         setDefaultCloseOperation(HIDE_ON_CLOSE);
+        setLocationRelativeTo(null);
     }
 
     /**
