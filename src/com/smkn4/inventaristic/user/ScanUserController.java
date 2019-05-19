@@ -21,6 +21,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -28,6 +29,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -57,6 +60,7 @@ public class ScanUserController implements Initializable {
     @FXML
     private Label lblFail;
 
+    String barcodeCache = new String();
     /**
      * Initializes the controller class.
      */
@@ -64,14 +68,15 @@ public class ScanUserController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         setFieldAction();
         Platform.runLater(() -> {
-            tFieldUser.requestFocus();
+//            tFieldUser.requestFocus();
+            setScanAction();
         });
     }
     
     private void setFieldAction() {
-        tFieldUser.setOnAction((event) -> {
-            scanUser();
-        });
+//        tFieldUser.setOnAction((event) -> {
+//            scanUser();
+//        });
         btnMenu.setOnAction((event) -> {
             try {
                 Stage stage = (Stage) btnMenu.getScene().getWindow();
@@ -79,21 +84,49 @@ public class ScanUserController implements Initializable {
                 stage.setScene(new Scene(root));
                 stage.show();
             } catch (IOException ex) {
-                
+                ex.getCause();
+                ex.printStackTrace();
             }
         });
         btnPengajuan.setOnAction((event) -> {
             new Pengajuan_Barang().setVisible(true);
         });
     }
+    
+    private void setScanAction() {
+        Scene scene = btnMenu.getScene();
+        if (scene == null) {
+            System.out.println("scene is null");
+        }
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                lblFail.setVisible(false);
+                if (event.getCode() == KeyCode.ENTER) {
+                    scanUser(barcodeCache);
+                    barcodeCache = new String();
+                } else {
+                    barcodeCache += getInput(event);
+                }
+            }
+        });
+    }
 
-    private void scanUser() {
-        System.out.println("called");
-        String nis = tFieldUser.getText();
+    private String getInput(KeyEvent event) {
+        if (event.getText().matches("[0-9]+")) {
+            return event.getText();
+        } else {
+            return "";
+        }
+    }
+    
+    private void scanUser(String nis) {
         if (nis == null || nis.length() < 10) {
+            System.out.println("GAGAL : " + nis);
             lblFail.setVisible(true);
             return;
         } else {
+            System.out.println("NIS: " + nis);
             checkUser(nis);
         }
     }
