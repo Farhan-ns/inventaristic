@@ -60,7 +60,7 @@ public class PeminjamanBarangController implements Initializable {
     @FXML
     private JFXButton btnPinjam;
     @FXML
-    private JFXTextField tFieldSearch;
+    private JFXButton btnCari;
     @FXML
     private TextField tFieldScanBarang;        
     @FXML
@@ -129,6 +129,18 @@ public class PeminjamanBarangController implements Initializable {
                 stage.show();
                 PermintaanBarangController controller = loader.getController();
                 controller.setUserMap(this.map);
+            } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
+            }
+        });
+        btnCari.setOnAction((event) -> {
+            try {
+                this.loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/user/LihatBarang.fxml"));
+                Parent viewMintaBarang = loader.load();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(viewMintaBarang));
+                stage.show();
             } catch (IOException ex) {
                 ex.getCause();
                 ex.printStackTrace();
