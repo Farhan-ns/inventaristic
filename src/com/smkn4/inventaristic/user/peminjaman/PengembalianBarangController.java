@@ -109,6 +109,7 @@ public class PengembalianBarangController implements Initializable {
         setSideBarButtons();
         Platform.runLater(() -> {
             btnMenu.getScene().getWindow().centerOnScreen();
+            stateCheck();
         });
     }
     
@@ -148,6 +149,7 @@ public class PengembalianBarangController implements Initializable {
                         if (idBarang.equals(str[1])) {
                             dTracker.add(idBarang);
                             colorValidasiBarang(listIdBarang.indexOf(idBarang));
+                            stateCheck();
                         }
                     }
                 }
@@ -311,6 +313,14 @@ public class PengembalianBarangController implements Initializable {
     
     private boolean isNotBarangDuplicate(String idBarang) {
         return dTracker.add(idBarang);
+    }
+    
+    private void stateCheck() {
+        if (barangs.isEmpty()) {
+            btnSelesai.setDisable(true);
+        } else {
+            btnSelesai.setDisable(false);
+        }
     }
     
     private String getTanggalToday() {
