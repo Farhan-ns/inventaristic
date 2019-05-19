@@ -97,6 +97,7 @@ public class PeminjamanBarangController implements Initializable {
         setButtonAction();
         Platform.runLater(() -> {
             btnMenu.getScene().getWindow().centerOnScreen();
+            stateCheck();
         });
     }
     
@@ -146,7 +147,10 @@ public class PeminjamanBarangController implements Initializable {
                 if (isNotBarangDuplicate(str[1])) {
                     try {
                         showBarang(str[1]);
+                        stateCheck();
                     } catch (JenisBarangException e) {
+                        lblNotAset.setVisible(true);
+                    } catch (Exception e) {
                         lblNotAset.setVisible(true);
                     }
                 }
@@ -217,15 +221,23 @@ public class PeminjamanBarangController implements Initializable {
         return idPeminjaman;
     }
     
-    private void showBarang(String idBarang) throws JenisBarangException {
+    private void showBarang(String idBarang) throws JenisBarangException, Exception {
         //BUG CSS PROBLEM
         String query = "SELECT id_barang, nama_barang, jenis_barang FROM barang_masuk WHERE id_barang = " + idBarang;
         try {
             Statement stmt = this.connection.createStatement();
             ResultSet rs = stmt.executeQuery(query);
+            if (!rs.next()) {
+                rs.close();
+                lblNotAset.setText("Data barang tidak ditemukan/bukan aset");
+                throw new Exception("data barang tidak di temukan");
+            }
+            rs.beforeFirst();
             rs.first();
             
             if (!rs.getString("jenis_barang").toLowerCase().equals("aset")) {
+                rs.close();
+                lblNotAset.setText("Bukan Barang jenis aset");
                 throw new JenisBarangException("Bukan Barang jenis aset");
             }
             
@@ -248,6 +260,14 @@ public class PeminjamanBarangController implements Initializable {
     
     private String getTanggalToday() {
         return DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss");
+    }
+    
+    private void stateCheck() {
+        if (barangs.isEmpty()) {
+            btnPinjam.setDisable(true);
+        } else {
+            btnPinjam.setDisable(false);
+        }
     }
     
     protected void setUserMap(Map map) {

@@ -80,8 +80,8 @@
                   </VBox>
                   <JFXButton fx:id="btnSelesai" layoutX="669.0" layoutY="537.0" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #00b894;" text="Selesai" />
                   <JFXTextField fx:id="tFieldSearch" focusColor="#00b894" layoutX="553.0" layoutY="54.0" prefHeight="25.0" prefWidth="189.0" promptText="Search" />
-                  <TextField fx:id="tFieldScanBarang" layoutX="192.0" layoutY="86.0" prefHeight="25.0" prefWidth="181.0" style="-fx-opacity: 1;" />
-                  <Label fx:id="lblNotHP" alignment="CENTER" layoutX="158.0" layoutY="121.0" prefHeight="33.0" prefWidth="250.0" text="Bukan Barang Habis Pakai" textFill="#fc1e1e" visible="false">
+                  <TextField fx:id="tFieldScanBarang" layoutX="561.0" layoutY="125.0" prefHeight="25.0" prefWidth="181.0" style="-fx-opacity: 1;" />
+                  <Label fx:id="lblNotHP" layoutX="153.0" layoutY="121.0" prefHeight="33.0" prefWidth="399.0" text="Bukan Barang Habis Pakai" textFill="#fc1e1e" visible="false">
                      <font>
                         <Font name="Lato Regular" size="19.0" />
                      </font>

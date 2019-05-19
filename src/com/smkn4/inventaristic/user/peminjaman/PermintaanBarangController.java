@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -100,6 +102,7 @@ public class PermintaanBarangController implements Initializable {
         setButtonAction();
         Platform.runLater(() -> {
             btnMenu.getScene().getWindow().centerOnScreen();
+            stateCheck();
         });
     }
     
@@ -120,7 +123,10 @@ public class PermintaanBarangController implements Initializable {
                 if (isNotBarangDuplicate(str[1])) {
                     try {
                         showBarang(str[1]);
+                        stateCheck();
                     } catch (JenisBarangException e) {
+                        lblNotHP.setVisible(true);
+                    } catch (Exception ex) {
                         lblNotHP.setVisible(true);
                     }
                 }
@@ -180,15 +186,23 @@ public class PermintaanBarangController implements Initializable {
         }
     }
     
-    private void showBarang(String idBarang) throws JenisBarangException {
+    private void showBarang(String idBarang) throws JenisBarangException, Exception {
         //BUG CSS PROBLEM
         String query = "SELECT id_barang, nama_barang, jenis_barang FROM barang_masuk WHERE id_barang = " + idBarang;
         try {
             Statement stmt = this.connection.createStatement();
             ResultSet rs = stmt.executeQuery(query);
+            if (!rs.next()) {
+                rs.close();
+                lblNotHP.setText("Data barang tidak ditemukan/bukan habis pakai");
+                throw new Exception("data barang tidak di temukan");
+            }
+            rs.beforeFirst();
             rs.first();
             
             if (!rs.getString("jenis_barang").toLowerCase().equals("habis_pakai")) {
+                rs.close();
+                lblNotHP.setText("Bukan Barang Habis Pakai");
                 throw new JenisBarangException("Bukan Barang Habis Pakai");
             }
             
@@ -226,6 +240,14 @@ public class PermintaanBarangController implements Initializable {
     }
     private void setUsername() {
         lblUsername.setText("Halo, "+ this.map.get("nama") + " !");
+    }
+    
+    private void stateCheck() {
+        if (barangs.isEmpty()) {
+            btnSelesai.setDisable(true);
+        } else {
+            btnSelesai.setDisable(false);
+        }
     }
     
     private void cekSanksiSiswa() {
