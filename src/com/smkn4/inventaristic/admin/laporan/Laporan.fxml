@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="171.0" prefWidth="329.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.smkn4.inventaristic.admin.laporan.LaporanController">
+   <children>
+      <JFXButton fx:id="btnBB" layoutX="14.0" layoutY="36.0" prefHeight="33.0" prefWidth="142.0" ripplerFill="#ebebeb" style="-fx-background-color: #00b894;" text="Barang Bermasalah" textFill="WHITE">
+         <font>
+            <Font name="Lato Bold" size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnBM" layoutX="14.0" layoutY="76.0" prefHeight="33.0" prefWidth="142.0" ripplerFill="#ebebeb" style="-fx-background-color: #00b894;" text="Barang Masuk" textFill="WHITE">
+         <font>
+            <Font name="Lato Bold" size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnP" layoutX="172.0" layoutY="36.0" prefHeight="33.0" prefWidth="142.0" ripplerFill="#ebebeb" style="-fx-background-color: #00b894;" text="Permintaan Barang" textFill="WHITE">
+         <font>
+            <Font name="Lato Bold" size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnPK" layoutX="172.0" layoutY="76.0" prefHeight="33.0" prefWidth="142.0" ripplerFill="#ebebeb" style="-fx-background-color: #00b894;" text="Pinjam Kembali" textFill="WHITE">
+         <font>
+            <Font name="Lato Bold" size="14.0" />
+         </font>
+      </JFXButton>
+      <Label layoutX="14.0" layoutY="6.0" text="Laporan">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="btnMP" layoutX="86.0" layoutY="124.0" prefHeight="33.0" prefWidth="142.0" ripplerFill="#ebebeb" style="-fx-background-color: #00b894;" text="Menu Print" textFill="WHITE">
+         <font>
+            <Font name="Lato Bold" size="14.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>
