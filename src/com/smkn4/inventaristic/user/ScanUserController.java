@@ -44,8 +44,6 @@ public class ScanUserController implements Initializable {
     @FXML
     private JFXButton btnMenu;
     @FXML
-    private JFXButton btnPengajuan;
-    @FXML
     private JFXButton btnSignOut;
     @FXML
     private Pane pnlCustomer;
@@ -87,9 +85,6 @@ public class ScanUserController implements Initializable {
                 ex.getCause();
                 ex.printStackTrace();
             }
-        });
-        btnPengajuan.setOnAction((event) -> {
-            new Pengajuan_Barang().setVisible(true);
         });
     }
     
