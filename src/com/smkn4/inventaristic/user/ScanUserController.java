@@ -44,8 +44,6 @@ public class ScanUserController implements Initializable {
     @FXML
     private JFXButton btnMenu;
     @FXML
-    private JFXButton btnSignOut;
-    @FXML
     private Pane pnlCustomer;
     @FXML
     private Pane pnlOrders;
