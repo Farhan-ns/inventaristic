@@ -5,6 +5,7 @@
  */
 package com.smkn4.inventaristic.admin;
 
+import com.jfoenix.controls.JFXButton;
 import com.smkn4.inventaristic.pengajuan.DataPengajuan;
 import java.io.IOException;
 import java.net.URL;
@@ -63,6 +64,8 @@ public class AdminHomeController implements Initializable {
     private Pane bocPeminjaman;
     @FXML
     private Label lblNama;
+    @FXML
+    private JFXButton btnSignOut;
     
     Map<String, String> admin = new HashMap<>();
     FXMLLoader loader;
@@ -77,6 +80,18 @@ public class AdminHomeController implements Initializable {
     }
     
     private void setBoxAction() {
+        btnSignOut.setOnAction((event) -> {
+            this.admin.clear();
+            try {
+                stage = (Stage) boxBarang.getScene().getWindow();
+                Parent root = FXMLLoader.load((getClass().getResource("/com/smkn4/inventaristic/LoginScreen.fxml")));
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
+            }
+        });
         boxBarang.setOnMouseClicked((event) -> {
             try {
                 stage = (Stage) boxBarang.getScene().getWindow();
