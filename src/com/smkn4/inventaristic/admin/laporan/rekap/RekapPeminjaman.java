@@ -102,7 +102,7 @@ public class RekapPeminjaman extends javax.swing.JFrame {
     }
     
     public void showData() {
-        String[] kolom = {"No", "ID Peminjaman", "Tanggal Peminjaman", "NIS", "Jumlah dipinjam","Tanggal Kembali","Status Peminjaman" };
+        String[] kolom = {"No", "ID Peminjaman", "Tanggal Peminjaman", "NIS", "Jumlah dipinjam","Tanggal Kembali","Status" };
 
         dtm = new DefaultTableModel(null, kolom);
         JTableHeader header = tbl_peminjaman.getTableHeader();
@@ -131,7 +131,12 @@ public class RekapPeminjaman extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         tbl_peminjaman.setModel(dtm);    
-        tbl_peminjaman.getColumnModel().getColumn(2).setPreferredWidth(150);
+        tbl_peminjaman.getColumnModel().getColumn(0).setPreferredWidth(2);
+        tbl_peminjaman.getColumnModel().getColumn(1).setPreferredWidth(60);
+        tbl_peminjaman.getColumnModel().getColumn(2).setPreferredWidth(100);
+        tbl_peminjaman.getColumnModel().getColumn(3).setPreferredWidth(50);
+        tbl_peminjaman.getColumnModel().getColumn(4).setPreferredWidth(60);
+        tbl_peminjaman.getColumnModel().getColumn(5).setPreferredWidth(100);
 //        count.setText("" + tbl_rekap.getRowCount());
     }
 
@@ -200,7 +205,7 @@ public class RekapPeminjaman extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
