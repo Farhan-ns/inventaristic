@@ -110,6 +110,17 @@ public class AdminHomeController implements Initializable {
                 ex.printStackTrace();
             }
         });
+        boxLaporan.setOnMouseClicked((event) -> {
+            try {
+                stage = (Stage) boxBarang.getScene().getWindow();
+                Parent root = FXMLLoader.load((getClass().getResource("/com/smkn4/inventaristic/admin/laporan/Laporan.fxml")));
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
+            }
+        });
         boxPengajuan.setOnMouseClicked((event) -> {
             new DataPengajuan().setVisible(true);
         });
