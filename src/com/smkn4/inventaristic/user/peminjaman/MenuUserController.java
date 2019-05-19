@@ -55,6 +55,18 @@ public class MenuUserController implements Initializable {
     }
     
     private void setButtonsAction() {
+        btnSignOut.setOnAction((event) -> {
+            this.map.clear();
+            try {
+                Stage stage = (Stage) btnSignOut.getScene().getWindow();
+                Parent root = FXMLLoader.load((getClass().getResource("/com/smkn4/inventaristic/admin/AdminHome.fxml")));
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
+            }
+        });
         boxPengembalian.setOnMouseClicked((event) -> {
             try {
                 this.loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/PengembalianBarang.fxml"));
