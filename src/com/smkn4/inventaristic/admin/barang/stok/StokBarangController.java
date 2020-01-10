@@ -188,7 +188,7 @@ public class StokBarangController implements Initializable {
         ObservableList<Barang> barangs = FXCollections.observableArrayList();
         try {
             Statement stat = this.connection.createStatement();
-            String query = "SELECT * FROM barang_masuk ORDER BY nama_barang";
+            String query = "select * from barang_masuk WHERE NOT EXISTS (SELECT barang_bermasalah.id_barang FROM barang_bermasalah WHERE barang_masuk.id_barang = barang_bermasalah.id_barang) ORDER BY nama_barang";
             /*
             DEV NOTES
             Bagaimana Jika ada barang yang namanya sama namun isi di field lain berbeda?
@@ -222,6 +222,7 @@ public class StokBarangController implements Initializable {
                 ex.getCause();
                 ex.printStackTrace();
             }
+            readData();
         });
         btnEdit.setOnAction((event) -> {
             try {
@@ -266,6 +267,7 @@ public class StokBarangController implements Initializable {
                 ex.getCause();
                 ex.printStackTrace();
             }
+            
         });
         btnHapus.setOnAction ( (event) -> {
             deleteData();
