@@ -84,7 +84,13 @@ public class  MySqlConnection {
      * @throws IOException 
      */
     private static void createConfig() throws IOException {
-        FileWriter configFile = new FileWriter(getUserDir()+"//config"+"//config.dbs");
+        File confDir = new File(Helper.getDriverRunningDirectory() + "/config");
+        
+        if (!confDir.exists()) {
+            confDir.mkdir();
+        }
+        
+        FileWriter configFile = new FileWriter(Helper.getDriverRunningDirectory()+"//config"+"//config.dbs");
         configFile.write("DatabaseHost=\n");
         configFile.write("DatabasePort=\n");
         configFile.write("DatabaseName=\n");
@@ -100,7 +106,7 @@ public class  MySqlConnection {
      * @throws FileNotFoundException 
      */
     private static Map<String, String> readConfig() throws FileNotFoundException {
-        File file = new File(getUserDir()+"//config"+"//config.dbs");
+        File file = new File(Helper.getDriverRunningDirectory()+"//config"+"//config.dbs");
         Scanner scanner = new Scanner(file);
         scanner.useDelimiter("\\Z");
         Map<String, String> dbConfig = new HashMap<>();
