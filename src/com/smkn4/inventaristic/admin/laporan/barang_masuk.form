@@ -192,7 +192,7 @@
               <StringArray count="3">
                 <StringItem index="0" value="Semua Jenis Barang"/>
                 <StringItem index="1" value="Habis Pakai"/>
-                <StringItem index="2" value="Asset"/>
+                <StringItem index="2" value="Aset"/>
               </StringArray>
             </Property>
           </Properties>
@@ -223,7 +223,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btn_batal">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Batal"/>
+            <Property name="text" type="java.lang.String" value="Reset"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_batalActionPerformed"/>

@@ -241,7 +241,7 @@ public class DataPengajuan extends javax.swing.JFrame {
         int no = 1;
         try {
             Statement stat = koneksi.createStatement();
-            String query = "SELECT * FROM pengajuan_barang";
+            String query = "SELECT * FROM pengajuan_barang ";
             String queryFilter = filterData();
             ResultSet rs = stat.executeQuery(query+queryFilter);
             while (rs.next()) {
@@ -253,9 +253,10 @@ public class DataPengajuan extends javax.swing.JFrame {
                 String jumlah = rs.getString("jumlah_permintaan");
                 String deks = rs.getString("deskripsi");
                 String tgl_permintaan = rs.getString("tgl_permintaan");
+                String deskripsi = rs.getString("deskripsi");
                 Date date;
                 Calendar cal = Calendar.getInstance();
-                dtm.addRow(new String[]{no + "", id_permintaan, nama, jenis, jumlah, deks, tgl_permintaan + ""});
+                dtm.addRow(new String[]{no + "", id_permintaan, nama, jenis, jumlah, deks, tgl_permintaan + "", deskripsi});
                 no++;
             }
         } catch (SQLException ex) {
@@ -275,14 +276,14 @@ public class DataPengajuan extends javax.swing.JFrame {
     
     public String filterData() {
         String qfilter = "",qf5 = "",qf6 = "",qf7 = "";
-//    if (!search.getText().equals("Nama...")){
-//        qf5 = " WHERE ( nama_barang LIKE '%" + search.getText() + "%') ";
+//        if (!search.getText().equals("Nama...")){
+//            qf5 = " WHERE ( nama_barang LIKE '%" + search.getText() + "%') ";
 //        }
-    if (rdDesc.isSelected()) {
-            qf6 = "ORDER BY tgl_permintaan DESC";
-        }
-        if (rdAsc.isSelected()) {
-            qf7 = "ORDER BY tgl_permintaan ASC";
+        if (rdDesc.isSelected()) {
+                qf6 = "ORDER BY tgl_permintaan DESC";
+            }
+        else if (rdAsc.isSelected()) {
+                qf7 = "ORDER BY tgl_permintaan ASC";
         }
         qfilter = qf5+qf6+qf7;
         System.out.println(qfilter);
@@ -296,10 +297,6 @@ public class DataPengajuan extends javax.swing.JFrame {
 
     private void cmdRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdRefreshActionPerformed
         showData();
-//        search.setText("Nama...");
-//        cmbKelas.setSelectedIndex(0);
-//        cmbJurusan.setSelectedIndex(0);
-//        rdSemua.setSelected(TRUE);
     }//GEN-LAST:event_cmdRefreshActionPerformed
     int baris;
     private void tbl_dataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_dataMouseClicked

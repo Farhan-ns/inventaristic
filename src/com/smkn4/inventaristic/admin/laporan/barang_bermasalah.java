@@ -120,8 +120,8 @@ public class barang_bermasalah extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        cb_jenis = new javax.swing.JComboBox<>();
         cb_permasalahan = new javax.swing.JComboBox<>();
+        cb_jenis = new javax.swing.JComboBox<>();
         btn_batal = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jButton1 = new javax.swing.JButton();
@@ -142,21 +142,21 @@ public class barang_bermasalah extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Jenis Permasalahan Barang");
 
-        cb_jenis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua Jenis Masalah", "Rusak", "Hilang" }));
-        cb_jenis.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cb_jenisActionPerformed(evt);
-            }
-        });
-
-        cb_permasalahan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua Jenis Barang", "Asset", "Habis Pakai" }));
+        cb_permasalahan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua Jenis Masalah", "Rusak", "Hilang" }));
         cb_permasalahan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cb_permasalahanActionPerformed(evt);
             }
         });
 
-        btn_batal.setText("Batal");
+        cb_jenis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua Jenis Barang", "Aset", "Habis Pakai" }));
+        cb_jenis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_jenisActionPerformed(evt);
+            }
+        });
+
+        btn_batal.setText("Reset");
         btn_batal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_batalActionPerformed(evt);
@@ -181,15 +181,15 @@ public class barang_bermasalah extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel7)
                                     .addComponent(jLabel3)
-                                    .addComponent(cb_jenis, 0, 149, Short.MAX_VALUE)
-                                    .addComponent(cb_permasalahan, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(cb_permasalahan, 0, 149, Short.MAX_VALUE)
+                                    .addComponent(cb_jenis, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(41, 41, 41)
                                 .addComponent(jButton1)))
                         .addGap(0, 15, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(64, 64, 64)
+                .addGap(63, 63, 63)
                 .addComponent(btn_batal, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -200,15 +200,15 @@ public class barang_bermasalah extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cb_jenis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addGap(27, 27, 27)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cb_permasalahan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(16, 16, 16)
                 .addComponent(btn_batal)
-                .addGap(87, 87, 87)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(123, 123, 123)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -286,21 +286,21 @@ public class barang_bermasalah extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cb_jenisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_jenisActionPerformed
-        // TODO add your handling code here:
-        showData(Filter(1));
-    }//GEN-LAST:event_cb_jenisActionPerformed
-
     private void cb_permasalahanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_permasalahanActionPerformed
         // TODO add your handling code here:
         showData(Filter(2));
     }//GEN-LAST:event_cb_permasalahanActionPerformed
 
+    private void cb_jenisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_jenisActionPerformed
+        // TODO add your handling code here:
+        showData(Filter(1));
+    }//GEN-LAST:event_cb_jenisActionPerformed
+
     private void btn_batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batalActionPerformed
         // TODO add your handling code here:
         btnGrup_waktu.clearSelection();
-        cb_jenis.setSelectedIndex(0);
         cb_permasalahan.setSelectedIndex(0);
+        cb_jenis.setSelectedIndex(0);
     }//GEN-LAST:event_btn_batalActionPerformed
 int baris;
     private void tbl_bermasalahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_bermasalahMouseClicked

@@ -47,11 +47,11 @@ public class pinjam_kembali extends javax.swing.JFrame {
         try{
             Statement stmt = koneksi.createStatement();
             String query = "SELECT peminjaman.`tgl_peminjaman`, siswa.`nama_siswa`, siswa.`kelas`, barang_masuk.`nama_barang`, barang_masuk.`jenis_barang`,"
-                    + "barang_masuk.`kondisi`, barang_masuk.`lokasi`, peminjaman.`jumlah_dipinjam`, peminjaman.`tgl_kembali`, peminjaman.`status_peminjaman`"
-                    + "FROM peminjaman, siswa, barang_masuk, rincian"
-                    + "WHERE peminjaman.`nis` = siswa.`nis`"
-                    + "AND rincian.`id_peminjaman` = peminjaman.`id_peminjaman`"
-                    + "AND rincian.`id_barang` = barang_masuk.`id_barang`" + qryFilter;
+                    + " barang_masuk.`kondisi`, barang_masuk.`lokasi`, peminjaman.`jumlah_dipinjam`, peminjaman.`tgl_kembali`, peminjaman.`status_peminjaman`"
+                    + " FROM peminjaman, siswa, barang_masuk, rincian"
+                    + " WHERE peminjaman.`nis` = siswa.`nis`"
+                    + " AND rincian.`id_peminjaman` = peminjaman.`id_peminjaman`"
+                    + " AND rincian.`id_barang` = barang_masuk.`id_barang`" + qryFilter;
             
             ResultSet rs = stmt.executeQuery(query);
             int no = 1;
@@ -93,13 +93,13 @@ public class pinjam_kembali extends javax.swing.JFrame {
         String qryFilter = null;
         switch(i) {
             case 1:
-                qryFilter = "AND barang_masuk.jenis_barang = '" + cb_jenis.getSelectedItem().toString() + "';";
+                qryFilter = " AND barang_masuk.jenis_barang = '" + cb_jenis.getSelectedItem().toString().toLowerCase() + "'";
                 break;
             case 2:
-                qryFilter = "AND peminjaman.status_peminjaman = '" + cb_status.getSelectedItem().toString() + "';";
+                qryFilter = " AND peminjaman.status_peminjaman = '" + cb_status.getSelectedItem().toString().toLowerCase() + "'";
                 break;
             default:
-                qryFilter = "ORDER BY tgl_pinjam ASC;";
+                qryFilter = " ORDER BY tgl_peminjaman ASC";
         }
         return qryFilter;
     }
@@ -147,7 +147,7 @@ public class pinjam_kembali extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Status Peminjaman");
 
-        cb_jenis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua Jenis Barang", "Habis Pakai", "Asset" }));
+        cb_jenis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua Jenis Barang", "Habis Pakai", "Aset" }));
         cb_jenis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cb_jenisActionPerformed(evt);
@@ -161,7 +161,7 @@ public class pinjam_kembali extends javax.swing.JFrame {
             }
         });
 
-        btn_batal.setText("Batal");
+        btn_batal.setText("Reset");
         btn_batal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_batalActionPerformed(evt);
@@ -190,12 +190,13 @@ public class pinjam_kembali extends javax.swing.JFrame {
                                     .addComponent(cb_status, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(36, 36, 36)
-                                .addComponent(jButton1))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(59, 59, 59)
-                                .addComponent(btn_batal, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jButton1)))
                         .addGap(0, 10, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addComponent(btn_batal, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,13 +209,13 @@ public class pinjam_kembali extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cb_status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_batal)
-                .addGap(75, 75, 75)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(94, 94, 94)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         jLabel5.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N

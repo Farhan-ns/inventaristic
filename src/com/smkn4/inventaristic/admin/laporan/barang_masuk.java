@@ -47,8 +47,7 @@ public class barang_masuk extends javax.swing.JFrame {
         try{
             Statement stmt = koneksi.createStatement();
             String query = "SELECT tgl_masuk, nama_barang, jenis_barang, thn_barang, sumber_perolehan, kondisi, lokasi, deskripsi "
-                         + "FROM barang_masuk "
-                         + "GROUP BY tgl_masuk " + qryFilter;
+                         + "FROM barang_masuk " + qryFilter;
             
             ResultSet rs = stmt.executeQuery(query);
             int no = 1;
@@ -84,16 +83,16 @@ public class barang_masuk extends javax.swing.JFrame {
     }
 
     public String Filter(int i) {
-        String qryFilter = null;
+        String qryFilter = "";
         switch(i) {
             case 1:
-                qryFilter = "171AND barang_masuk.jenis_barang = '" + cb_jenis.getSelectedItem().toString() + "';";
+                qryFilter = " WHERE barang_masuk.jenis_barang = '" + cb_jenis.getSelectedItem().toString().toLowerCase() + "'";
                 break;
             case 2:
-                qryFilter = "AND barang_masuk.kondisi = '" + cb_kondisi.getSelectedItem().toString() + "';";
+                qryFilter = " WHERE barang_masuk.kondisi = '" + cb_kondisi.getSelectedItem().toString().toLowerCase() + "'";
                 break;
             default:
-                qryFilter = "ORDER BY tgl_masuk ASC;";
+                qryFilter = " ORDER BY tgl_masuk ASC";
         }
         return qryFilter;
     }
@@ -159,7 +158,7 @@ public class barang_masuk extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Kondisi Barang");
 
-        cb_jenis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua Jenis Barang", "Habis Pakai", "Asset" }));
+        cb_jenis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua Jenis Barang", "Habis Pakai", "Aset" }));
         cb_jenis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cb_jenisActionPerformed(evt);
@@ -173,7 +172,7 @@ public class barang_masuk extends javax.swing.JFrame {
             }
         });
 
-        btn_batal.setText("Batal");
+        btn_batal.setText("Reset");
         btn_batal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_batalActionPerformed(evt);
