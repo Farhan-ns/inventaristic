@@ -18,7 +18,12 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Frame;
+import java.io.IOException;
 import java.util.Calendar;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -62,6 +67,18 @@ public class DataPengajuan extends javax.swing.JFrame {
     private void initComponents() {
 
         bgUsia = new javax.swing.ButtonGroup();
+        jSeparator1 = new javax.swing.JSeparator();
+        bg = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        rdAsc = new javax.swing.JRadioButton();
+        rdDesc = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        cmdRefresh = new javax.swing.JButton();
+        cmdHapus = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_data = new javax.swing.JTable()
         {
@@ -70,19 +87,72 @@ public class DataPengajuan extends javax.swing.JFrame {
                 return false;
             }
         };
-        cmdRefresh = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
-        bg = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        cmdHapus = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        rdAsc = new javax.swing.JRadioButton();
-        rdDesc = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -2, -1, 560));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel8.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        jLabel8.setText("Periode");
+
+        bgUsia.add(rdAsc);
+        rdAsc.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        rdAsc.setText("Termuda");
+        rdAsc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdAscActionPerformed(evt);
+            }
+        });
+
+        bgUsia.add(rdDesc);
+        rdDesc.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        rdDesc.setText("Tertua");
+        rdDesc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdDescActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
+        jLabel1.setText("Data Pengajuan Barang");
+
+        jPanel2.setBackground(new java.awt.Color(0, 204, 153));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Hai User !!!");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 180, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Menu");
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, -1, -1));
+
+        cmdRefresh.setBackground(new java.awt.Color(255, 255, 255));
+        cmdRefresh.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        cmdRefresh.setText("Refresh");
+        cmdRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdRefreshActionPerformed(evt);
+            }
+        });
+
+        cmdHapus.setBackground(new java.awt.Color(255, 255, 255));
+        cmdHapus.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        cmdHapus.setText("Hapus");
+        cmdHapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdHapusActionPerformed(evt);
+            }
+        });
 
         jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -112,90 +182,50 @@ public class DataPengajuan extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tbl_data);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 910, 280));
-
-        cmdRefresh.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        cmdRefresh.setText("Refresh");
-        cmdRefresh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdRefreshActionPerformed(evt);
-            }
-        });
-        getContentPane().add(cmdRefresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 520, 100, -1));
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 890, 10));
-        getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -2, -1, 560));
-
-        jPanel2.setBackground(new java.awt.Color(100, 0, 100));
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Data Pengajuan Barang");
-        jPanel2.add(jLabel1);
-
-        cmdHapus.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        cmdHapus.setText("Hapus");
-        cmdHapus.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdHapusActionPerformed(evt);
-            }
-        });
-
-        jLabel8.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jLabel8.setText("Periode");
-
-        bgUsia.add(rdAsc);
-        rdAsc.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        rdAsc.setText("Termuda");
-        rdAsc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdAscActionPerformed(evt);
-            }
-        });
-
-        bgUsia.add(rdDesc);
-        rdDesc.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        rdDesc.setText("Tertua");
-        rdDesc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdDescActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(cmdHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54))
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
+                        .addComponent(cmdRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cmdHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(62, 62, 62)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
+                        .addGap(18, 18, 18)
                         .addComponent(rdAsc)
-                        .addGap(9, 9, 9)
+                        .addGap(18, 18, 18)
                         .addComponent(rdDesc))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 911, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20))
+                    .addComponent(jLabel1)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(97, 97, 97)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(46, 46, 46)
+                .addComponent(jLabel1)
+                .addGap(58, 58, 58)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmdRefresh)
+                    .addComponent(cmdHapus)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rdAsc)
                     .addComponent(rdDesc))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 341, Short.MAX_VALUE)
-                .addComponent(cmdHapus)
-                .addContainerGap())
+                .addGap(28, 28, 28)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 1, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 910, 560));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, -10, 970, 570));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -302,6 +332,10 @@ public class DataPengajuan extends javax.swing.JFrame {
     private void rdDescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdDescActionPerformed
         showData();
     }//GEN-LAST:event_rdDescActionPerformed
+    Stage stage;
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        this.dispose();
+    }//GEN-LAST:event_jLabel3MouseClicked
     int xx = 0;
     int yy = 0;
 
@@ -346,6 +380,8 @@ public class DataPengajuan extends javax.swing.JFrame {
     private javax.swing.JButton cmdHapus;
     private javax.swing.JButton cmdRefresh;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
