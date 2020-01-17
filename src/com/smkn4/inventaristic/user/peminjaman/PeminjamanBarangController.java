@@ -152,7 +152,7 @@ public class PeminjamanBarangController implements Initializable {
         tFieldScanBarang.setOnAction((event) -> {
             String kodeBarang = tFieldScanBarang.getText();
             String[] str = kodeBarang.split("-");
-            if (!str[0].equals("4BDG")) {
+            if (!str[0].equals("SMKN4BDG")) {
                 System.out.println(kodeBarang);
                 System.out.println("bukan barang smkn 4");
             } else {
