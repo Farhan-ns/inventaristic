@@ -28,9 +28,9 @@ public class Driver extends Application{
             //ADMIN HOME
 //            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/admin/AdminHome.fxml"));
 
-            System.out.println(Helper.getDriverRunningDirectory());
+//17001             System.out.println(Helper.getDriverRunningDirectory());
 
-            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/LoginScreen.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/PivotScreen.fxml"));
             Scene scene = new Scene(root);
             scene.getStylesheets().add("/com/smkn4/inventaristic/center-column.css");
             primaryStage.setScene(scene);
