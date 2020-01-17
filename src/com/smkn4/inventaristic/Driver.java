@@ -5,6 +5,7 @@
  */
 package com.smkn4.inventaristic;
 
+import com.smkn4.inventaristic.util.Helper;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -26,11 +27,15 @@ public class Driver extends Application{
 //            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/user/ScanUser.fxml"));
             //ADMIN HOME
 //            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/admin/AdminHome.fxml"));
-            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/LoginScreen.fxml"));
+
+//17001             System.out.println(Helper.getDriverRunningDirectory());
+
+            Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/PivotScreen.fxml"));
             Scene scene = new Scene(root);
             scene.getStylesheets().add("/com/smkn4/inventaristic/center-column.css");
             primaryStage.setScene(scene);
             primaryStage.show();
+            
         } catch (IOException e) {
             e.getCause();
             e.printStackTrace();

@@ -46,8 +46,7 @@ public class permintaan_barang extends javax.swing.JFrame {
         try{
             Statement stmt = koneksi.createStatement();
             String query = "SELECT nama_barang, jenis_barang, tgl_permintaan, jumlah_permintaan, deskripsi "
-                         + "FROM permintaan_barang "
-                         + "GROUP BY tgl_permintaan " + qryFilter;
+                         + "FROM permintaan_barang " + qryFilter;
                         
             ResultSet rs = stmt.executeQuery(query);
             int no = 1;
@@ -72,17 +71,17 @@ public class permintaan_barang extends javax.swing.JFrame {
         tbl_permintaan.getColumnModel().getColumn(4).setPreferredWidth(20);
         
         int j = tbl_permintaan.getRowCount();
-        lbl_jumlah.setText("Jumlah Permintaan Baran : "+j);
+        lbl_jumlah.setText("Jumlah Permintaan Barang : "+j);
     }
     
     public String Filter(int i) {
         String qryFilter = null;
         switch(i) {
             case 1:
-                qryFilter = "AND barang_masuk.jenis_barang = '" + cb_jenis.getSelectedItem().toString() + "';";
+                qryFilter = " WHERE barang_masuk.jenis_barang = '" + cb_jenis.getSelectedItem().toString().toLowerCase() + "'";
                 break;       
             default:
-                qryFilter = "ORDER BY nama_barang ASC;";
+                qryFilter = " ORDER BY nama_barang ASC";
         }
         return qryFilter;
     }
@@ -125,14 +124,14 @@ public class permintaan_barang extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Jenis Barang");
 
-        cb_jenis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua Jenis Barang", "Habis Pakai", "Asset" }));
+        cb_jenis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua Jenis Barang", "Habis Pakai", "Aset" }));
         cb_jenis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cb_jenisActionPerformed(evt);
             }
         });
 
-        btn_batal.setText("Batal");
+        btn_batal.setText("Reset");
         btn_batal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_batalActionPerformed(evt);
@@ -151,13 +150,8 @@ public class permintaan_barang extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jSeparator1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(60, 60, 60)
-                                .addComponent(btn_batal, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(36, 36, 36)
-                                .addComponent(jButton1)))
+                        .addGap(36, 36, 36)
+                        .addComponent(jButton1)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -166,6 +160,10 @@ public class permintaan_barang extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(cb_jenis, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addComponent(btn_batal, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,11 +172,11 @@ public class permintaan_barang extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cb_jenis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(87, 87, 87)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(58, 58, 58)
                 .addComponent(btn_batal)
-                .addGap(40, 40, 40)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(69, 69, 69)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(52, Short.MAX_VALUE))
         );

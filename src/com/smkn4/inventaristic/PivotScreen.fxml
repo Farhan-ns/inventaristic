@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="562.0" prefWidth="604.0" style="-fx-background-color: #ecf0f1;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.smkn4.inventaristic.PivotScreenController">
+   <children>
+      <Pane prefHeight="274.0" prefWidth="604.0" style="-fx-background-color: #00b894;">
+         <children>
+            <ImageView fitHeight="139.0" fitWidth="165.0" layoutX="228.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/Logo%20SMKN%204.png" />
+               </image>
+               <effect>
+                  <ColorAdjust brightness="0.24" contrast="0.12" saturation="0.02" />
+               </effect>
+            </ImageView>
+            <Label alignment="CENTER" layoutX="193.0" layoutY="180.0" prefHeight="53.0" prefWidth="219.0" text="Inventaristic" textFill="WHITE">
+               <font>
+                  <Font name="Lato Medium" size="36.0" />
+               </font>
+            </Label>
+            <JFXButton fx:id="btnLogin" layoutX="451.0" layoutY="14.0" text="Login Admin" textFill="WHITE">
+               <font>
+                  <Font name="Lato Medium" size="20.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </Pane>
+      <Pane fx:id="bocPeminjaman" layoutX="60.0" layoutY="297.0" prefHeight="222.0" prefWidth="203.0" style="-fx-background-color: white; -fx-background-insets: 10; -fx-cursor: hand;">
+         <effect>
+            <DropShadow blurType="GAUSSIAN" height="12.1" radius="6.2925" width="15.07" />
+         </effect>
+         <children>
+            <Label layoutX="36.0" layoutY="141.0" text="Peminjaman">
+               <font>
+                  <Font name="Lato Regular" size="24.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="88.0" fitWidth="117.0" layoutX="57.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/order.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane fx:id="boxPengajuan" layoutX="358.0" layoutY="297.0" prefHeight="222.0" prefWidth="203.0" style="-fx-background-color: white; -fx-background-insets: 10; -fx-cursor: hand;">
+         <effect>
+            <DropShadow blurType="GAUSSIAN" height="12.1" radius="6.2925" width="15.07" />
+         </effect>
+         <children>
+            <Label layoutX="13.0" layoutY="141.0" text="Pengajuan Siswa">
+               <font>
+                  <Font name="Lato Regular" size="24.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="88.0" fitWidth="117.0" layoutX="57.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/approval.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
