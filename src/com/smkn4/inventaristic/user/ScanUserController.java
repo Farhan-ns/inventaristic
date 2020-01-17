@@ -97,7 +97,7 @@ public class ScanUserController implements Initializable {
             public void handle(KeyEvent event) {
                 lblFail.setVisible(false);
                 if (event.getCode() == KeyCode.ENTER) {
-                    scanUser(barcodeCache);
+                    scanNis(barcodeCache);
                     barcodeCache = new String();
                 } else {
                     barcodeCache += getInput(event);
@@ -114,7 +114,7 @@ public class ScanUserController implements Initializable {
         }
     }
     
-    private void scanUser(String nis) {
+    private void scanNis(String nis) {
         if (nis == null || nis.length() < 10) {
             System.out.println("GAGAL : " + nis);
             lblFail.setVisible(true);
