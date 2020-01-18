@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import java.text.MessageFormat;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -33,7 +35,14 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Workbook;
 /**
  *
  * @author Salman
@@ -57,6 +66,9 @@ public class RekapPeminjaman extends javax.swing.JFrame {
         return dtm.getValueAt(x,y).toString();
     }
     
+      private static String getUserDir() {
+        return System.getProperty("user.dir");
+    }
 //    export data
     private void exportToExcel(){
         XSSFWorkbook wb = new XSSFWorkbook();
@@ -91,9 +103,23 @@ public class RekapPeminjaman extends javax.swing.JFrame {
             
         }
         
+         CellStyle cs = wb.createCellStyle();
+            cs.setFillForegroundColor(IndexedColors.LIME.getIndex());
+            cs.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+            Font f = wb.createFont();
+            f.setBoldweight(Font.BOLDWEIGHT_BOLD);
+            f.setFontHeightInPoints((short) 12);
+            cs.setFont(f);
+        
+              int idx = 0;
+              Cell c = null;
+                int idy = 0;
 //        Save File
         try{
-            FileOutputStream fos = new FileOutputStream(new File("D:/Excel/RekapPeminjaman.xls"));
+           
+            
+            
+            FileOutputStream fos = new FileOutputStream(new File("rekap//rekapdata.xls"));
             wb.write(fos);
             fos.close();
         }catch(FileNotFoundException ex){
@@ -291,6 +317,7 @@ public class RekapPeminjaman extends javax.swing.JFrame {
         });
     }
 
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
