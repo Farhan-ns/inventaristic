@@ -7,6 +7,7 @@ package com.smkn4.inventaristic.admin;
 
 import com.jfoenix.controls.JFXButton;
 import com.smkn4.inventaristic.pengajuan.DataPengajuan;
+import com.smkn4.inventaristic.user.ScanUserController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -67,7 +68,7 @@ public class AdminHomeController implements Initializable {
     private Label lblNama;
     @FXML
     private JFXButton btnSignOut;
-    
+
     Map<String, String> admin = new HashMap<>();
     FXMLLoader loader;
     Stage stage;
@@ -82,7 +83,7 @@ public class AdminHomeController implements Initializable {
         });
         setBoxAction();
     }
-    
+
     private void setBoxAction() {
         btnSignOut.setOnAction((event) -> {
             this.admin.clear();
@@ -120,8 +121,15 @@ public class AdminHomeController implements Initializable {
         });
         bocPeminjaman.setOnMouseClicked((event) -> {
             try {
-                stage = (Stage) boxBarang.getScene().getWindow();
-                Parent root = FXMLLoader.load((getClass().getResource("/com/smkn4/inventaristic/user/ScanUser.fxml")));
+                FXMLLoader loader = new FXMLLoader();
+
+                stage = (Stage) bocPeminjaman.getScene().getWindow();
+                loader.setLocation((getClass().getResource("/com/smkn4/inventaristic/user/ScanUser.fxml")));
+                Parent root = loader.load();
+
+                ScanUserController controller = loader.getController();
+                controller.setAuth(true);
+
                 stage.setScene(new Scene(root));
                 stage.show();
             } catch (IOException ex) {
@@ -149,7 +157,7 @@ public class AdminHomeController implements Initializable {
         admin = map;
         lblNama.setText(admin.get("nama"));
     }
-    
+
     @FXML
     private void handleClicks(ActionEvent event) {
     }

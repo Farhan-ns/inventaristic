@@ -57,20 +57,21 @@ public class ScanUserController implements Initializable {
     private Label lblFail;
 
     String barcodeCache = new String();
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        setFieldAction();
         Platform.runLater(() -> {
 //            tFieldUser.requestFocus();
             setScanAction();
             btnMenu.getScene().getWindow().centerOnScreen();
         });
+
     }
-    
-    private void setFieldAction() {
+
+    private void setMenuWithAuth() {
 //        tFieldUser.setOnAction((event) -> {
 //            scanUser();
 //        });
@@ -86,7 +87,21 @@ public class ScanUserController implements Initializable {
             }
         });
     }
-    
+
+    private void setMenuWithoutAuth() {
+        btnMenu.setOnAction((event) -> {
+            try {
+                Stage stage = (Stage) btnMenu.getScene().getWindow();
+                Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/PivotScreen.fxml"));
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
+            }
+        });
+    }
+
     private void setScanAction() {
         Scene scene = btnMenu.getScene();
         if (scene == null) {
@@ -97,7 +112,8 @@ public class ScanUserController implements Initializable {
             public void handle(KeyEvent event) {
                 lblFail.setVisible(false);
                 if (event.getCode() == KeyCode.ENTER) {
-                    scanNis(barcodeCache);
+//                    scanNis(barcodeCache);
+                    scanUserBarcode(barcodeCache);
                     barcodeCache = new String();
                 } else {
                     barcodeCache += getInput(event);
@@ -107,13 +123,26 @@ public class ScanUserController implements Initializable {
     }
 
     private String getInput(KeyEvent event) {
-        if (event.getText().matches("[0-9]+")) {
-            return event.getText();
+        return event.getText();
+//        if (event.getText().matches("[0-9]+")) {
+//            return event.getText();
+//        } else {
+//            return "";
+//        }
+    }
+
+    private void scanUserBarcode(String barcode) {
+        String[] str = barcode.split("-");
+        if (!str[0].equals("SMKN4BDG")) {
+            System.out.println(barcode);
+            System.out.println("User Error");
+            lblFail.setVisible(true);
         } else {
-            return "";
+            System.out.println("CODE: " + barcode);
+
         }
     }
-    
+
     private void scanNis(String nis) {
         if (nis == null || nis.length() < 10) {
             System.out.println("GAGAL : " + nis);
@@ -121,15 +150,40 @@ public class ScanUserController implements Initializable {
             return;
         } else {
             System.out.println("NIS: " + nis);
-            checkUser(nis);
+            checkUserNis(nis);
         }
     }
-    
-    private void checkUser(String nis) {
+
+    private void checkUserId(String barcode) {
         try {
             Connection connection = MySqlConnection.getConnection();
             Statement stmt = connection.createStatement();
-            String query = "SELECT nis, nama_siswa, kelas, sanksi  FROM siswa WHERE nis = " + "'" + nis +"'";
+            String query = "SELECT *"
+                    + " FROM kelas "
+                    + " WHERE barcode = " + "'" + barcode + "'";
+            ResultSet rs = stmt.executeQuery(query);
+
+            if (rs != null && rs.next()) {
+                Map map = new HashMap();
+                map.put("id", rs.getString("nis"));
+                map.put("nama_kelas", rs.getString("nama_kelas"));
+                map.put("tahun_masuk", rs.getString("tahun_masuk"));
+                map.put("tingkat", rs.getString("tingkat"));
+                map.put("barcode", rs.getString("barcode"));
+                grant(map);
+                connection.close();
+            }
+        } catch (Exception ex) {
+            ex.getCause();
+            ex.printStackTrace();
+        }
+    }
+
+    private void checkUserNis(String nis) {
+        try {
+            Connection connection = MySqlConnection.getConnection();
+            Statement stmt = connection.createStatement();
+            String query = "SELECT nis, nama_siswa, kelas, sanksi  FROM siswa WHERE nis = " + "'" + nis + "'";
             ResultSet rs = stmt.executeQuery(query);
             if (rs != null && rs.next()) {
                 Map map = new HashMap();
@@ -145,7 +199,16 @@ public class ScanUserController implements Initializable {
             ex.printStackTrace();
         }
     }
-    
+
+    public void setAuth(boolean auth) {
+        if (!auth) {
+            setMenuWithoutAuth();
+        } else if (auth) {
+            setMenuWithAuth();
+        }
+        System.out.println("AUTH" + auth);
+    }
+
     private void grant(Map map) {
         FXMLLoader loader = new FXMLLoader();
         try {
@@ -162,5 +225,5 @@ public class ScanUserController implements Initializable {
             ex.printStackTrace();
         }
     }
-    
+
 }
