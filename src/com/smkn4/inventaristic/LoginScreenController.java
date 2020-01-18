@@ -43,6 +43,8 @@ public class LoginScreenController implements Initializable {
     private JFXButton btnLogin;
     @FXML
     private Label lblNotif;
+    @FXML
+    private Label lblBack;
 
     Map<String, String> admin = new HashMap<>();
     Connection connection;
@@ -53,6 +55,7 @@ public class LoginScreenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         this.connection = MySqlConnection.getConnection();
         setLoginButton();
+        setBackButton();
     }
     
     private void setLoginButton() {
@@ -64,6 +67,24 @@ public class LoginScreenController implements Initializable {
                 validasi();
             }
         });
+    }
+    
+    private void setBackButton() {
+        lblBack.setOnMouseClicked((event) -> {
+            backToPivot();
+        });
+    }
+    
+    private void backToPivot() {
+        try {
+            Stage stage = (Stage) btnLogin.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/PivotScreen.fxml"));
+            Parent root = loader.load();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException ex) { 
+            System.out.println(ex);
+        }
     }
     
     private void validasi() {
