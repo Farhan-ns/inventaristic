@@ -139,7 +139,7 @@ public class ScanUserController implements Initializable {
             lblFail.setVisible(true);
         } else {
             System.out.println("CODE: " + barcode);
-
+            checkUserId(barcode);
         }
     }
 
@@ -160,12 +160,12 @@ public class ScanUserController implements Initializable {
             Statement stmt = connection.createStatement();
             String query = "SELECT *"
                     + " FROM kelas "
-                    + " WHERE barcode = " + "'" + barcode + "'";
+                    + " WHERE barcode = " + "\"" + barcode + "\"";
             ResultSet rs = stmt.executeQuery(query);
 
             if (rs != null && rs.next()) {
                 Map map = new HashMap();
-                map.put("id", rs.getString("nis"));
+                map.put("id", rs.getString("id_kelas"));
                 map.put("nama_kelas", rs.getString("nama_kelas"));
                 map.put("tahun_masuk", rs.getString("tahun_masuk"));
                 map.put("tingkat", rs.getString("tingkat"));
@@ -174,6 +174,7 @@ public class ScanUserController implements Initializable {
                 connection.close();
             }
         } catch (Exception ex) {
+            lblFail.setVisible(true);
             ex.getCause();
             ex.printStackTrace();
         }
