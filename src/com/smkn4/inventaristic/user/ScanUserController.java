@@ -132,7 +132,9 @@ public class ScanUserController implements Initializable {
     }
 
     private void scanUserBarcode(String barcode) {
-        String[] str = barcode.split("-");
+        String[] str = barcode
+                .toUpperCase()
+                .split("-");
         if (!str[0].equals("SMKN4BDG")) {
             System.out.println(barcode);
             System.out.println("User Error");
@@ -169,6 +171,7 @@ public class ScanUserController implements Initializable {
                 map.put("nama_kelas", rs.getString("nama_kelas"));
                 map.put("tahun_masuk", rs.getString("tahun_masuk"));
                 map.put("tingkat", rs.getString("tingkat"));
+                map.put("sanksi", rs.getString("sanksi"));
                 map.put("barcode", rs.getString("barcode"));
                 grant(map);
                 connection.close();
