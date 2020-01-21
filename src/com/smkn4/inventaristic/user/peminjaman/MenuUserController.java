@@ -55,7 +55,7 @@ public class MenuUserController implements Initializable {
     }   
     
     private void setIdentitas() {
-        lblNama.setText("Hallo, " + map.get("nama").toString() + "!");
+        lblNama.setText("Hallo, " + map.get("nama_kelas").toString() + "!");
     }
     
     private void setButtonsAction() {
