@@ -98,6 +98,9 @@ public class PermintaanBarangController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.connection = MySqlConnection.getConnection();
+        colNo.setCellValueFactory(new PropertyValueFactory<>("noUrut"));
+        colKode.setCellValueFactory(new PropertyValueFactory<>("idBarang"));
+        colNama.setCellValueFactory(new PropertyValueFactory<>("namaBarang"));
         setScanAction();
         setButtonAction();
         Platform.runLater(() -> {
@@ -109,28 +112,6 @@ public class PermintaanBarangController implements Initializable {
     private void setButtonAction() {
         btnSelesai.setOnAction((event) -> {
             createRecordPermintaan();
-        });
-    }
-    
-    private void setScanAction() {
-        tFieldScanBarang.setOnAction((event) -> {
-            String kodeBarang = tFieldScanBarang.getText();
-            String[] str = kodeBarang.split("-");
-            if (!str[0].equals("4BDG")) {
-                System.out.println(kodeBarang);
-                System.out.println("bukan barang smkn 4");
-            } else {
-                if (isNotBarangDuplicate(str[1])) {
-                    try {
-                        showBarang(str[1]);
-                        stateCheck();
-                    } catch (JenisBarangException e) {
-                        lblNotHP.setVisible(true);
-                    } catch (Exception ex) {
-                        lblNotHP.setVisible(true);
-                    }
-                }
-            }
         });
         btnMenu.setOnAction((event) -> {
             try {
@@ -149,11 +130,11 @@ public class PermintaanBarangController implements Initializable {
         btnSwitch.setOnAction((event) -> {
             try {
                 this.loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/PeminjamanBarang.fxml"));
-                Parent viewPinjamBarang = loader.load();
+                Parent viewMintaBarang = loader.load();
                 Stage stage = (Stage) btnSwitch.getScene().getWindow();
-                stage.setScene(new Scene(viewPinjamBarang));
+                stage.setScene(new Scene(viewMintaBarang));
                 stage.show();
-                PeminjamanBarangController controller = loader.getController();
+                PermintaanBarangController controller = loader.getController();
                 controller.setUserMap(this.map);
             } catch (IOException ex) {
                 ex.getCause();
@@ -174,6 +155,28 @@ public class PermintaanBarangController implements Initializable {
         });
     }
     
+    private void setScanAction() {
+        tFieldScanBarang.setOnAction((event) -> {
+            String kodeBarang = tFieldScanBarang.getText();
+            String[] str = kodeBarang.split("-");
+            if (!str[0].equals("SMKN4BDG")) {
+                System.out.println(kodeBarang);
+                System.out.println("bukan barang smkn 4");
+            } else {
+                if (isNotBarangDuplicate(str[1])) {
+                    try {
+                        showBarang(str[1]);
+                        stateCheck();
+                    } catch (JenisBarangException e) {
+                        lblNotHP.setVisible(true);
+                    } catch (Exception ex) {
+                        lblNotHP.setVisible(true);
+                    }
+                }
+            }
+        });
+    }
+    
     private void createRecordPermintaan() {
         List<String> list = new ArrayList<>();
         for (Barang barang : tabelPermintaanBarang.getItems()) {
@@ -181,13 +184,13 @@ public class PermintaanBarangController implements Initializable {
             list.add(idBarang);
         }
         String tanggalPermintaan = getTanggalToday();
-        String nis = this.map.get("nis");
+        String id = this.map.get("id");
         Statement stmt;
         try {
             stmt = connection.createStatement();
             for (String idBarang : list) {
-                String query = "INSERT INTO permintaan(tgl_permintaan, nis, id_barang) " +
-                        "VALUES('" + tanggalPermintaan + "', " + "'" + nis + "'," + "'" + idBarang + "')";
+                String query = "INSERT INTO permintaan(tgl_permintaan, id_kelas, id_barang) " +
+                        "VALUES('" + tanggalPermintaan + "', " + "'" + id + "'," + "'" + idBarang + "')";
                 stmt.executeUpdate(query);
             }
             JOptionPane.showMessageDialog(null, "Permintaan Berhasil", "Notifikasi", 1);
