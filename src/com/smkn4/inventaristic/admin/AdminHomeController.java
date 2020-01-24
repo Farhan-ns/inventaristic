@@ -111,7 +111,7 @@ public class AdminHomeController implements Initializable {
         boxSiswa.setOnMouseClicked((event) -> {
             try {
                 stage = (Stage) boxBarang.getScene().getWindow();
-                Parent root = FXMLLoader.load((getClass().getResource("/com/smkn4/inventaristic/admin/siswa/DataSiswa.fxml")));
+                Parent root = FXMLLoader.load((getClass().getResource("/com/smkn4/inventaristic/admin/siswa/DataKelas.fxml")));
                 stage.setScene(new Scene(root));
                 stage.show();
             } catch (IOException ex) {
