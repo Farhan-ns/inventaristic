@@ -57,6 +57,7 @@ public class ScanUserController implements Initializable {
     private Label lblFail;
 
     String barcodeCache = new String();
+    private boolean auth = false;
 
     /**
      * Initializes the controller class.
@@ -205,10 +206,13 @@ public class ScanUserController implements Initializable {
     }
 
     public void setAuth(boolean auth) {
+        this.auth = auth;
+        
         if (!auth) {
             setMenuWithoutAuth();
         } else if (auth) {
             setMenuWithAuth();
+            
         }
         System.out.println("AUTH" + auth);
     }
@@ -223,6 +227,7 @@ public class ScanUserController implements Initializable {
 //            tFieldUser.getScene().getWindow().hide();
             stage.show();
             MenuUserController controller = loader.getController();
+            controller.setAuth(this.auth);
             controller.setUserMap(map);
         } catch (IOException ex) {
             ex.getCause();

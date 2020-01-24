@@ -116,7 +116,7 @@ public class PermintaanBarangController implements Initializable {
         tFieldScanBarang.setOnAction((event) -> {
             String kodeBarang = tFieldScanBarang.getText();
             String[] str = kodeBarang.split("-");
-            if (!str[0].equals("4BDG")) {
+            if (!str[0].equals("SMKN4BDG")) {
                 System.out.println(kodeBarang);
                 System.out.println("bukan barang smkn 4");
             } else {
@@ -181,13 +181,13 @@ public class PermintaanBarangController implements Initializable {
             list.add(idBarang);
         }
         String tanggalPermintaan = getTanggalToday();
-        String nis = this.map.get("nis");
+        String id = this.map.get("id");
         Statement stmt;
         try {
             stmt = connection.createStatement();
             for (String idBarang : list) {
-                String query = "INSERT INTO permintaan(tgl_permintaan, nis, id_barang) " +
-                        "VALUES('" + tanggalPermintaan + "', " + "'" + nis + "'," + "'" + idBarang + "')";
+                String query = "INSERT INTO permintaan(tgl_permintaan, id_kelas, id_barang) " +
+                        "VALUES('" + tanggalPermintaan + "', " + "'" + id + "'," + "'" + idBarang + "')";
                 stmt.executeUpdate(query);
             }
             JOptionPane.showMessageDialog(null, "Permintaan Berhasil", "Notifikasi", 1);
@@ -251,7 +251,7 @@ public class PermintaanBarangController implements Initializable {
         });
     }
     private void setUsername() {
-        lblUsername.setText("Halo, "+ this.map.get("nama") + " !");
+        lblUsername.setText("Halo, "+ this.map.get("nama_kelas") + " !");
     }
     
     private void stateCheck() {
@@ -264,7 +264,7 @@ public class PermintaanBarangController implements Initializable {
     
     private void cekSanksiSiswa() {
         int sanksi = Integer.parseInt(this.map.get("sanksi"));
-        String namaMsg = "Nama Siswa : " + this.map.get("nama");
+        String namaMsg = "Nama : " + this.map.get("nama_kelas");
         String sanksiMsg = "Jumlah Sanksi : " + this.map.get("sanksi");
         if (sanksi >= 3) {
             String msg = "Anda tidak dapat meminjam di karenakan sanksi anda telah melebihi batas\n"
