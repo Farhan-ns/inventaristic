@@ -98,6 +98,9 @@ public class PermintaanBarangController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.connection = MySqlConnection.getConnection();
+        colNo.setCellValueFactory(new PropertyValueFactory<>("noUrut"));
+        colKode.setCellValueFactory(new PropertyValueFactory<>("idBarang"));
+        colNama.setCellValueFactory(new PropertyValueFactory<>("namaBarang"));
         setScanAction();
         setButtonAction();
         Platform.runLater(() -> {
@@ -109,6 +112,46 @@ public class PermintaanBarangController implements Initializable {
     private void setButtonAction() {
         btnSelesai.setOnAction((event) -> {
             createRecordPermintaan();
+        });
+        btnMenu.setOnAction((event) -> {
+            try {
+                this.loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/MenuUser.fxml"));
+                Parent viewMintaBarang = loader.load();
+                Stage stage = (Stage) btnSwitch.getScene().getWindow();
+                stage.setScene(new Scene(viewMintaBarang));
+                stage.show();
+                MenuUserController controller = loader.getController();
+                controller.setUserMap(this.map);
+            } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
+            }
+        });
+        btnSwitch.setOnAction((event) -> {
+            try {
+                this.loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/PeminjamanBarang.fxml"));
+                Parent viewMintaBarang = loader.load();
+                Stage stage = (Stage) btnSwitch.getScene().getWindow();
+                stage.setScene(new Scene(viewMintaBarang));
+                stage.show();
+                PermintaanBarangController controller = loader.getController();
+                controller.setUserMap(this.map);
+            } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
+            }
+        });
+        btnCari.setOnAction((event) -> {
+            try {
+                this.loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/user/LihatBarang.fxml"));
+                Parent viewMintaBarang = loader.load();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(viewMintaBarang));
+                stage.show();
+            } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
+            }
         });
     }
     
@@ -130,46 +173,6 @@ public class PermintaanBarangController implements Initializable {
                         lblNotHP.setVisible(true);
                     }
                 }
-            }
-        });
-        btnMenu.setOnAction((event) -> {
-            try {
-                this.loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/MenuUser.fxml"));
-                Parent viewMintaBarang = loader.load();
-                Stage stage = (Stage) btnSwitch.getScene().getWindow();
-                stage.setScene(new Scene(viewMintaBarang));
-                stage.show();
-                MenuUserController controller = loader.getController();
-                controller.setUserMap(this.map);
-            } catch (IOException ex) {
-                ex.getCause();
-                ex.printStackTrace();
-            }
-        });
-        btnSwitch.setOnAction((event) -> {
-            try {
-                this.loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/PeminjamanBarang.fxml"));
-                Parent viewPinjamBarang = loader.load();
-                Stage stage = (Stage) btnSwitch.getScene().getWindow();
-                stage.setScene(new Scene(viewPinjamBarang));
-                stage.show();
-                PeminjamanBarangController controller = loader.getController();
-                controller.setUserMap(this.map);
-            } catch (IOException ex) {
-                ex.getCause();
-                ex.printStackTrace();
-            }
-        });
-        btnCari.setOnAction((event) -> {
-            try {
-                this.loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/user/LihatBarang.fxml"));
-                Parent viewMintaBarang = loader.load();
-                Stage stage = new Stage();
-                stage.setScene(new Scene(viewMintaBarang));
-                stage.show();
-            } catch (IOException ex) {
-                ex.getCause();
-                ex.printStackTrace();
             }
         });
     }
