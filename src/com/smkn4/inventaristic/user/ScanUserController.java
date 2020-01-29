@@ -31,6 +31,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -55,9 +56,13 @@ public class ScanUserController implements Initializable {
     private TextField tFieldUser;
     @FXML
     private Label lblFail;
+    @FXML
+    private HBox hbox_tfield;
 
     String barcodeCache = new String();
     private boolean auth = false;
+    private final int USE_SCENE_LISTENER = 0;
+    private final int USE_TFIELD_LISTENER = 1;
 
     /**
      * Initializes the controller class.
@@ -66,7 +71,7 @@ public class ScanUserController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(() -> {
 //            tFieldUser.requestFocus();
-            setScanAction();
+            setScanAction(USE_TFIELD_LISTENER);
             btnMenu.getScene().getWindow().centerOnScreen();
         });
 
@@ -103,24 +108,21 @@ public class ScanUserController implements Initializable {
         });
     }
 
-    private void setScanAction() {
+    private void setScanAction(final int USE) {
         Scene scene = btnMenu.getScene();
+        
         if (scene == null) {
-            System.out.println("scene is null");
+            System.out.println("scene OF ScanUser is null");
         }
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                lblFail.setVisible(false);
-                if (event.getCode() == KeyCode.ENTER) {
-//                    scanNis(barcodeCache);
-                    scanUserBarcode(barcodeCache);
-                    barcodeCache = new String();
-                } else {
-                    barcodeCache += getInput(event);
-                }
-            }
-        });
+        
+        switch (USE) {
+            case USE_SCENE_LISTENER:
+                useSceneListener(scene);
+                break;
+            case USE_TFIELD_LISTENER:
+                useTFieldListener(scene);
+                break;
+        }
     }
 
     private String getInput(KeyEvent event) {
@@ -233,6 +235,36 @@ public class ScanUserController implements Initializable {
             ex.getCause();
             ex.printStackTrace();
         }
+    }
+    
+    private void useSceneListener(Scene scene) {
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                lblFail.setVisible(false);
+                if (event.getCode() == KeyCode.ENTER) {
+//                    scanNis(barcodeCache);
+                    scanUserBarcode(barcodeCache);
+                    barcodeCache = new String();
+                } else {
+                    barcodeCache += getInput(event);
+                }
+            }
+        });
+    }
+    private void useTFieldListener(Scene scene) {
+        TextField tfield = new TextField();
+        tfield.setOpacity(0);
+        tfield.setOnAction((event) -> {
+            String input = tfield.getText();
+            scanUserBarcode(input
+                    .trim()
+                    .toUpperCase()
+            );
+        });
+        
+        hbox_tfield.getChildren().add(tfield);
+        tfield.requestFocus();
     }
 
 }
