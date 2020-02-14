@@ -31,6 +31,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -55,22 +56,28 @@ public class ScanUserController implements Initializable {
     private TextField tFieldUser;
     @FXML
     private Label lblFail;
+    @FXML
+    private HBox hbox_tfield;
 
     String barcodeCache = new String();
+    private boolean auth = false;
+    private final int USE_SCENE_LISTENER = 0;
+    private final int USE_TFIELD_LISTENER = 1;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        setFieldAction();
         Platform.runLater(() -> {
 //            tFieldUser.requestFocus();
-            setScanAction();
+            setScanAction(USE_TFIELD_LISTENER);
             btnMenu.getScene().getWindow().centerOnScreen();
         });
+
     }
-    
-    private void setFieldAction() {
+
+    private void setMenuWithAuth() {
 //        tFieldUser.setOnAction((event) -> {
 //            scanUser();
 //        });
@@ -86,50 +93,104 @@ public class ScanUserController implements Initializable {
             }
         });
     }
-    
-    private void setScanAction() {
-        Scene scene = btnMenu.getScene();
-        if (scene == null) {
-            System.out.println("scene is null");
-        }
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                lblFail.setVisible(false);
-                if (event.getCode() == KeyCode.ENTER) {
-                    scanUser(barcodeCache);
-                    barcodeCache = new String();
-                } else {
-                    barcodeCache += getInput(event);
-                }
+
+    private void setMenuWithoutAuth() {
+        btnMenu.setOnAction((event) -> {
+            try {
+                Stage stage = (Stage) btnMenu.getScene().getWindow();
+                Parent root = FXMLLoader.load(getClass().getResource("/com/smkn4/inventaristic/PivotScreen.fxml"));
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
             }
         });
     }
 
-    private String getInput(KeyEvent event) {
-        if (event.getText().matches("[0-9]+")) {
-            return event.getText();
-        } else {
-            return "";
+    private void setScanAction(final int USE) {
+        Scene scene = btnMenu.getScene();
+        
+        if (scene == null) {
+            System.out.println("scene OF ScanUser is null");
+        }
+        
+        switch (USE) {
+            case USE_SCENE_LISTENER:
+                useSceneListener(scene);
+                break;
+            case USE_TFIELD_LISTENER:
+                useTFieldListener(scene);
+                break;
         }
     }
-    
-    private void scanUser(String nis) {
+
+    private String getInput(KeyEvent event) {
+        return event.getText();
+//        if (event.getText().matches("[0-9]+")) {
+//            return event.getText();
+//        } else {
+//            return "";
+//        }
+    }
+
+    private void scanUserBarcode(String barcode) {
+        String[] str = barcode
+                .toUpperCase()
+                .split("-");
+        if (!str[0].equals("SMKN4BDG")) {
+            System.out.println(barcode);
+            System.out.println("User Error");
+            lblFail.setVisible(true);
+        } else {
+            System.out.println("CODE: " + barcode);
+            checkUserId(barcode);
+        }
+    }
+
+    private void scanNis(String nis) {
         if (nis == null || nis.length() < 10) {
             System.out.println("GAGAL : " + nis);
             lblFail.setVisible(true);
             return;
         } else {
             System.out.println("NIS: " + nis);
-            checkUser(nis);
+            checkUserNis(nis);
         }
     }
-    
-    private void checkUser(String nis) {
+
+    private void checkUserId(String barcode) {
         try {
             Connection connection = MySqlConnection.getConnection();
             Statement stmt = connection.createStatement();
-            String query = "SELECT nis, nama_siswa, kelas, sanksi  FROM siswa WHERE nis = " + "'" + nis +"'";
+            String query = "SELECT *"
+                    + " FROM kelas "
+                    + " WHERE barcode = " + "\"" + barcode + "\"";
+            ResultSet rs = stmt.executeQuery(query);
+
+            if (rs != null && rs.next()) {
+                Map map = new HashMap();
+                map.put("id", rs.getString("id_kelas"));
+                map.put("nama_kelas", rs.getString("nama_kelas"));
+                map.put("tahun_masuk", rs.getString("tahun_masuk"));
+                map.put("tingkat", rs.getString("tingkat"));
+                map.put("sanksi", rs.getString("sanksi"));
+                map.put("barcode", rs.getString("barcode"));
+                grant(map);
+                connection.close();
+            }
+        } catch (Exception ex) {
+            lblFail.setVisible(true);
+            ex.getCause();
+            ex.printStackTrace();
+        }
+    }
+
+    private void checkUserNis(String nis) {
+        try {
+            Connection connection = MySqlConnection.getConnection();
+            Statement stmt = connection.createStatement();
+            String query = "SELECT nis, nama_siswa, kelas, sanksi  FROM siswa WHERE nis = " + "'" + nis + "'";
             ResultSet rs = stmt.executeQuery(query);
             if (rs != null && rs.next()) {
                 Map map = new HashMap();
@@ -145,7 +206,19 @@ public class ScanUserController implements Initializable {
             ex.printStackTrace();
         }
     }
-    
+
+    public void setAuth(boolean auth) {
+        this.auth = auth;
+        
+        if (!auth) {
+            setMenuWithoutAuth();
+        } else if (auth) {
+            setMenuWithAuth();
+            
+        }
+        System.out.println("AUTH" + auth);
+    }
+
     private void grant(Map map) {
         FXMLLoader loader = new FXMLLoader();
         try {
@@ -156,6 +229,7 @@ public class ScanUserController implements Initializable {
 //            tFieldUser.getScene().getWindow().hide();
             stage.show();
             MenuUserController controller = loader.getController();
+            controller.setAuth(this.auth);
             controller.setUserMap(map);
         } catch (IOException ex) {
             ex.getCause();
@@ -163,4 +237,34 @@ public class ScanUserController implements Initializable {
         }
     }
     
+    private void useSceneListener(Scene scene) {
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                lblFail.setVisible(false);
+                if (event.getCode() == KeyCode.ENTER) {
+//                    scanNis(barcodeCache);
+                    scanUserBarcode(barcodeCache);
+                    barcodeCache = new String();
+                } else {
+                    barcodeCache += getInput(event);
+                }
+            }
+        });
+    }
+    private void useTFieldListener(Scene scene) {
+        TextField tfield = new TextField();
+        tfield.setOpacity(0);
+        tfield.setOnAction((event) -> {
+            String input = tfield.getText();
+            scanUserBarcode(input
+                    .trim()
+                    .toUpperCase()
+            );
+        });
+        
+        hbox_tfield.getChildren().add(tfield);
+        tfield.requestFocus();
+    }
+
 }

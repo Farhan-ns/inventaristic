@@ -152,9 +152,9 @@ public class PeminjamanBarangController implements Initializable {
         tFieldScanBarang.setOnAction((event) -> {
             String kodeBarang = tFieldScanBarang.getText();
             String[] str = kodeBarang.split("-");
-            if (!str[0].equals("4BDG")) {
+            if (!str[0].equals("SMKN4BDG")) {
                 System.out.println(kodeBarang);
-                System.out.println("bukan barang smkn 4");
+                System.out.println("bukan barang SMKN 4");
             } else {
                 if (isNotBarangDuplicate(str[1])) {
                     try {
@@ -172,9 +172,9 @@ public class PeminjamanBarangController implements Initializable {
     
     private void createRecordPeminjaman() {
         String tanggalPinjam = getTanggalToday();
-        String nis = this.map.get("nis");
-        String query = "INSERT INTO peminjaman(tgl_peminjaman, nis, status_peminjaman) " +
-                "VALUES('"+tanggalPinjam+"', " + "'" + nis + "', 'belum_kembali')";
+        String id = this.map.get("id");
+        String query = "INSERT INTO peminjaman(tgl_peminjaman, id_kelas, status_peminjaman) " +
+                "VALUES('"+tanggalPinjam+"', " + "'" + id + "', 'belum_kembali')";
         Statement stmt;
         try {
             stmt = connection.createStatement();
@@ -228,7 +228,7 @@ public class PeminjamanBarangController implements Initializable {
             rs.first();
             idPeminjaman = rs.getString("id_peminjaman");
         } catch (SQLException ex) {
-        
+            ex.getCause();
         }
         return idPeminjaman;
     }
@@ -291,12 +291,12 @@ public class PeminjamanBarangController implements Initializable {
         });
     }
     private void setUsername() {
-        lblUsername.setText("Halo, "+ this.map.get("nama") + " !");
+        lblUsername.setText("Halo, "+ this.map.get("nama_kelas") + " !");
     }
     
     private void cekSanksiSiswa() {
         int sanksi = Integer.parseInt(this.map.get("sanksi"));
-        String namaMsg = "Nama Siswa : " + this.map.get("nama");
+        String namaMsg = "Nama : " + this.map.get("nama_kelas");
         String sanksiMsg = "Jumlah Sanksi : " + this.map.get("sanksi");
         if (sanksi >= 3) {
             String msg = "Anda tidak dapat meminjam di karenakan sanksi anda telah melebihi batas\n"

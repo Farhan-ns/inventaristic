@@ -166,7 +166,7 @@ public class DataSiswaController implements Initializable {
                 stage.setScene(new Scene(root));
                 stage.show();
             } catch (IOException ex) {
-                
+                ex.printStackTrace();
             }
         });
     }

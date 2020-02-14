@@ -8,17 +8,17 @@
 
 <AnchorPane id="AnchorPane" prefHeight="555.0" prefWidth="472.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.smkn4.inventaristic.admin.siswa.RincianPinjamController">
    <children>
-      <Label fx:id="lblNama" layoutX="14.0" layoutY="21.0" prefHeight="35.0" prefWidth="450.0" text="Nama">
+      <Label fx:id="lblNamaKelas" layoutX="14.0" layoutY="21.0" prefHeight="35.0" prefWidth="450.0" text="Kelas ">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="lblKelas" layoutX="14.0" layoutY="46.0" prefHeight="35.0" prefWidth="355.0" text="Kelas">
+      <Label fx:id="lblTingkat" layoutX="14.0" layoutY="46.0" prefHeight="35.0" prefWidth="355.0" text="Tingkat">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="lblSanksi" layoutX="14.0" layoutY="72.0" prefHeight="35.0" prefWidth="355.0" text="Sanksi">
+      <Label fx:id="lblSanksi" layoutX="14.0" layoutY="72.0" prefHeight="35.0" prefWidth="355.0" text="Sanksi ">
          <font>
             <Font size="14.0" />
          </font>

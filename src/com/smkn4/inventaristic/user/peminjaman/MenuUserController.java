@@ -55,22 +55,10 @@ public class MenuUserController implements Initializable {
     }   
     
     private void setIdentitas() {
-        lblNama.setText("Hallo, " + map.get("nama").toString() + "!");
+        lblNama.setText("Hallo, " + map.get("nama_kelas").toString() + "!");
     }
     
     private void setButtonsAction() {
-        btnSignOut.setOnAction((event) -> {
-            this.map.clear();
-            try {
-                Stage stage = (Stage) btnSignOut.getScene().getWindow();
-                Parent root = FXMLLoader.load((getClass().getResource("/com/smkn4/inventaristic/admin/AdminHome.fxml")));
-                stage.setScene(new Scene(root));
-                stage.show();
-            } catch (IOException ex) {
-                ex.getCause();
-                ex.printStackTrace();
-            }
-        });
         boxPengembalian.setOnMouseClicked((event) -> {
             try {
                 this.loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/PengembalianBarang.fxml"));
@@ -116,6 +104,36 @@ public class MenuUserController implements Initializable {
         boxPengajuan.setOnMouseClicked((event) -> {
             new Pengajuan_Barang().setVisible(true);
         });
+    }
+    
+    public void setAuth(boolean auth) {
+        if (auth) {
+            btnSignOut.setOnAction((event) -> {
+            this.map.clear();
+            try {
+                Stage stage = (Stage) btnSignOut.getScene().getWindow();
+                Parent root = FXMLLoader.load((getClass().getResource("/com/smkn4/inventaristic/admin/AdminHome.fxml")));
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
+            }
+        });
+        } else {
+            btnSignOut.setOnAction((event) -> {
+            this.map.clear();
+            try {
+                Stage stage = (Stage) btnSignOut.getScene().getWindow();
+                Parent root = FXMLLoader.load((getClass().getResource("/com/smkn4/inventaristic/PivotScreen.fxml")));
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException ex) {
+                ex.getCause();
+                ex.printStackTrace();
+            }
+        });
+        }
     }
     
     public void setUserMap(Map map) {

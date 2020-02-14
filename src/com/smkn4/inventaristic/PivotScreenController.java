@@ -7,6 +7,7 @@ package com.smkn4.inventaristic;
 
 import com.jfoenix.controls.JFXButton;
 import com.smkn4.inventaristic.pengajuan.DataPengajuan;
+import com.smkn4.inventaristic.user.ScanUserController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -47,8 +48,15 @@ public class PivotScreenController implements Initializable {
     public void setBoxAction() {
         bocPeminjaman.setOnMouseClicked((event) -> {
             try {
+                FXMLLoader loader = new FXMLLoader();
+                
                 stage = (Stage) bocPeminjaman.getScene().getWindow();
-                Parent root = FXMLLoader.load((getClass().getResource("/com/smkn4/inventaristic/user/ScanUser.fxml")));
+                loader.setLocation((getClass().getResource("/com/smkn4/inventaristic/user/ScanUser.fxml")));
+                Parent root = loader.load();
+                
+                ScanUserController controller = loader.getController();
+                controller.setAuth(false);
+                
                 stage.setScene(new Scene(root));
                 stage.show();
             } catch (IOException ex) {

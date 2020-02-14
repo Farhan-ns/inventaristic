@@ -30,9 +30,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class RincianPinjamController implements Initializable {
 
     @FXML
-    private Label lblNama;
+    private Label lblNamaKelas;
     @FXML
-    private Label lblKelas;
+    private Label lblTingkat;
     @FXML
     private Label lblSanksi;
     @FXML
@@ -64,19 +64,20 @@ public class RincianPinjamController implements Initializable {
         if (!barangs.isEmpty()) {
             barangs.clear();
         }
-        String query = "SELECT siswa.nis, siswa.nama_siswa, siswa.kelas, siswa.sanksi, peminjaman.tgl_peminjaman, "
-                + " barang_masuk.nama_barang, rincian.status_barang FROM siswa " +
-                "JOIN peminjaman ON peminjaman.`nis` = siswa.`nis` " +
-                "JOIN rincian ON rincian.`id_peminjaman` = peminjaman.`id_peminjaman` " +
-                "JOIN barang_masuk ON barang_masuk.`id_barang` = rincian.`id_barang` " +
-                "WHERE peminjaman.status_peminjaman = 'belum_kembali' " +
-                "HAVING siswa.nis = " + id + "";
+        String query = "SELECT kelas.id_kelas, kelas.nama_kelas, kelas.tingkat, kelas.sanksi, peminjaman.tgl_peminjaman, "
+                + " barang_masuk.nama_barang, rincian.status_barang "
+                + "FROM kelas " 
+                + "JOIN peminjaman ON peminjaman.`id_kelas` = kelas.`id_kelas` " 
+                + "JOIN rincian ON rincian.`id_peminjaman` = peminjaman.`id_peminjaman` " 
+                + "JOIN barang_masuk ON barang_masuk.`id_barang` = rincian.`id_barang` " 
+                + "WHERE peminjaman.status_peminjaman = 'belum_kembali' " 
+                + "HAVING kelas.id_kelas = " + id + "";
         try {
             Statement stmt = this.connection.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             rs.first();
-            lblNama.setText(lblNama.getText() + "\t: " + rs.getString("nama_siswa"));
-            lblKelas.setText(lblKelas.getText() + "\t: " + rs.getString("kelas"));
+            lblNamaKelas.setText(lblNamaKelas.getText() + "\t: " + rs.getString("nama_kelas"));
+            lblTingkat.setText(lblTingkat.getText() + "\t: " + rs.getString("tingkat"));
             lblSanksi.setText(lblSanksi.getText() + "\t: " + rs.getString("sanksi"));
             String nama, tgl, status;
             rs.beforeFirst();

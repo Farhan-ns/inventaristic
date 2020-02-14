@@ -85,7 +85,7 @@ public class PengembalianBarangController implements Initializable {
     private TableColumn<Barang, String> colKode;
     @FXML
     private TableColumn<Barang, String> colNama;
-    
+
     ObservableList<Barang> barangs = FXCollections.observableArrayList();
     Set<String> dTracker = new HashSet<>();
     List<String> listIdBarang = new ArrayList<>();
@@ -112,7 +112,7 @@ public class PengembalianBarangController implements Initializable {
             stateCheck();
         });
     }
-    
+
     private void setSideBarButtons() {
         btnMenu.setOnAction((event) -> {
             try {
@@ -129,34 +129,38 @@ public class PengembalianBarangController implements Initializable {
             }
         });
     }
-    
+
     private void setButtonAction() {
         btnSelesai.setOnAction((event) -> {
             updateRecordRincian(this.dTracker);
         });
     }
-    
+
     private void setScanAction() {
         tFieldScanBarang.setOnAction((event) -> {
             String kodeBarang = tFieldScanBarang.getText();
             String[] str = kodeBarang.split("-");
-            if (!str[0].equals("4BDG")) {
+            if (!str[0].equals("SMKN4BDG")) {
                 System.out.println(kodeBarang);
                 System.out.println("bukan barang smkn 4");
             } else {
-                if (isNotBarangDuplicate(str[1])) {
-                    for (String idBarang : this.listIdBarang) {
-                        if (idBarang.equals(str[1])) {
-                            dTracker.add(idBarang);
-                            colorValidasiBarang(listIdBarang.indexOf(idBarang));
-                            stateCheck();
+                try {
+                    if (isNotBarangDuplicate(str[1])) {
+                        for (String idBarang : this.listIdBarang) {
+                            if (idBarang.equals(str[1])) {
+                                dTracker.add(idBarang);
+                                colorValidasiBarang(listIdBarang.indexOf(idBarang));
+                                stateCheck();
+                            }
                         }
                     }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println(e);
                 }
             }
         });
     }
-    
+
     private void updateRecordRincian(Set<String> set) {
         String query = "UPDATE rincian SET status_barang = 'dikembalikan' WHERE rincian.id_barang = ?";
         try {
@@ -169,10 +173,10 @@ public class PengembalianBarangController implements Initializable {
             ex.getCause();
             ex.printStackTrace();
         }
-        Set<String> idsPeminjaman = getIdPeminjaman(this.map.get("nis"));
+        Set<String> idsPeminjaman = getIdPeminjaman(this.map.get("id"));
         cekStatusPeminjaman(idsPeminjaman);
     }
-    
+
     private void cekStatusPeminjaman(Set<String> set) {
         for (String idPeminjaman : set) {
             if (isDikembalikanSemua(idPeminjaman)) {
@@ -182,7 +186,7 @@ public class PengembalianBarangController implements Initializable {
         JOptionPane.showMessageDialog(null, "Pengembalian Berhasil");
         backToMenu();
     }
-    
+
     private void updatePengembalianLunas(String idPeminjaman) {
         String query = "UPDATE peminjaman SET status_peminjaman = 'sudah_kembali', tgl_kembali = ? WHERE id_peminjaman = ?";
         try {
@@ -195,26 +199,26 @@ public class PengembalianBarangController implements Initializable {
             ex.printStackTrace();
         }
     }
-    
+
     private boolean isDikembalikanSemua(String idPeminjaman) {
         String query = "SELECT status_barang FROM rincian WHERE id_peminjaman = ? AND status_barang = ?";
         boolean isLunas = false;
-         try {
+        try {
             PreparedStatement ps = this.connection.prepareStatement(query);
             ps.setString(1, idPeminjaman);
             ps.setString(2, "dipinjam");
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) {
-                isLunas = true; 
+                isLunas = true;
             }
         } catch (SQLException ex) {
             ex.getCause();
             ex.printStackTrace();
         }
-         System.out.println("isLunas = " + isLunas);
-         return isLunas;
+        System.out.println("isLunas = " + isLunas);
+        return isLunas;
     }
-    
+
 //    private void updateJumlahPeminjaman(String idPeminjaman, String jumlah) {
 //        String query = "UPDATE peminjaman SET jumlah_dipinjam = ? WHERE id_peminjaman = ?";
 //        try {
@@ -227,17 +231,16 @@ public class PengembalianBarangController implements Initializable {
 //            ex.printStackTrace();
 //        }
 //    }
-    
-    private Set<String> getIdPeminjaman(String nis) {
-        String query = "SELECT id_peminjaman FROM peminjaman WHERE nis = ?";
+    private Set<String> getIdPeminjaman(String id) {
+        String query = "SELECT id_peminjaman FROM peminjaman WHERE id_kelas = ?";
         Set<String> idsPeminjaman = new HashSet<>();
         try {
             PreparedStatement ps = this.connection.prepareStatement(query);
-            ps.setString(1, nis);
+            ps.setString(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                String id = rs.getString("id_peminjaman");
-                idsPeminjaman.add(id);
+                String id_peminjaman = rs.getString("id_peminjaman");
+                idsPeminjaman.add(id_peminjaman);
             }
         } catch (SQLException ex) {
             ex.getCause();
@@ -245,7 +248,7 @@ public class PengembalianBarangController implements Initializable {
         }
         return idsPeminjaman;
     }
-    
+
 //    private void getIdPeminjamanOf(Set<String> set) {
 //        String query = "SELECT id_peminjaman FROM rincian WHERE rincian.id_barang = ?";
 //        Set<String> idPeminjaman
@@ -266,19 +269,18 @@ public class PengembalianBarangController implements Initializable {
 //            ex.printStackTrace();
 //        }
 //    }
-    
-    private void showBarang(String nis) {
-        String query = "SELECT rincian.id_barang, barang_masuk.nama_barang, peminjaman.tgl_peminjaman " +
-                "FROM barang_masuk, peminjaman, rincian, siswa " +
-                "WHERE rincian.id_peminjaman = peminjaman.id_peminjaman  " +
-                "AND rincian.id_barang = barang_masuk.id_barang " +
-                "AND peminjaman.nis = siswa.nis " +
-                "AND peminjaman.nis = ? " +
-                "AND peminjaman.status_peminjaman = 'belum_kembali'" +
-                "AND rincian.status_barang = 'dipinjam'";
+    private void showBarang(String id) {
+        String query = "SELECT rincian.id_barang, barang_masuk.nama_barang, peminjaman.tgl_peminjaman "
+                + "FROM barang_masuk, peminjaman, rincian, kelas "
+                + "WHERE rincian.id_peminjaman = peminjaman.id_peminjaman  "
+                + " AND rincian.id_barang = barang_masuk.id_barang "
+                + " AND peminjaman.id_kelas = kelas.id_kelas "
+                + " AND peminjaman.id_kelas = ? "
+                + " AND peminjaman.status_peminjaman = 'belum_kembali'"
+                + " AND rincian.status_barang = 'dipinjam'";
         try {
             PreparedStatement ps = this.connection.prepareStatement(query);
-            ps.setString(1, nis);
+            ps.setString(1, id);
             ResultSet rs = ps.executeQuery();
             String tglPeminjaman;
             String idBarang;
@@ -302,7 +304,7 @@ public class PengembalianBarangController implements Initializable {
             listIdBarang.add(idBarang);
         }
     }
-    
+
     private void colorValidasiBarang(int index) {
         TableCell cell;
         for (int i = 0; i < 4; i++) {
@@ -310,11 +312,11 @@ public class PengembalianBarangController implements Initializable {
             cell.setStyle("-fx-background-color : #2beec3");
         }
     }
-    
+
     private boolean isNotBarangDuplicate(String idBarang) {
         return dTracker.add(idBarang);
     }
-    
+
     private void stateCheck() {
         if (barangs.isEmpty()) {
             btnSelesai.setDisable(true);
@@ -322,39 +324,39 @@ public class PengembalianBarangController implements Initializable {
             btnSelesai.setDisable(false);
         }
     }
-    
+
     private String getTanggalToday() {
         return DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss");
     }
-    
+
     protected void setUserMap(Map map) {
         this.map = map;
         setUsername();
         Platform.runLater(() -> {
             tFieldScanBarang.requestFocus();
             cekSanksiSiswa();
-            showBarang(this.map.get("nis"));
+            showBarang(this.map.get("id"));
         });
     }
-    
+
     private void setUsername() {
-        lblUsername.setText("Halo, "+ this.map.get("nama") + " !");
+        lblUsername.setText("Halo, " + this.map.get("nama_kelas") + " !");
     }
-    
+
     private void cekSanksiSiswa() {
         int sanksi = Integer.parseInt(this.map.get("sanksi"));
-        String namaMsg = "Nama Siswa : " + this.map.get("nama");
+        String namaMsg = "Nama : " + this.map.get("nama_kelas");
         String sanksiMsg = "Jumlah Sanksi : " + this.map.get("sanksi");
         if (sanksi >= 3) {
             String msg = "Anda tidak dapat meminjam di karenakan sanksi anda telah melebihi batas\n"
                     + "harap lunasi sanksi Anda terlebih dahulu untuk melanjutkan";
-            JOptionPane.showMessageDialog(null, namaMsg + "\n" + sanksiMsg + "\n" + msg) ;
+            JOptionPane.showMessageDialog(null, namaMsg + "\n" + sanksiMsg + "\n" + msg);
         } else if (sanksi > 0 && sanksi < 3) {
             String msg = "Anda memiliki sanksi, segera lunasi";
             JOptionPane.showMessageDialog(null, namaMsg + "\n" + sanksiMsg + "\n" + msg);
         }
     }
-    
+
     private void backToMenu() {
         try {
             this.loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/user/peminjaman/MenuUser.fxml"));
@@ -369,13 +371,14 @@ public class PengembalianBarangController implements Initializable {
             ex.printStackTrace();
         }
     }
-    
+
     public class Barang extends RecursiveTreeObject<Barang> {
+
         String noUrut;
         String tanggalPinjam;
         String idBarang;
         String namaBarang;
-        
+
         public Barang(String noUrut, String tanggalPinjam, String idBarang, String namaBarang) {
             this.noUrut = noUrut;
             this.tanggalPinjam = tanggalPinjam;
@@ -386,7 +389,7 @@ public class PengembalianBarangController implements Initializable {
         public String getNoUrut() {
             return noUrut;
         }
-        
+
         public String getTanggalPinjam() {
             return tanggalPinjam;
         }
@@ -399,5 +402,5 @@ public class PengembalianBarangController implements Initializable {
             return namaBarang;
         }
     }
-    
+
 }
