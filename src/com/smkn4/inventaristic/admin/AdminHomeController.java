@@ -6,6 +6,7 @@
 package com.smkn4.inventaristic.admin;
 
 import com.jfoenix.controls.JFXButton;
+import com.smkn4.inventaristic.admin.siswa.DataKelasController;
 import com.smkn4.inventaristic.pengajuan.DataPengajuan;
 import com.smkn4.inventaristic.user.ScanUserController;
 import java.io.IOException;
@@ -111,9 +112,13 @@ public class AdminHomeController implements Initializable {
         boxSiswa.setOnMouseClicked((event) -> {
             try {
                 stage = (Stage) boxBarang.getScene().getWindow();
-                Parent root = FXMLLoader.load((getClass().getResource("/com/smkn4/inventaristic/admin/siswa/DataKelas.fxml")));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/admin/siswa/DataKelas.fxml"));
+                Parent root = loader.load();
+                DataKelasController controller = loader.getController();
+                //controller.setAdmin(admin);
                 stage.setScene(new Scene(root));
                 stage.show();
+                controller.setMap(admin);
             } catch (IOException ex) {
                 ex.getCause();
                 ex.printStackTrace();

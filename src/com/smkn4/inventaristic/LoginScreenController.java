@@ -101,6 +101,7 @@ public class LoginScreenController implements Initializable {
                     String nama = rs.getString("nama");
                     admin.put("noInduk", noInduk);
                     admin.put("nama", nama);
+                    admin.put("password", password);
                     pass();
                     lblNotif.setVisible(false);
                 } else {

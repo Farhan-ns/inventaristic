@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="225.0" prefWidth="374.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.smkn4.inventaristic.admin.siswa.ManageTahunAjaranController">
+   <children>
+      <Pane prefHeight="225.0" prefWidth="374.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="68.0" layoutY="32.0" prefHeight="17.0" prefWidth="249.0" text="Anda Akan Menambah Tahun Ajaran ">
+               <font>
+                  <Font name="Lato Semibold" size="15.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="pass" layoutX="91.0" layoutY="100.0" prefHeight="25.0" prefWidth="204.0" promptText="Masukkan Password" />
+            <Button fx:id="btnYa" layoutX="91.0" layoutY="154.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #00b894;" text="Ya" textFill="WHITE" />
+            <Button fx:id="btnTIdak" layoutX="225.0" layoutY="154.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #ea0b0b; -fx-font: #000000;" text="Tidak" textFill="WHITE" />
+            <Pane prefHeight="225.0" prefWidth="5.0" style="-fx-background-color: #00b894;" />
+            <Pane layoutX="369.0" prefHeight="225.0" prefWidth="5.0" style="-fx-background-color: #00b894;" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="68.0" layoutY="76.0" prefHeight="17.0" prefWidth="249.0" text="Masukkan Password Untuk konfirmasi">
+               <font>
+                  <Font name="Lato Semibold" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
