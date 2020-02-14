@@ -16,6 +16,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Map;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,14 +30,15 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
  * @author Farhanunnasih
  */
-public class DataKelasController implements Initializable{
+public class DataKelasController implements Initializable {
 
-     @FXML
+    @FXML
     private Button btnMenu;
 
     @FXML
@@ -89,22 +91,27 @@ public class DataKelasController implements Initializable{
 
     @FXML
     private JFXButton btnGene;
+
+    @FXML
+    private JFXButton btnShow;
     
+    private Map<String, String> map;
+
     ObservableList<Kelas> classes = FXCollections.observableArrayList();
     Connection connection;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.connection = MySqlConnection.getConnection();
         Platform.runLater(() -> {
             btnMenu.getScene().getWindow().centerOnScreen();
         });
-        
+
         setColumns();
         readData(false);
         setButtonAction();
     }
-    
+
     public void setButtonAction() {
         tabelSiswa.setOnMouseClicked((event) -> {
             btnDetail.setDisable(false);
@@ -146,23 +153,37 @@ public class DataKelasController implements Initializable{
                 ex.printStackTrace();
             }
         });
+        btnShow.setOnAction((event) -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/smkn4/inventaristic/admin/siswa/ManageTahunAjaran.fxml"));
+                Parent formDetail = loader.load();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(formDetail));
+                //stage.initStyle(StageStyle.UTILITY);
+                stage.show();
+                ManageTahunAjaranController controller = loader.getController();
+                controller.setMap(map);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
-    
+
     public void readData(boolean withPeminjaman) {
         if (!classes.isEmpty()) {
             classes.clear();
         }
-        
+
         String query = "SELECT * FROM kelas";
         String query2 = "SELECT * FROM kelas JOIN peminjaman ON peminjaman.id_kelas = kelas.id_kelas WHERE peminjaman.status_peminjaman = 'belum_kembali'";
-        
+
         try {
             Statement stmt = this.connection.createStatement();
             ResultSet result;
             if (withPeminjaman) {
-                 result = stmt.executeQuery(query2);
+                result = stmt.executeQuery(query2);
             } else {
-                 result = stmt.executeQuery(query);
+                result = stmt.executeQuery(query);
             }
             while (result.next()) {
                 String id = result.getString("id_kelas");
@@ -179,6 +200,7 @@ public class DataKelasController implements Initializable{
         tabelSiswa.setItems(classes);
     }
     
+
     public void setColumns() {
         colID.setCellValueFactory(new PropertyValueFactory<>("id"));
         colNamaKelas.setCellValueFactory(new PropertyValueFactory<>("namaKelas"));
@@ -188,6 +210,10 @@ public class DataKelasController implements Initializable{
         colBarcode.setCellValueFactory(new PropertyValueFactory<>("barcode"));
     }
     
+    public void setMap(Map<String, String> map) {
+        this.map = map;
+    }
+
     public class Kelas {
 
         String id;
@@ -195,8 +221,8 @@ public class DataKelasController implements Initializable{
         String tahunMasuk;
         String tingkat;
         String sanksi;
-        String barcode; 
-        
+        String barcode;
+
         public Kelas(String id, String namaKelas, String tahunMasuk, String tingkat, String sanksi, String barcode) {
             this.id = id;
             this.namaKelas = namaKelas;
@@ -230,5 +256,5 @@ public class DataKelasController implements Initializable{
             return barcode;
         }
     }
-    
+
 }
