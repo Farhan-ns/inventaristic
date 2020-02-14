@@ -115,6 +115,8 @@ public class MenuUserController implements Initializable {
                 Parent root = FXMLLoader.load((getClass().getResource("/com/smkn4/inventaristic/admin/AdminHome.fxml")));
                 stage.setScene(new Scene(root));
                 stage.show();
+                
+                System.out.println("BTNSGN: " + auth);
             } catch (IOException ex) {
                 ex.getCause();
                 ex.printStackTrace();
@@ -128,6 +130,8 @@ public class MenuUserController implements Initializable {
                 Parent root = FXMLLoader.load((getClass().getResource("/com/smkn4/inventaristic/PivotScreen.fxml")));
                 stage.setScene(new Scene(root));
                 stage.show();
+                
+                System.out.println("BTNSGN: " + auth);
             } catch (IOException ex) {
                 ex.getCause();
                 ex.printStackTrace();

@@ -81,7 +81,7 @@ public class Pengajuan_Barang extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel9.setText("Barang Yang Diajukan:");
 
-        jButton1.setBackground(new java.awt.Color(100, 0, 100));
+        jButton1.setBackground(new java.awt.Color(0, 204, 153));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Kirim");

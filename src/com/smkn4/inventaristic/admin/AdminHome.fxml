@@ -68,7 +68,7 @@
                         <DropShadow blurType="GAUSSIAN" height="12.1" radius="6.2925" width="15.07" />
                      </effect>
                      <children>
-                        <Label layoutX="70.0" layoutY="141.0" text="Siswa">
+                        <Label layoutX="70.0" layoutY="141.0" text="Kelas">
                            <font>
                               <Font name="Lato Regular" size="24.0" />
                            </font>

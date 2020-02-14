@@ -39,7 +39,7 @@
             <DropShadow blurType="GAUSSIAN" height="12.1" radius="6.2925" width="15.07" />
          </effect>
          <children>
-            <Label layoutX="36.0" layoutY="141.0" text="Peminjaman">
+            <Label layoutX="36.0" layoutY="141.0" text="Menu Siswa">
                <font>
                   <Font name="Lato Regular" size="24.0" />
                </font>

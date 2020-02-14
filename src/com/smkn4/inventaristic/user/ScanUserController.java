@@ -148,6 +148,7 @@ public class ScanUserController implements Initializable {
         }
     }
 
+    @Deprecated
     private void scanNis(String nis) {
         if (nis == null || nis.length() < 10) {
             System.out.println("GAGAL : " + nis);
@@ -159,6 +160,7 @@ public class ScanUserController implements Initializable {
         }
     }
 
+    @Deprecated
     private void checkUserId(String barcode) {
         try {
             Connection connection = MySqlConnection.getConnection();
@@ -186,6 +188,7 @@ public class ScanUserController implements Initializable {
         }
     }
 
+    @Deprecated
     private void checkUserNis(String nis) {
         try {
             Connection connection = MySqlConnection.getConnection();
@@ -257,6 +260,7 @@ public class ScanUserController implements Initializable {
         tfield.setOpacity(0);
         tfield.setOnAction((event) -> {
             String input = tfield.getText();
+            tfield.setText("");
             scanUserBarcode(input
                     .trim()
                     .toUpperCase()
