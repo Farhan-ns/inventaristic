@@ -56,6 +56,7 @@ public class LoginScreenController implements Initializable {
         this.connection = MySqlConnection.getConnection();
         setLoginButton();
         setBackButton();
+        setFieldTyped();
     }
     
     private void setLoginButton() {
@@ -66,6 +67,15 @@ public class LoginScreenController implements Initializable {
             if (event.getCode().equals(KeyCode.ENTER)) {
                 validasi();
             }
+        });
+    }
+    
+    private void setFieldTyped() {
+        tFieldUsername.setOnKeyTyped((event) -> {
+            lblNotif.setVisible(false);
+        });
+        pFieldPassword.setOnKeyTyped((event) -> {
+            lblNotif.setVisible(false);
         });
     }
     
@@ -90,6 +100,9 @@ public class LoginScreenController implements Initializable {
     private void validasi() {
         String username = getUsername();
         String password = getPassword();
+        if (username.isEmpty() || password.isEmpty()) {
+            lblNotif.setVisible(true);
+        }
         System.out.println("called");
         String query = "SELECT no_induk, nama, password FROM petugas WHERE no_induk = " + username;
         try {
