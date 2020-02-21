@@ -110,11 +110,11 @@ public class ScanUserController implements Initializable {
 
     private void setScanAction(final int USE) {
         Scene scene = btnMenu.getScene();
-        
+
         if (scene == null) {
             System.out.println("scene OF ScanUser is null");
         }
-        
+
         switch (USE) {
             case USE_SCENE_LISTENER:
                 useSceneListener(scene);
@@ -160,7 +160,6 @@ public class ScanUserController implements Initializable {
         }
     }
 
-    @Deprecated
     private void checkUserId(String barcode) {
         try {
             Connection connection = MySqlConnection.getConnection();
@@ -180,6 +179,8 @@ public class ScanUserController implements Initializable {
                 map.put("barcode", rs.getString("barcode"));
                 grant(map);
                 connection.close();
+            } else {
+                lblFail.setVisible(true);
             }
         } catch (Exception ex) {
             lblFail.setVisible(true);
@@ -212,12 +213,12 @@ public class ScanUserController implements Initializable {
 
     public void setAuth(boolean auth) {
         this.auth = auth;
-        
+
         if (!auth) {
             setMenuWithoutAuth();
         } else if (auth) {
             setMenuWithAuth();
-            
+
         }
         System.out.println("AUTH" + auth);
     }
@@ -239,7 +240,7 @@ public class ScanUserController implements Initializable {
             ex.printStackTrace();
         }
     }
-    
+
     private void useSceneListener(Scene scene) {
         scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
@@ -255,6 +256,7 @@ public class ScanUserController implements Initializable {
             }
         });
     }
+
     private void useTFieldListener(Scene scene) {
         TextField tfield = new TextField();
         tfield.setOpacity(0);
@@ -266,7 +268,7 @@ public class ScanUserController implements Initializable {
                     .toUpperCase()
             );
         });
-        
+
         hbox_tfield.getChildren().add(tfield);
         tfield.requestFocus();
     }
