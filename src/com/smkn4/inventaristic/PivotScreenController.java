@@ -7,6 +7,7 @@ package com.smkn4.inventaristic;
 
 import com.jfoenix.controls.JFXButton;
 import com.smkn4.inventaristic.pengajuan.DataPengajuan;
+import com.smkn4.inventaristic.pengajuan.Pengajuan_Barang;
 import com.smkn4.inventaristic.user.ScanUserController;
 import java.io.IOException;
 import java.net.URL;
@@ -65,7 +66,7 @@ public class PivotScreenController implements Initializable {
             }
         });
         boxPengajuan.setOnMouseClicked((event) -> {
-            new DataPengajuan().setVisible(true);
+            new Pengajuan_Barang().setVisible(true);
         });
     }
     
