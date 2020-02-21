@@ -41,6 +41,8 @@ public class LihatBarangController implements Initializable {
     @FXML
     private TableColumn<Barang, String> colJml;
     @FXML
+    private TableColumn<Barang, String> colKode;
+    @FXML
     private JFXTextField tFieldSearch;
     /**
      * Initializes the controller class.
@@ -51,6 +53,7 @@ public class LihatBarangController implements Initializable {
         colNama.setCellValueFactory(new PropertyValueFactory<>("nama"));
         colLokasi.setCellValueFactory(new PropertyValueFactory<>("lokasi"));
         colJml.setCellValueFactory(new PropertyValueFactory<>("jumlah"));
+        colKode.setCellValueFactory(new PropertyValueFactory<>("kode"));
         Platform.runLater(() -> {
             readData("");
         });
@@ -65,7 +68,7 @@ public class LihatBarangController implements Initializable {
     
     private void readData(String search) {
         barangs.clear();
-        String query = "SELECT barang_masuk.nama_barang, barang_masuk.lokasi, COUNT(id_barang) AS jumlah "
+        String query = "SELECT barang_masuk.nama_barang, barang_masuk.lokasi, COUNT(id_barang) AS jumlah, barang_masuk.id_barang "
                 + " FROM barang_masuk ";
         if (!search.isEmpty()) {
             query += "WHERE nama_barang LIKE '%" + search + "%'";
@@ -75,12 +78,13 @@ public class LihatBarangController implements Initializable {
             Statement stmt = this.connection.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             int no = 1;
-            String nama, lokasi, jumlah;
+            String nama, lokasi, jumlah, kode;
             while (rs.next()) {
                 nama = rs.getString("nama_barang");
                 lokasi = rs.getString("lokasi");
                 jumlah = rs.getString("jumlah");
-                barangs.add(new Barang(nama, lokasi, jumlah));
+                kode = "SMKN4BDG-" + rs.getString("id_barang");
+                barangs.add(new Barang(nama, lokasi, jumlah, kode));
                 no++;
             }
         } catch (SQLException ex) {
@@ -94,11 +98,13 @@ public class LihatBarangController implements Initializable {
         String nama;
         String lokasi;
         String jumlah;
+        String kode;
 
-        public Barang(String nama, String lokasi, String jumlah) {
+        public Barang(String nama, String lokasi, String jumlah, String kode) {
             this.nama = nama;
             this.lokasi = lokasi;
             this.jumlah = jumlah;
+            this.kode = kode;
         }
 
         public String getNama() {
@@ -112,7 +118,10 @@ public class LihatBarangController implements Initializable {
         public String getJumlah() {
             return jumlah;
         }
-        
+
+        public String getKode() {
+            return kode;
+        }
     }
     
 }
