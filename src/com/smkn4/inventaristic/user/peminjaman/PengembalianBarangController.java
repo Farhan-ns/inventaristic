@@ -56,8 +56,6 @@ public class PengembalianBarangController implements Initializable {
     @FXML
     private JFXButton btnMenu;
     @FXML
-    private JFXButton btnSignOut;
-    @FXML
     private Pane pnlCustomer;
     @FXML
     private Pane pnlOrders;
@@ -123,6 +121,7 @@ public class PengembalianBarangController implements Initializable {
                 stage.show();
                 MenuUserController controller = loader.getController();
                 controller.setUserMap(this.map);
+                controller.setAuth(false);
             } catch (IOException ex) {
                 ex.getCause();
                 ex.printStackTrace();

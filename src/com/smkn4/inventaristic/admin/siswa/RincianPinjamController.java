@@ -43,6 +43,8 @@ public class RincianPinjamController implements Initializable {
     private TableColumn<Barang, String> colTgl;
     @FXML
     private TableColumn<Barang, String> colStatus;
+    @FXML
+    private Label lblNoPinjam;
 
     ObservableList<Barang> barangs = FXCollections.observableArrayList();
     Connection connection;
@@ -58,6 +60,7 @@ public class RincianPinjamController implements Initializable {
         Platform.runLater(() -> {
             tabelBarang.getScene().getWindow().centerOnScreen();
         });
+        lblNoPinjam.setVisible(false);
     }
     
     private void readData(String id) {
@@ -75,6 +78,13 @@ public class RincianPinjamController implements Initializable {
         try {
             Statement stmt = this.connection.createStatement();
             ResultSet rs = stmt.executeQuery(query);
+            if (!rs.next()) {
+                lblNoPinjam.setVisible(true);
+                lblTingkat.setVisible(false);
+                lblNamaKelas.setVisible(false);
+                lblSanksi.setVisible(false);
+                return;
+            }
             rs.first();
             lblNamaKelas.setText(lblNamaKelas.getText() + "\t: " + rs.getString("nama_kelas"));
             lblTingkat.setText(lblTingkat.getText() + "\t: " + rs.getString("tingkat"));

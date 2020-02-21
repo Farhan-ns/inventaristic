@@ -54,8 +54,6 @@ public class PeminjamanBarangController implements Initializable {
     @FXML
     private JFXButton btnSwitch;
     @FXML
-    private JFXButton btnSignOut;
-    @FXML
     private Label lblTotal;
     @FXML
     private JFXButton btnPinjam;
@@ -115,6 +113,7 @@ public class PeminjamanBarangController implements Initializable {
                 stage.show();
                 MenuUserController controller = loader.getController();
                 controller.setUserMap(this.map);
+                controller.setAuth(false);
             } catch (IOException ex) {
                 ex.getCause();
                 ex.printStackTrace();

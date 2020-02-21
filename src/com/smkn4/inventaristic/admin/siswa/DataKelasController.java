@@ -42,9 +42,6 @@ public class DataKelasController implements Initializable {
     private Button btnMenu;
 
     @FXML
-    private Button btnSignOut;
-
-    @FXML
     private Pane pnlCustomer;
 
     @FXML
@@ -115,7 +112,7 @@ public class DataKelasController implements Initializable {
     public void setButtonAction() {
         tabelSiswa.setOnMouseClicked((event) -> {
             btnDetail.setDisable(false);
-            btnBeriSanksi.setDisable(false);
+            btnBeriSanksi.setDisable(true);
             btnGene.setDisable(false);
         });
         cbPinjaman.setOnAction((event) -> {

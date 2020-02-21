@@ -43,6 +43,7 @@ public class MenuUserController implements Initializable {
     
     FXMLLoader loader;
     Map map;
+    private boolean auth;
     /**
      * Initializes the controller class.
      */
@@ -51,6 +52,9 @@ public class MenuUserController implements Initializable {
         setButtonsAction();
         Platform.runLater(() -> {
             btnSignOut.getScene().getWindow().centerOnScreen();
+        });
+        lblNama.setOnMouseClicked((event) -> {
+            System.out.println("LLASDASK : --" + this.auth);
         });
     }   
     
@@ -107,6 +111,7 @@ public class MenuUserController implements Initializable {
     }
     
     public void setAuth(boolean auth) {
+        this.auth = auth;
         if (auth) {
             btnSignOut.setOnAction((event) -> {
             this.map.clear();

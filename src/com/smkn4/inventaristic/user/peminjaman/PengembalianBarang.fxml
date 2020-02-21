@@ -39,11 +39,6 @@
                   <Insets top="22.0" />
                </VBox.margin>
             </JFXButton>
-            <JFXButton fx:id="btnSignOut" graphicTextGap="22.0" prefHeight="25.0" prefWidth="130.0" text="Sign Out" textFill="#e7e5e5">
-               <VBox.margin>
-                  <Insets top="22.0" />
-               </VBox.margin>
-            </JFXButton>
          </children>
       </VBox>
       <StackPane layoutX="258.0" prefHeight="576.0" prefWidth="793.0" style="-fx-background-color: #02030A;">

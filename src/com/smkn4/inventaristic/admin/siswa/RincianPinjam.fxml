@@ -13,7 +13,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="lblTingkat" layoutX="14.0" layoutY="46.0" prefHeight="35.0" prefWidth="355.0" text="Tingkat">
+      <Label fx:id="lblTingkat" layoutX="14.0" layoutY="46.0" prefHeight="35.0" prefWidth="64.0" text="Tingkat">
          <font>
             <Font size="14.0" />
          </font>
@@ -30,5 +30,10 @@
             <TableColumn fx:id="colStatus" prefWidth="110.0" text="Status Barang" />
          </columns>
       </TableView>
+      <Label fx:id="lblNoPinjam" layoutX="131.0" layoutY="46.0" prefHeight="35.0" prefWidth="213.0" text="Kelas Tidak Memiliki Peminjaman" textFill="#e40000">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

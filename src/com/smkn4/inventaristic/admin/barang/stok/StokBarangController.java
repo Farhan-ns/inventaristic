@@ -66,9 +66,6 @@ public class StokBarangController implements Initializable {
     private JFXButton btnMenu;
 
     @FXML
-    private JFXButton btnSignOut;
-
-    @FXML
     private JFXButton btnSwitch;
     
     @FXML
