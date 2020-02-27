@@ -40,6 +40,10 @@ public class barang_masuk extends javax.swing.JFrame {
     
     DefaultTableModel dtm;
     
+     private String getCellValue(int x,int y){
+        return dtm.getValueAt(x,y).toString();
+    }
+    
     public void showData(String qryFilter) {
         String[] kolom = {"No", "Tanggal Masuk", "Nama Barang", "Jenis Barang", "Tahun Barang", "Sumber Perolehan Barang", "Kondisi Barang", "Lokasi Penyimpangan", "Deskripsi Barang"};
         
@@ -149,7 +153,7 @@ public class barang_masuk extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel1.setBackground(new java.awt.Color(0, 184, 148));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "F I L T E R", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(255, 255, 255))); // NOI18N
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -179,7 +183,13 @@ public class barang_masuk extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("PRINT LAPORAN");
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton1.setText("Export To Excel");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -328,7 +338,11 @@ int baris;
         showData(Filter(0));
     }//GEN-LAST:event_btn_refreshActionPerformed
 
-    /**
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //exportToExcel();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    /**s
      * @param args the command line arguments
      */
     public static void main(String args[]) {

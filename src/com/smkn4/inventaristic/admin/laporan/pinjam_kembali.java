@@ -5,6 +5,8 @@
  */
 package com.smkn4.inventaristic.admin.laporan;
 
+import com.smkn4.inventaristic.admin.laporan.rekap.RekapBarang;
+import com.smkn4.inventaristic.admin.laporan.rekap.RekapPeminjaman;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,12 +14,29 @@ import java.sql.Statement;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import com.smkn4.inventaristic.util.MySqlConnection;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import static javax.swing.WindowConstants.HIDE_ON_CLOSE;
 import javax.swing.table.TableRowSorter;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -39,6 +58,10 @@ public class pinjam_kembali extends javax.swing.JFrame {
     
     DefaultTableModel dtm;
     
+     private String getCellValue(int x,int y){
+        return dtm.getValueAt(x,y).toString();
+    }
+    
     public void showData(String qryFilter) {
         String[] kolom = {"No", "Tanggal Peminjaman", "Nama Peminjaman", "Kelas", "Nama Barang", "Jenis Barang", "Kondisi Barang", "Lokasi Penyimpangan", "Jumlah Pinjam", "Tanggal Kembali", "Status Kembali"};
         
@@ -49,8 +72,7 @@ public class pinjam_kembali extends javax.swing.JFrame {
             String query = "SELECT peminjaman.`tgl_peminjaman`, siswa.`nama_siswa`, siswa.`kelas`, barang_masuk.`nama_barang`, barang_masuk.`jenis_barang`,"
                     + " barang_masuk.`kondisi`, barang_masuk.`lokasi`, peminjaman.`jumlah_dipinjam`, peminjaman.`tgl_kembali`, peminjaman.`status_peminjaman`"
                     + " FROM peminjaman, siswa, barang_masuk, rincian"
-                    + " WHERE peminjaman.`nis` = siswa.`nis`"
-                    + " AND rincian.`id_peminjaman` = peminjaman.`id_peminjaman`"
+                    + " WHERE rincian.`id_peminjaman` = peminjaman.`id_peminjaman`"
                     + " AND rincian.`id_barang` = barang_masuk.`id_barang`" + qryFilter;
             
             ResultSet rs = stmt.executeQuery(query);
@@ -104,6 +126,67 @@ public class pinjam_kembali extends javax.swing.JFrame {
         return qryFilter;
     }
     
+      private void exportToExcel(){
+        XSSFWorkbook wb = new XSSFWorkbook();
+        XSSFSheet ws = wb.createSheet();
+        
+//        header
+
+        MessageFormat title = new MessageFormat("Laporan Data Barang Bermasalah");
+        
+//        load data
+        TreeMap<String,Object[]> data = new TreeMap<>();
+        data.put("-1",new Object[]{dtm.getColumnName(0),dtm.getColumnName(1),dtm.getColumnName(2),dtm.getColumnName(3),dtm.getColumnName(4),dtm.getColumnName(5),dtm.getColumnName(6)});
+        
+//    load data cell row
+        for(int i = 0;i<dtm.getRowCount();i++){
+            data.put(Integer.toString(i),new Object[]{getCellValue(i,0),getCellValue(i,1),getCellValue(i,2),getCellValue(i,3),getCellValue(i,4),getCellValue(i,5),getCellValue(i,6)});
+        }
+//     Write to excel
+        Set<String> ids = data.keySet();
+        XSSFRow row;
+        int rowID = 0;
+        
+        for(String key : ids){
+            row=ws.createRow(rowID++);
+            
+            Object[] values=data.get(key);
+            int cellID = 0;
+            for(Object o: values){
+                Cell cell = row.createCell(cellID++);
+                cell.setCellValue(o.toString());
+            }
+            
+        }
+        
+         CellStyle cs = wb.createCellStyle();
+            cs.setFillForegroundColor(IndexedColors.LIME.getIndex());
+            cs.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+            Font f = wb.createFont();
+            f.setBoldweight(Font.BOLDWEIGHT_BOLD);
+            f.setFontHeightInPoints((short) 12);
+            cs.setFont(f);
+        
+              int idx = 0;
+              Cell c = null;
+                int idy = 0;
+//        Save File
+        try{
+           
+            
+            
+            FileOutputStream fos = new FileOutputStream(new File("rekap//rekap_peminjaman.xls"));
+            wb.write(fos);
+            fos.close();
+        }catch(FileNotFoundException ex){
+            Logger.getLogger(RekapPeminjaman.class.getName()).log(Level.SEVERE,null,ex);
+        }catch(IOException ex){
+            Logger.getLogger(RekapBarang.class.getName()).log(Level.SEVERE,null,ex);
+        }
+    }
+    
+    
+    
     public void filterData() {
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(dtm);
         tbl_peminjaman.setRowSorter(tr);
@@ -138,7 +221,7 @@ public class pinjam_kembali extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel1.setBackground(new java.awt.Color(0, 184, 148));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "F I L T E R", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(255, 255, 255))); // NOI18N
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -168,7 +251,13 @@ public class pinjam_kembali extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("PRINT LAPORAN");
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton1.setText("Export To Excel");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -331,6 +420,10 @@ int baris;
         // TODO add your handling code here:
         showData(Filter(0));
     }//GEN-LAST:event_btn_refreshActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        exportToExcel();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

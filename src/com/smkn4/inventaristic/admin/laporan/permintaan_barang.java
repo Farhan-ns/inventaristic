@@ -5,6 +5,8 @@
  */
 package com.smkn4.inventaristic.admin.laporan;
 
+import com.smkn4.inventaristic.admin.laporan.rekap.RekapBarang;
+import com.smkn4.inventaristic.admin.laporan.rekap.RekapPeminjaman;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,11 +14,29 @@ import java.sql.Statement;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import com.smkn4.inventaristic.util.MySqlConnection;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import javax.swing.table.TableRowSorter;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 /**
  *
  * @author andrew
@@ -24,7 +44,7 @@ import javax.swing.table.TableRowSorter;
 public class permintaan_barang extends javax.swing.JFrame {
 
     private final Connection koneksi;
-    
+
     /**
      * Creates new form permintaan_barang
      */
@@ -35,29 +55,29 @@ public class permintaan_barang extends javax.swing.JFrame {
         setDefaultCloseOperation(HIDE_ON_CLOSE);
         setLocationRelativeTo(null);
     }
-    
+
     DefaultTableModel dtm;
-    
+
     public void showData(String qryFilter) {
         String[] kolom = {"No", "Nama Barang", "Jenis Barang", "Tanggal Permintaan", "Jumlah Permintaan", "Deskripsi"};
-        
+
         dtm = new DefaultTableModel(null, kolom);
-        
-        try{
+
+        try {
             Statement stmt = koneksi.createStatement();
             String query = "SELECT nama_barang, jenis_barang, tgl_permintaan, jumlah_permintaan, deskripsi "
-                         + "FROM permintaan_barang " + qryFilter;
-                        
+                    + "FROM pengajuan_barang" + qryFilter;
+
             ResultSet rs = stmt.executeQuery(query);
             int no = 1;
-            while(rs.next()) {
-                String nama_barang         = rs.getString("nama_barang");
-                String jenis_barang        = rs.getString("jenis_barang");
-                String tgl_permintaan      = rs.getString("tgl_permintaan");
-                String jumlah_permintaan   = rs.getString("jumlah_permintaan");
-                String deskripsi           = rs.getString("deskripsi");
-            
-                dtm.addRow(new String[] {no + "", nama_barang, jenis_barang, tgl_permintaan, jumlah_permintaan, deskripsi});
+            while (rs.next()) {
+                String nama_barang = rs.getString("nama_barang");
+                String jenis_barang = rs.getString("jenis_barang");
+                String tgl_permintaan = rs.getString("tgl_permintaan");
+                String jumlah_permintaan = rs.getString("jumlah_permintaan");
+                String deskripsi = rs.getString("deskripsi");
+
+                dtm.addRow(new String[]{no + "", nama_barang, jenis_barang, tgl_permintaan, jumlah_permintaan, deskripsi});
                 no++;
             }
         } catch (SQLException ex) {
@@ -69,23 +89,82 @@ public class permintaan_barang extends javax.swing.JFrame {
         tbl_permintaan.getColumnModel().getColumn(2).setPreferredWidth(30);
         tbl_permintaan.getColumnModel().getColumn(3).setPreferredWidth(15);
         tbl_permintaan.getColumnModel().getColumn(4).setPreferredWidth(20);
-        
+
         int j = tbl_permintaan.getRowCount();
-        lbl_jumlah.setText("Jumlah Permintaan Barang : "+j);
+        lbl_jumlah.setText("Jumlah Permintaan Barang : " + j);
     }
-    
+
     public String Filter(int i) {
         String qryFilter = null;
-        switch(i) {
+        switch (i) {
             case 1:
-                qryFilter = " WHERE barang_masuk.jenis_barang = '" + cb_jenis.getSelectedItem().toString().toLowerCase() + "'";
-                break;       
+                qryFilter = " WHERE pengajuan_barang.jenis_barang = '" + cb_jenis.getSelectedItem().toString().toLowerCase() + "'";
+                break;
             default:
                 qryFilter = " ORDER BY nama_barang ASC";
         }
         return qryFilter;
     }
-    
+
+    private String getCellValue(int x, int y) {
+        return dtm.getValueAt(x, y).toString();
+    }
+
+    private void exportToExcel() {
+        XSSFWorkbook wb = new XSSFWorkbook();
+        XSSFSheet ws = wb.createSheet();
+
+//       header
+        MessageFormat title = new MessageFormat("Laporan Data Barang Bermasalah");
+
+//       load data
+        TreeMap<String, Object[]> data = new TreeMap<>();
+        data.put("-1", new Object[]{dtm.getColumnName(0), dtm.getColumnName(1), dtm.getColumnName(2), dtm.getColumnName(3), dtm.getColumnName(4), dtm.getColumnName(5), dtm.getColumnName(6)});
+
+//    load data cell row
+        for (int i = 0; i < dtm.getRowCount(); i++) {
+            data.put(Integer.toString(i), new Object[]{getCellValue(i, 0), getCellValue(i, 1), getCellValue(i, 2), getCellValue(i, 3), getCellValue(i, 4), getCellValue(i, 5), getCellValue(i, 6)});
+        }
+//     Write to excel
+        Set<String> ids = data.keySet();
+        XSSFRow row;
+        int rowID = 0;
+
+        for (String key : ids) {
+            row = ws.createRow(rowID++);
+
+            Object[] values = data.get(key);
+            int cellID = 0;
+            for (Object o : values) {
+                Cell cell = row.createCell(cellID++);
+                cell.setCellValue(o.toString());
+            }
+
+        }
+
+        CellStyle cs = wb.createCellStyle();
+        cs.setFillForegroundColor(IndexedColors.LIME.getIndex());
+        cs.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+        Font f = wb.createFont();
+        f.setBoldweight(Font.BOLDWEIGHT_BOLD);
+        f.setFontHeightInPoints((short) 12);
+        cs.setFont(f);
+
+        int idx = 0;
+        Cell c = null;
+        int idy = 0;
+//        Save File
+        try {
+            FileOutputStream fos = new FileOutputStream(new File("rekap//rekap_permintaan_barang.xls"));
+            wb.write(fos);
+            fos.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(RekapPeminjaman.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(RekapBarang.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void filterData() {
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(dtm);
         tbl_permintaan.setRowSorter(tr);
@@ -118,7 +197,7 @@ public class permintaan_barang extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel1.setBackground(new java.awt.Color(0, 184, 148));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "F I L T E R", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(255, 255, 255))); // NOI18N
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -138,7 +217,13 @@ public class permintaan_barang extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("PRINT LAPORAN");
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton1.setText("Export To Excel");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -266,7 +351,7 @@ public class permintaan_barang extends javax.swing.JFrame {
 
     private void cb_jenisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_jenisActionPerformed
         // TODO add your handling code here:
-       showData(Filter(1));
+        showData(Filter(1));
     }//GEN-LAST:event_cb_jenisActionPerformed
 
     private void btn_batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batalActionPerformed
@@ -274,7 +359,7 @@ public class permintaan_barang extends javax.swing.JFrame {
         btnGrup_waktu.clearSelection();
         cb_jenis.setSelectedIndex(0);
     }//GEN-LAST:event_btn_batalActionPerformed
-int baris;
+    int baris;
     private void tbl_permintaanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_permintaanMouseClicked
         // TODO add your handling code here:
         baris = tbl_permintaan.getSelectedRow();
@@ -284,6 +369,10 @@ int baris;
         // TODO add your handling code here:
         showData(Filter(0));
     }//GEN-LAST:event_btn_refreshActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        exportToExcel();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
